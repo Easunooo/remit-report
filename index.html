@@ -1,0 +1,1248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>微汇款内容营销报告完整演示</title>
+  <style>
+    :root {
+      --green: #27d66f;
+      --green-deep: #159653;
+      --green-soft: #eaf8ef;
+      --bg: #f7fbf8;
+      --paper: rgba(255, 255, 255, .78);
+      --paper-strong: #ffffff;
+      --ink: #20272b;
+      --muted: #69776f;
+      --light: #eff8f2;
+      --shadow: 0 10px 30px rgba(32, 39, 43, .05);
+      --shadow-soft: 0 6px 18px rgba(32, 39, 43, .035);
+      --sidebar: 310px;
+      --table-max-width: 1520px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      background: #f6fbf8;
+      overflow-x: hidden;
+    }
+
+    body::before { display: none; }
+
+    .layout {
+      display: block;
+      min-height: 100vh;
+    }
+
+    aside {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: var(--sidebar);
+      height: 100vh;
+      z-index: 20;
+      padding: 34px 22px 28px 30px;
+      overflow: auto;
+      background: rgba(250, 253, 250, .88);
+      backdrop-filter: blur(22px);
+      box-shadow: 10px 0 30px rgba(32, 39, 43, .06);
+      transform: translateX(calc(-100% + 8px));
+      transition: transform .24s ease;
+    }
+    aside:hover,
+    aside:focus-within { transform: translateX(0); }
+    aside > * {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s ease;
+    }
+    aside:hover > *,
+    aside:focus-within > * {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: var(--green);
+      color: white;
+      font-weight: 900;
+      box-shadow: none;
+    }
+    .brand-title { font-weight: 850; letter-spacing: -.03em; line-height: 1.15; }
+    .brand-sub { margin-top: 3px; color: var(--muted); font-size: 12px; font-weight: 650; }
+
+    .toc-title {
+      color: var(--green-deep);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      margin: 24px 0 12px;
+    }
+    #toc { display: grid; gap: 3px; }
+    #toc a {
+      display: block;
+      padding: 9px 12px;
+      color: #617169;
+      font-size: 14px;
+      line-height: 1.38;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: .18s ease;
+    }
+    #toc a:hover, #toc a.active {
+      color: var(--ink);
+      background: rgba(39, 214, 111, .10);
+    }
+    #toc a.h3 { padding-left: 26px; font-size: 13px; color: #76847d; }
+    #toc a.h4 { padding-left: 40px; font-size: 12px; color: #87948e; }
+
+    .progress-wrap {
+      height: 7px;
+      background: rgba(39, 214, 111, .10);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 18px 0 20px;
+    }
+    .progress { height: 100%; width: 0%; background: var(--green); border-radius: inherit; }
+
+    main { min-width: 0; padding: 44px 48px 84px; }
+    .document {
+      width: min(1240px, 100%);
+      margin: 0 auto;
+      padding: clamp(26px, 4.4vw, 58px);
+      border-radius: 34px;
+      background: rgba(255,255,255,.72);
+      box-shadow: none;
+      backdrop-filter: blur(18px);
+    }
+
+    .doc-hero {
+      margin-bottom: 42px;
+      padding: 4px 0 22px;
+      border-radius: 0;
+      color: var(--ink);
+      background: transparent;
+      box-shadow: none;
+    }
+    .doc-hero .kicker,
+    .doc-hero p { display: none; }
+    .doc-hero h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(30px, 3.8vw, 48px);
+      line-height: 1.08;
+      letter-spacing: -.055em;
+    }
+
+    #content { font-size: 17px; line-height: 1.82; }
+    #content > *:first-child { margin-top: 0; }
+    .chapter-card {
+      margin: 34px 0;
+      padding: clamp(28px, 4vw, 48px);
+      border-radius: 26px;
+      background: rgba(255, 255, 255, .58);
+      box-shadow: none;
+    }
+    .chapter-card:first-child { margin-top: 0; }
+    h2, h3, h4 {
+      scroll-margin-top: 32px;
+      letter-spacing: -.045em;
+      line-height: 1.16;
+    }
+    h2 {
+      position: relative;
+      margin: 0 0 24px;
+      padding-top: 4px;
+      font-size: clamp(28px, 3vw, 40px);
+    }
+    h2::before {
+      content: "";
+      display: block;
+      width: 42px;
+      height: 5px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+    h3 {
+      margin: 38px 0 16px;
+      padding: 0;
+      color: #1f2c26;
+      font-size: clamp(22px, 2.2vw, 28px);
+    }
+    h4 {
+      margin: 30px 0 12px;
+      color: #1e3529;
+      font-size: 20px;
+    }
+    p { max-width: 860px; margin: 16px 0; color: #3f4d46; }
+    .chapter-card > p:first-of-type strong { font-size: 1.08em; }
+    .chapter-card > ul,
+    .chapter-card > ol,
+    .chapter-card > blockquote { max-width: 860px; }
+    strong { color: #111a15; font-weight: 850; }
+    em { color: #405149; }
+    a { color: var(--green-deep); text-decoration: none; font-weight: 760; }
+    hr { height: 14px; margin: 28px 0; background: rgba(39, 214, 111, .14); border: 0; border-radius: 999px; opacity: .7; }
+
+    blockquote {
+      margin: 22px 0;
+      padding: 22px 26px;
+      border-radius: 18px;
+      background: rgba(39, 214, 111, .08);
+      color: #314139;
+      box-shadow: none;
+    }
+    blockquote p { margin: 0; }
+
+    ul, ol { margin: 18px 0 22px; padding-left: 0; list-style: none; display: grid; gap: 10px; }
+    li { position: relative; padding-left: 25px; color: #3f4d46; }
+    li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: .78em;
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: var(--green);
+    }
+    ol { counter-reset: item; }
+    ol li { counter-increment: item; padding-left: 34px; }
+    ol li::before {
+      content: counter(item);
+      top: .28em;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+      margin: 20px 0 28px;
+      padding: 0;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: none;
+      scrollbar-gutter: stable both-edges;
+    }
+    .table-wrap::before { display: none; }
+    table {
+      width: var(--table-width, auto);
+      min-width: var(--table-min-width, 860px);
+      margin: 0 auto;
+      border-collapse: separate;
+      border-spacing: 0 2px;
+      table-layout: fixed;
+      background: #ffffff;
+    }
+    th, td {
+      vertical-align: top;
+      text-align: left;
+      padding: 8px 12px;
+      background: #ffffff;
+      color: #3f4d46;
+      line-height: 1.38;
+      font-size: 14px;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      color: #183226;
+      background: #e8f7ee;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    tr th:first-child, tr td:first-child { border-radius: 10px 0 0 10px; }
+    tr th:last-child, tr td:last-child { border-radius: 0 10px 10px 0; }
+    tbody tr { filter: none; }
+    .table-wrap.media-table table { min-width: var(--table-min-width, 1080px); }
+    .table-wrap.media-table th,
+    .table-wrap.media-table td { padding: 8px 12px; }
+    .percent-cell { min-width: 0; }
+    .percent-bar {
+      display: block;
+      width: min(170px, 100%);
+      height: 8px;
+      margin-top: 8px;
+      border-radius: 999px;
+      background: rgba(39, 214, 111, .12);
+      overflow: hidden;
+    }
+    .percent-bar span {
+      display: block;
+      width: var(--p);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--green);
+    }
+    .scale-cell { min-width: 0; }
+    .scale-bar {
+      display: block;
+      width: min(170px, 100%);
+      height: 8px;
+      margin-top: 8px;
+      border-radius: 999px;
+      background: rgba(39, 214, 111, .12);
+      overflow: hidden;
+    }
+    .scale-bar span {
+      display: block;
+      width: var(--p);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--green);
+    }
+    .gap-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(39, 214, 111, .12);
+      color: var(--green-deep);
+      font-weight: 900;
+    }
+
+    .image-cluster {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin: 22px 0;
+      align-items: start;
+    }
+    figure {
+      margin: 22px 0;
+      padding: 0;
+      border-radius: 16px;
+      background: transparent;
+      box-shadow: none;
+      width: min(100%, 900px);
+      max-width: 100%;
+      overflow: hidden;
+    }
+    .image-cluster figure { width: 100%; margin: 0; }
+    img {
+      display: block;
+      width: 100%;
+      max-width: min(100%, 900px);
+      height: auto;
+      max-height: 620px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: #f2f8f4;
+    }
+    figure.is-missing { display: none; }
+    .chapter-card > .table-wrap {
+      width: min(calc(100vw - 64px), var(--table-max-width));
+      max-width: none;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+    .chapter-card > figure,
+    .chapter-card > .image-cluster {
+      width: min(calc(100vw - 96px), 1360px);
+      max-width: none;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+    .chapter-card > .table-wrap { margin-top: 34px; margin-bottom: 30px; }
+    .chapter-card > figure img { width: auto; max-width: 100%; margin: 0 auto; }
+    .chapter-card > .image-cluster figure { transform: none; }
+    .chapter-card > .image-cluster img { width: 100%; max-width: 100%; }
+    table figure { margin: 8px 0 0; padding: 0; box-shadow: none; background: transparent; width: 100%; transform: none; }
+    table img { width: auto; max-width: 170px; max-height: 140px; margin: 0; border-radius: 8px; }
+    .table-wrap.media-table td:first-child img { max-width: 150px; max-height: 120px; }
+    .table-wrap.media-table td:last-child img,
+    .table-wrap.media-table td:nth-last-child(2) img { max-width: 190px; max-height: 150px; }
+    .table-wrap.case-icon-table td:first-child img {
+      max-width: 96px;
+      max-height: 76px;
+    }
+    .table-image-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 8px;
+      padding-bottom: 0;
+      overflow: visible;
+    }
+    .table-image-row figure {
+      flex: 1 1 180px;
+      width: auto;
+      max-width: 260px;
+      margin: 0;
+    }
+    .table-image-row img,
+    .table-wrap.media-table .table-image-row img {
+      width: 100%;
+      max-width: 260px;
+      max-height: 220px;
+    }
+    td.merged-image-cell {
+      vertical-align: middle;
+      text-align: center;
+    }
+    td.merged-image-cell figure { margin: 0; }
+    td.merged-image-cell img {
+      max-width: 380px;
+      max-height: 560px;
+      margin: 0 auto;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 7px;
+      background: rgba(39, 214, 111, .11);
+      color: #17643b;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: .92em;
+    }
+
+    .backtop {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      z-index: 10;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      box-shadow: none;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 980px) {
+      :root { --sidebar: 0px; }
+      body::before { display: none; }
+      .layout { display: block; }
+      aside {
+        position: relative;
+        width: auto;
+        height: auto;
+        padding: 24px 22px 0;
+        transform: none;
+        background: transparent;
+        box-shadow: none;
+      }
+      aside > * { opacity: 1; pointer-events: auto; }
+      #toc {
+        display: flex;
+        overflow: auto;
+        gap: 8px;
+        padding-bottom: 10px;
+      }
+      #toc a, #toc a.h3, #toc a.h4 {
+        white-space: nowrap;
+        padding: 9px 12px;
+      }
+      main { padding: 22px 18px 70px; }
+      .document { padding: 20px; border-radius: 28px; }
+      .doc-hero { padding: 0 0 18px; border-radius: 0; }
+      .doc-hero h1 { font-size: clamp(28px, 9vw, 38px); }
+      .chapter-card { padding: 24px 18px; border-radius: 26px; }
+      h2 { font-size: 28px; }
+      h3 { padding: 0; font-size: 22px; }
+      .chapter-card > .table-wrap,
+      .chapter-card > figure,
+      .chapter-card > .image-cluster { width: calc(100vw - 36px); }
+      .table-wrap { border-radius: 18px; }
+      .table-wrap::before { position: sticky; left: 8px; }
+      .image-cluster { grid-template-columns: 1fr; }
+      img { max-height: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+      <div class="toc-title">目录</div>
+      <nav id="toc" aria-label="文档目录"></nav>
+    </aside>
+
+    <main>
+      <article class="document">
+        <div class="doc-hero">
+          <h1>微汇款内容营销打法</h1>
+        </div>
+        <div id="content"></div>
+      </article>
+    </main>
+  </div>
+
+  <button class="backtop" type="button" aria-label="回到顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <script type="text/plain" id="markdown-source">## 1. 概览
+
+**一句话结论：微汇款不缺真实需求，缺的是在用户做汇款决策前，被看见、被讲清楚、被信任。**
+
+| **维度** | **核心判断** | **对微汇款的含义** |
+| - | - | - |
+| **需求** | 海外务工、留学、长期驻外人群长期有工资回流、生活费、赡养、节日红包、应急转账等需求 | 市场真实，且微汇款已切中跨境家庭资金流动场景 |
+| **入口** | 用户有需求时，先搜“怎么汇款回国”“手续费多少”“多久到账”“父母怎么收款”，而不是先搜“微汇款” | 内容要出现在搜索、比较、问答和种草场景中 |
+| **认知** | 用户不清楚微汇款到底是汇款平台、微信收款入口，还是海外机构入境后的承接服务 | 先讲清楚“微汇款在链路里负责什么、解决什么问题” |
+| **增长** | 当前卡点不只是交易中段转化，而是前端决策阶段缺少存在感 | 营销要前移，建立“被看见 → 被理解 → 被信任 → 被复用”的链路 |
+
+**本报告重点回答 5 个问题：**
+
+1. **增长卡点：**微汇款为什么值得做，当前主要卡在哪里？
+2. **前端触达：**如何在用户搜索、比较汇款方案时提前出现？
+3. **内容分层：**如何按国家、城市、人群和场景拆内容？
+4. **信任教育：**如何把费用、汇率、到账、收款流程讲清楚？
+5. **转化承接：**如何把内容流量转化为首汇、复汇和亲友推荐？
+
+**案例选择：**
+
+| **案例** | **参考价值** | **回答问题** |
+| - | - | - |
+| 饭团 Fantuan<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45107899) | **海外华人触达 + 小红书 KFS 种草**<br/><br/>参考其如何用 KOL/KOC、Feeds、Search 把海外华人日常需求变成内容入口。 | **微汇款如何先被海外华人看见？** |
+| Weee!<br/><br/>![Clipboard_Screenshot_1779257204.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45107903) | **城市 / 人群 / 场景分层投流**<br/><br/>参考其如何按地区、族群和生活场景拆内容，而不是用一套话术覆盖所有用户。 | **微汇款如何按国家、城市和用户场景做内容分层？** |
+| Futu <br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45107904) | **金融产品教育 + 信任转化**<br/><br/>参考其如何先降低理解门槛，再用内容教育推动开户和交易。 | **微汇款如何把复杂的汇款决策讲清楚？** |
+
+---
+
+## 2. 为什么选择这些案例？
+
+在解释为什么选择这些案例之前，需要先明确微汇款当前面对的两个业务现状是什么
+
+### Q1：当前业务现状是什么？
+
+#### 现状1: 渗透低，空间大 → 值得做
+
+**第一，仍有巨大增长空间。微汇款核心用户画像是海外务工/长期驻外华人，但当前使用情况与全球华人群体规模之间存在结构性 Gap，各区域重点市场仍有巨大增长空间。**
+
+当前微汇款核心用户画像如下：
+
+| **画像维度** | **典型特征** | **典型场景举例** |
+| - | - | - |
+| 汇款端主力人群 | 23–34 岁年轻用户占比较高，学生/留学生、海外工作和长期驻外人群突出 | 工资汇回、家庭备用金 |
+| 资金关系 | 汇款端在海外，收款端多为国内父母、亲属或家庭成员 | 赡养、生活费、节日汇款、应急转账 |
+| 地域特征 | - 海外端集中在美国（19.00%）、日本（9.17%）、韩国（6.60%）、澳大利亚（6.17%）、新加坡（5.24%）、加拿大（4.63%）、英国（4.61%）等；<br/>- 国内端沿海、侨乡特征明显，如福建（11.67%）、广东（5.14%）、长三角、东三省、山东等区域突出。<br/><br/> | 日本发薪后汇款、美国留学生汇款、福建/广东家庭收款<br/><br/> |
+
+对比全球华人社区规模可见，印尼、泰国、马来西亚等华人基数大但微汇款占比仍有释放空间；英国、日本等华人规模相对不大的国家却能贡献较高占比，微汇款当前远未渗透完全，无论美加澳发达国家还是东南亚，重点国家/地区都仍有较大增长空间。
+
+| **国家/地区** | **全球华人社区规模** | **排序** | **微汇款当前用户占比** | **排序** | **排序GAP** | **全球华人社区规模** |
+| - | - | - | - | - | - | - |
+| 印度尼西亚 | 11.0M | **1** | 2.25% | **14** | **+13** | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45078852) |
+| 泰国 | 7.0M | **2** | 5.19% | **6** | +4 |   |
+| 马来西亚 | 6.9M | **3** | 3.09% | **11** | **+8** |   |
+| 美国 | 5.8M | **4** | 19.00% | **1** | -3 |   |
+| 新加坡 | 3.1M | **5** | 5.24% | **5** | 0 |   |
+| 加拿大 | 2.0M | **6** | 4.63% | **7** | +1 |   |
+| 澳大利亚 | 1.5M | **7** | 6.17% | **4** | -3 |   |
+| 法国 | 800K | **8** | 1.56% | **19** | **+11** |   |
+| 英国 | 500K | **9** | 4.61% | **8** | -1 |   |
+| 南非 | 500K | **10** | 未进入前 20 | **-** | **≥+11** |   |
+| 日本 | - | **-** | 9.17% | **2** |  |   |
+
+这里需要补充一个口径：**上面的国家分布来自微汇款当前用户和全球华人社区规模对比；澳大利亚、美国、新加坡、韩国四国调研则主要用于理解不同市场里的用户决策差异，不代表微汇款的全部市场边界。**换句话说，四国调研不是把市场范围缩小到四个国家，而是帮助我们形成几类可迁移的市场打法。
+
+| **调研市场** | **可以理解成的市场类型** | **对内容打法的启发** |
+| - | - | - |
+| 美国 | 线上汇款成熟、用户会主动比价 | 更适合做平台对比、费用/汇率解释、SEO 和 Search 拦截 |
+| 新加坡 | 年轻用户和数字消费突出 | 更适合讲微信收款、小额高频、网购/红包/虚拟服务等场景 |
+| 澳大利亚 | 中产、资产和银行信任心智较强 | 更需要强调安全、合规、高限额、到账透明和资产/账单场景 |
+| 韩国 | 蓝领家庭支持和线下辅助需求明显 | 更需要中文客服、低门槛教程、线下/社群触达和合规替代 |
+
+同时，用户调研里的四类人群不建议单独拉出一章来讲，而是作为内容分层的前置信息使用：Family Supporter 解释家庭汇款和发薪日场景；Efficient Professional 解释为什么用户会比较汇率和手续费；Occasional Young Remitter 解释为什么微信收款和数字消费场景重要；Asset Strategist 解释为什么大额场景必须补安全、合规和限额说明。
+
+#### 现状2: 认知浅，定位弱  → 做什么
+
+**第二，用户有明显认知卡点。一方面是跨境汇款机构普遍面临的高决策成本，另一方面是微汇款自身的定位感不足。**
+
+**1）跨境汇款机构普通高决策成本**：从[用户讨论](https://www.xiaohongshu.com/explore/68ccf529000000001301aaaf?xsec_token=ABL078Y4TgLi-44hjlfY4dCkZhW5H16tsQsETbHgxTwHk=&source=web_explore_feed)可以看到，跨境汇款不是简单的支付动作，而是一个高信任、低频大额、强比较的决策过程。用户在选渠道时会同时比较流程、手续费、汇率、限额、材料、到账时间、安全性和收款便利性，并在银行电汇、Wise、Remitly、PayPal/Xoom、银行卡副卡、私人换汇等方案之间反复权衡。这是所有汇款机构共同面对的营销卡点：用户不是没有需求，而是不知道哪种方式最正规、最划算、最安全、最适合自己的金额和场景。
+
+**2）微汇款自身的定位感不足。**用户汇前的核心动作是比较 Wise、Remitly、银行电汇等海外汇出渠道，而微汇款更多承担后半段的国内收款、到账通知、确认和服务承接角色。由于用户一开始并不知道微汇款和这些汇款机构之间的关系，也不清楚腾讯在整笔交易中负责哪一段，所以即便用户信任腾讯，也未必能把微汇款纳入自己的汇款决策。对用户来说，关键疑问不是“腾讯可信吗”，而是“微汇款到底是汇款平台、收款入口，还是和 Wise 等机构配套的国内承接服务”。这个角色定位如果不清晰，微汇款使用价值没有被强调，就会导致微汇款在用户早期选渠道阶段缺乏存在感，也更可能选择银行渠道或者通过机构汇入支付宝。
+
+| **认知卡点** | **典型问题** | **用户心理** |
+| - | - | - |
+| **1）跨境汇款机构侧：普通高决策成本** | 到底该用银行电汇、Remitly、Wise、PayPal/Xoom、银行卡？信用卡刷卡？还是私下换汇？带现金回国？哪个才正规、靠谱、损耗小？ | 不懂选什么渠道，问问小红书/朋友推荐，看看哪个推荐多还不错选哪个<br/><br/>![Clipboard_Screenshot_1779335045.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45087109)<br/><br/>![Clipboard_Screenshot_1779338342.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45087108)<br/><br/>![Clipboard_Screenshot_1779338578.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45087115) |
+| **2）微汇款侧：用户认知不足** | 微汇款小程序有什么用？和Remitly、Wise、PayPal/Xoom、银行电汇之间有什么关系？为什么要汇款到微信，也可以汇款到支付宝、银联啊？ | ![Clipboard_Screenshot_1779340666.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45087322)<br/><br/>![Clipboard_Screenshot_1779341279.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45087550) |
+
+
+### Q2：针对现状，当前内容营销的高优先级环节应该是什么？
+
+结合前文两个业务现状——渗透低、空间大与认知浅、定位弱，微汇款当前营销的高优先级不应只放在交易中段的转化优化，而应优先解决用户增长链路两端的问题：前端如何被用户发现、理解和信任；后端如何让已使用用户形成复汇、订阅提醒和留存。
+
+**换句话说，内容营销的核心价值是要在用户增长链路中承担两类关键任务：**
+
+1. **在链路起点建立入口和信任：**让海外汇款端用户在产生汇款需求、比较汇款方式、搜索费用和到账问题时，能够看到微汇款，并理解微汇款的角色、优势和适用场景。
+2. **在链路末端提升复用和裂变：**让完成过一次汇款的用户，在后续发薪、节日、家庭应急、赡养等场景中再次想起微汇款，并愿意订阅提醒、复汇或推荐给亲友。
+
+| **用户增长阶段** | **核心问题** | **内容营销的作用** | **责任方** |
+| - | - | - | - |
+| 起点：<br/><br/>触达 / 获客 | 用户在哪里？为什么会注意到微汇款？ | 找到海外汇款端用户，围绕费用、汇率、到账时间、材料要求、收款确认、安全性等问题制造可被看见、可被搜索、可被信任的内容 | 机构+微汇款 |
+| 中段：<br/><br/>试算 / 开户 / 首汇 | 用户是否能顺利完成第一次交易？ | 内容负责解释流程、降低疑虑、引导试算和咨询，核心方在机构侧 | 机构 |
+| 末端：<br/><br/>留存 / 推荐 | 用户为什么会再次使用？是否愿意推荐？ | 围绕发薪、节日、家庭用钱、赡养、学费、应急等复汇场景持续提醒，并推动老客权益和亲友推荐 | 机构+微汇款 |
+
+### Q3：针对当前营销的高优先级环节，应如何选择营销案例？
+
+在明确微汇款当前内容营销的高优先级环节后，下一步需要回答的是：选择哪些案例，才能有效启发微汇款在“用户触达、业务信任、策略闭环”三个问题上的内容营销打法？
+
+因此，案例选择不以行业是否完全相同作为唯一标准，而是从微汇款当前最需要解决的三个核心问题出发，选择具有可迁移价值的案例。后文不会把案例当成单纯的行业介绍，而是只看它们各自能回答微汇款增长链路里的哪个问题：
+
+| **维度** | **核心问题** | **案例选择意义** | **对应案例** |
+| - | - | - | - |
+| 用户 | 如何触达海外华人及相近用户群体，并让他们愿意看内容？ | 解决“渗透低”的问题，让更多潜在用户先看见微汇款；同时用具体问题型内容吸引用户，而不是泛泛宣传“方便、安全、到账快”。 | 饭团 Fantuan、Weee! |
+| 业务 | 如何降低高决策成本，并建立用户对平台角色和服务流程的信任？ | 解决“认知浅、定位弱”的问题，让用户理解微汇款到底在交易中负责什么、为什么值得信任、适合什么汇款场景。 | Futu |
+| 策略 | 如何把内容流量转化为业务结果，而不是停留在曝光和种草？ | 建立从内容种草、搜索拦截、规则解释，到小程序试算、客服承接、复汇运营和转介绍的业务闭环。 | 饭团 Fantuan、Weee!、Futu |
+
+
+## 3. 这些案例的内容营销打法是什么？
+
+### 3.1 饭团 Fantuan：以小红书 KFS 对北美华人内容种草
+
+#### 饭团业务概览：北美美团
+
+> _**一句话概括：**海外华人本地生活服务平台——北美版美团_
+
+饭团 Fantuan 于 2014 年创立于加拿大温哥华，2023 年完成 4,000 万美元 C 轮融资。早期以中餐外卖配送切入海外华人市场，解决华人用户在海外获取中餐、本地商家服务和中文消费体验不便的问题。随着用户规模扩大，饭团逐步从单一外卖平台，延伸至**生鲜零售、即时配送、到店团购、本地生活服务**等多个场景，覆盖餐饮、商超、跑腿、优惠消费和生活服务等需求。其核心用户主要包括**海外华人、留学生、中国游客**，以及对亚洲餐饮、亚洲商品和华人社区服务有需求的本地用户。整体来看，饭团的定位已从“海外中餐外卖平台”升级为面向海外华人社区的综合型本地生活服务平台。
+
+- **核心业务：亚洲餐饮外卖**，提供外卖到家、到店自取、生鲜杂货配送、跑腿代办、团购与生活服务等一站式本地生活服务。其定位为连接用户与本地社区的 local lifestyle / life service platform。
+- **商户规模**：**32,000+ 合作商户**。
+- **覆盖地区**：**加拿大、美国、澳大利亚和英国等主要城市**；官方称其已进入全球 60+城市。
+- **用户体量：200 万+** 线上活跃用户；媒体报道口径约 **360 万**至 **500 万**用户。
+- **用户画像**：**海外华人、留学生，**现已扩展至更广泛的亚洲餐饮/本地生活消费人群
+
+![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45039542)
+
+   ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45039553)
+
+
+**Q：选择 饭团外卖 作为案例的理由是什么？**
+
+**1）用户画像高度重合。**饭团和微汇款当前客户都集中在加拿大、美国、澳大利亚和英国。饭团同样面向海外华人用户，场景集中在城市、校园、社区和本地生活服务，**是海外华人的高频场景，且同时链接蓝领和白领、留学生多维度核心华人群体**，海外华人认知明显。
+
+**2）成熟的小红书获客打法：**饭团有通过小红书、微信生态、KOL/KOC 和本地生活内容的成熟经验，可以供饭团触达海外华人，并把具体生活需求转化为内容入口提供借鉴。
+
+
+---
+
+#### 饭团打法：KFS组合覆盖用户决策链路
+
+小红书 KFS 通常可理解为 KOL/KOC、Feeds、Search 三类能力的组合，核心在于将内容营销拆成三层：先用 KOL/KOC 建立可信场景，再用 Feeds 放大已验证内容，最后用 Search 承接高意图搜索。
+
+| **模块** | **目的** | **策略** | **案例** |  |
+| - | - | - | - | - |
+| **K：**<br/><br/>**KOL/KOC 种草** | 建立场景认知和用户信任 | **头腰跑通：找地区KOC/腰部KOL**  <br/>先用本地化内容证明“饭团懂当地生活”，再用达人/KOC输出真实消费体验 | “温哥华留学生吃什么”“多伦多打工人午餐”“纽约中餐外卖推荐”；内容重点放在真实场景：下课点餐、加班夜宵、周末聚餐、刚到海外不会找中餐 | ![Clipboard_Screenshot_1779254295.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45037803)<br/><br/>![Clipboard_Screenshot_1779254577.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45037816)<br/><br/> |
+|  | 利用业务用户画像重合点，通过合作塑造品牌认知来拓客 | **品牌合作**：IP联名、限量、代言， | 和蜜雪冰城、小红书海外官方合作，推出线上权益合作、线下现场活动 | ![Clipboard_Screenshot_1779254417.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45091493)<br/><br/>![Clipboard_Screenshot_1779254376.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45091494) |
+| **F：**<br/><br/>**Feeds 放大** | 将验证有效的内容推给相似人群 | **定向投放：按城市、人群、兴趣**<br/><br/>把已跑通的种草内容二次投流，批量复制，放大到同城华人/留学生/亚裔用户 | 如“温哥华”“留学生”“亚洲美食”“中餐外卖”；素材以推荐外卖为主，但是笔记最后有官方账号/链接导流 | ![Clipboard_Screenshot_1779345285.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45091039) |
+| **S：**<br/><br/>**Search 拦截** | 承接主动搜索需求 | **布局关键词：城市词 + 品类词 + 优惠词**  <br/>在用户搜索城市、餐外卖、中餐、优惠时出现相关内容 | “温哥华中餐外卖”“多伦多奶茶外卖”“纽约饭团优惠码”“洛杉矶川菜推荐”；内容标题直接匹配搜索需求，承接高意向用户 | ![Clipboard_Screenshot_1779255093.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45037909)<br/><br/>![Clipboard_Screenshot_1779344893.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45090510) |
+
+
+
+---
+
+### 3.2 Weee!：用户分层&平台投流
+
+#### Weee!业务概览：亚超 x 本地零售配送
+
+> **一句话概括**：亚超 x 本地零售配送，北美版“线上亚洲超市”
+
+Weee! 于 2015年前后创立于美国硅谷，早期从华人和亚裔用户的亚洲食品、生鲜杂货需求切入，解决海外用户购买中餐食材、亚洲调料、零食、生鲜和日用品不方便的问题。随着用户规模扩大，Weee! 逐步从华人线上亚超，扩展为覆盖亚洲及多族裔食品的线上零售配送平台，品类包括蔬果、肉类、海鲜、冷冻食品、零食饮料、调味品、日用品和健康个护等。其官方定位为 “America’s largest online Asian supermarket”，覆盖 Chinese、Korean、Japanese、Vietnamese、Filipino、Indian、Mexican 等多族裔食品需求。 2022 年完成 4.25 亿美元融资，投资方包括 SoftBank 等。Weee! 2024 年收入约 10.13 亿美元。
+
+- **核心业务：** **亚洲食品/生鲜/杂货的本地零售配送**，提供线上下单、冷链配送、特色食材购买、日用品补充、新人优惠、榜单推荐、用户评价和内容种草等服务。
+- **用户体量： 150 万**购买用户（2025年）
+- **覆盖地区**： **美国**，覆盖美国主要城市及都会区；可向美国 50 个州配送，形成“重点城市本地配送 + 全国范围商品触达”的覆盖模式。
+- **用户画像：** **主要面向海外华人、留学生和亚裔家庭**，现已扩展至更广泛的亚洲食品和多族裔消费人群，包括华人、日韩用户、东南亚用户、南亚用户、菲律宾/越南社区、墨西哥裔用户，以及喜欢亚洲食品和特色食材的本地消费者。
+
+![Clipboard_Screenshot_1779257692.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45039417)
+
+![Clipboard_Screenshot_1779345973.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45091949)
+
+**Q：选择 weee! 作为案例的理由是什么？**
+
+1）**用户画像接近，可参考其分层投流方法。**  
+Weee! 和微汇款都面向海外华人用户，用户分布在不同城市、职业和生活场景中。Weee! 的参考价值不在于拓宽族群，而在于它会根据用户所在地区、生活方式和消费场景拆分内容与投流入口，而不是用一套内容覆盖所有华人用户。
+
+2）**“地域分层 × 职业分层”的打法可迁移。**  
+Weee! 会围绕不同城市用户做本地化内容承接，例如 San Francisco、Chicago 等城市的本地KOC、Feeds和地方新闻。微汇款可以参考这种分层方式，按 **地域** 拆分北美、英国、澳洲、加拿大重点城市用户，分城市投流，汇款场景、内容素材和落地页承接。
+
+---
+
+#### Weee! 打法：族群 × 城市用户分层投流
+
+Weee! 的内容营销主要通过用户的**1）族群** 和 **2）城市** 分层进行：
+
+**1）在族群维度上**，Weee! 会针对Filipino\korean\japanese\Vietnamese\Chinese等不同亚裔群体分平台、分账号、分别制作独立宣传物料。例如 Filipino 内容中会使用 Nanay、Handaan、Filipino groceries、Thanksgiving Sale 等强文化关键词，把平台能力包装成家庭采购和节日团聚场景。Chinese / Lunar New Year 内容则围绕春节、年货、团圆和节日食品展开。
+
+| **渠道** | **策略** | **案例** |  |
+| - | - | - | - |
+| **官方矩阵账号**<br/><br/>分族群 | **分族群经营平台账号**：其他亚裔集中在tiktok、ins、facebook，Chinese集中在小红书 | 针对Filipino\korean\japanese\Vietnamese的单独运行tiktok、ins官方内容账号<br/><br/> | ![Clipboard_Screenshot_1779302632.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093092)<br/><br/>![Clipboard_Screenshot_1779303637.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093090)<br/><br/>![Clipboard_Screenshot_1779303752.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093089)<br/><br/>![Clipboard_Screenshot_1779303820.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093091) |
+|  |  | 针对Chinese运营小红书官方账号、相关矩阵账号<br/><br/>- **@Weee：**官方主号，日更，主要北美活动、美食教程、促销活动、新品预告和创意营销策划（雪山狐狸、千禧年梦核零食等较火）<br/><br/>- **@小包子Weee美食录**：伪装个人留学生，日更，发布留学生形象的做饭教学视频，食材使用weee提供<br/><br/>- **@亚小超Weee优选**：官方推荐号，日更，发布基于Weee采购食材的做饭教学视频/新品推荐 | ![Clipboard_Screenshot_1779347015.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093440)<br/><br/>![Clipboard_Screenshot_1779347242.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093925)<br/><br/>![Clipboard_Screenshot_1779347127.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093553)<br/><br/>![Clipboard_Screenshot_1779347646.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45094305) |
+| **KOL**<br/><br/>族群KOL | 投放各个族裔本地头部KOL | 针对Filipino头部280万粉丝博主投流 | ![Clipboard_Screenshot_1779302459.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093070)<br/><br/>![Clipboard_Screenshot_1779302555.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093071) |
+| **官网承接**<br/><br/>族群分流 | 在官网设置分流用户族群，承接不同族群用户流量 | 官方根据不同族群用户的投流链接入口直接匹配不同的族群版本 | ![Clipboard_Screenshot_1779302338.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45093115) |
+
+
+**2）在城市维度上**，Weee! 会通过本地 KOC、城市生活方式内容和城市关键词承接本地需求。例如 San Francisco / Bay Area 的开箱、省钱、亚洲家庭采购内容，强调的是“在本地生活如何更方便地买到亚洲食材”。
+
+| **渠道** | **策略** | **案例** |  |
+| - | - | - | - |
+| **社交平台**  <br/> | **KOC：地方KOC**<br/><br/>**投放本地工作/生活类KOC博主**建立本地用户信任 | 投流 San Francisco 本地 KOC，发布亚洲食材采购、家庭做饭、节日备餐等内容，触达本地华人及亚裔家庭用户 | ![Clipboard_Screenshot_1779302230.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45095536) |
+|  | **Feeds：**地方普通用户<br/><br/>**用普通用户内容进行信息流放大**覆盖用户日常浏览与搜索路径 | 投流 Chicago 小红书 Feeds 内容，以“亚洲超市推荐”“留学生做饭”“Weee 买菜体验”等内容触达本地用户 | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45095543)<br/><br/>![Clipboard_Screenshot_1779347985.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45095766)<br/><br/>![Clipboard_Screenshot_1779348093.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45095767) |
+| **地方新闻** | 借助本地媒体提升品牌可信度和城市覆盖声量 | 投流 San Francisco 本地新闻网，围绕 Weee 的本地配送、亚裔社区服务、节日食品供应等内容做曝光 | ![Clipboard_Screenshot_1779302709.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45095689) |
+| **官网承接**：<br/><br/>投流爆款 | **将外部投流内容导流至官网，**承接地区不同营销活动页面 | 对华人地区小红书平台爆款内容进行官网承接，落地页匹配中文用户、亚洲食品、生鲜配送、优惠活动等转化信息 | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45095611) |
+
+
+---
+
+### 3.3 Futu：用金融内容教育建立决策信任
+
+#### Futu业务概览：海外股票投资平台
+
+> **一句话概括**：面向华人及全球投资者的股票投资平台
+
+富途 Futu 成立于 2012 年，总部位于香港，2019 年在纳斯达克上市。早期以港美股在线交易切入，解决华人投资者跨市场交易门槛高、行情信息分散、交易体验不友好的问题。随着用户规模扩大，富途逐步从单一证券交易平台，延伸至行情资讯、投资社区、基金/现金管理、融资融券、期权交易、企业服务等多个场景，并通过 **富途牛牛 Futubull** 和海外品牌 **moomoo** 拓展香港、新加坡、美国、澳大利亚、日本、加拿大、马来西亚、新西兰等市场。整体来看，富途已从“港美股交易工具”升级为面向全球投资者的一站式数字金融服务平台。
+
+- **核心业务： 股票投资券商**，在线证券经纪、港美股/ETF/期权交易、实时行情、财经资讯、投资社区、融资融券、基金与现金管理等。其定位为 tech-driven online brokerage and wealth management platform，即科技驱动的线上券商与财富管理平台。
+- **收入规模：** 2025 年全年总收入约 **228.47 亿港元**，同比增长 **68.1%**；全年净利润约 **113.02 亿港元**。
+- **覆盖地区：** 香港、新加坡、美国、澳大利亚、日本、加拿大、马来西亚、新西兰等市场；
+- **用户体量：** **2,920 万**，有资产账户数约 **336.5 万** （2025）
+- **用户画像：** 早期以**中国香港及海外华人投资者、港美股交易用户**为核心，后续通过 moomoo 扩展至新加坡、美国、日本、加拿大、马来西亚等本地年轻投资者、自主交易用户和中高净值零售投资者。
+
+![Clipboard_Screenshot_1779350262.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45098377)
+
+ ![Clipboard_Screenshot_1779357532.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45108102)
+
+
+**Q：选择 futu 作为案例的理由是什么？**
+
+**1）同属高决策金融服务，可参考“教育前置”打法。**  
+Futu 和微汇款都需要先解决用户对安全性、费用、流程和操作门槛的疑虑。Futu 通过 Learn 内容、教学视频、模拟交易等方式先教育用户，再引导开户和交易。微汇款也可以参考，把“手续费怎么算、汇率怎么看、多久到账、父母怎么收款”等问题做成内容，先建立信任，再推动首单转化。
+
+**2）“内容教育 × 福利转化”的链路可迁移。**  
+Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产品体验和专属福利页完成转化。微汇款可以借鉴这一方式，与海外生活、留学、务工、职场、税务/签证类博主合作，把汇款服务嵌入真实场景，再用新人券、首单优惠、汇率提醒和复汇券推动用户完成首单与复汇。
+
+
+---
+
+#### Futu打法：教育 → 产品心智 → 转化
+
+富途不只是单纯“开户投流”，而是**先用教育内容降低门槛，再用产品体验建立心智，最后用 KOL / 福利页完成转化。**
+
+| **模块** | **目的** | **策略/案例** | **案例附图** |
+| - | - | - | - |
+| **新手教学+转化**<br/><br/>偏效果广告 | 降低投资门槛，让用户先学会、再开户/交易 | **“学”教学视频：**用 Learn 内容承接“我不懂股票/期权/ETF”的用户，把复杂金融产品拆成教程、概念解释和操作指南。 | ![Clipboard_Screenshot_1779351227.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45099914) |
+|  |  | **“做”模拟交易**：用 paper trading、模拟交易比赛、排行榜、奖励等方式，把“学习投资”包装成可参与的营销活动，提升用户活跃和转化。 | ![Clipboard_Screenshot_1779351399.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45100092)<br/><br/>![Clipboard_Screenshot_1779351438.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45100141) |
+|  |  | **Feeds教学视频投流：**在 TikTok / Instagram / YouTube：针对 0 经验投资者，投放教学使用视频 | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45103043)<br/><br/>![Clipboard_Screenshot_1779352820.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45103041)<br/><br/>![Clipboard_Screenshot_1779352077.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45103042) |
+| **品牌投流+转化：**<br/><br/>偏品牌广告 | 依靠头部KOL，培养用户对品牌的认知，塑造品牌专业形象 | **头部财经KOL合作：礼包制转化。**和财经 YouTuber、bilibili投资博主、Podcast，用专属码/专属落地页追踪转化；通常是“开户教程、平台测评、奖励领取、交易工具体验”。 | ![Clipboard_Screenshot_1779350818.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45099357)<br/><br/>![Clipboard_Screenshot_1779351038.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45099580)<br/><br/>![Clipboard_Screenshot_1779351069.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45099629) |
+
+三个案例放在一起看，微汇款可以借鉴的不是某一个平台的单点做法，而是一条完整链路：**饭团解决“先触达谁、在哪里触达”；Weee! 解决“不同国家和城市怎么分层说”；Futu 解决“复杂金融服务怎么讲到用户愿意行动”。**下一章的微汇款打法，会沿着这三件事展开，而不是重新另起一套逻辑。
+
+---
+
+## 4. 微汇款的内容营销打法该如何做？
+
+微汇款的内容营销应围绕 **线上获客、线下触达、内容教育、运营承接** 四个环节展开。核心是以小红书 KFS 为主线，配合本地生活平台合作，把海外华人用户从“看到内容”引导到“理解服务、完成首汇、形成复汇”。
+
+这里的执行顺序可以理解为：先在用户搜索和刷内容的地方出现，再把微汇款角色讲清楚，最后用小程序、客服、复汇提醒承接业务结果。
+
+| **增长环节** | **要解决的问题** | **对应打法** |
+| - | - | - |
+| 线上获客 | 用户在哪里看到微汇款？ | 小红书 KFS、Google SEO/AI 搜索、KOL/KOC 内容 |
+| 内容教育 | 用户为什么理解并信任微汇款？ | 费用/汇率/到账/收款教程，解释微汇款和合作机构关系 |
+| 线下触达 | 如何借助海外华人高频生活场景？ | 饭团、熊猫外卖、Weee!、本地华人生活平台合作 |
+| 运营承接 | 如何从首汇走向复汇和推荐？ | 发薪日提醒、节日权益、亲友推荐、复汇券 |
+
+### 4.1 线上打法：KFS + 主账号
+
+#### 1）KFS 投流：认知、加热、卡位
+
+**在线上获客中，微汇款应以 KFS 作为核心增长方法，将内容从“曝光”推进到“搜索承接”和“业务转化”闭环流程，同时考虑不同国家的用户分层覆盖**。具体来看，KOL/KOC 负责用真实场景建立信任，Feeds 负责放大已验证的有效内容，Search 负责拦截用户主动搜索需求。
+
+| **模块** | **作用** | **微汇款打法** | **示例** |  |
+| - | - | - | - | - |
+| **K：**<br/><br/>**KOL/KOC 种草** | **认知**：做内容打样，建立真实场景信任 | 合作各主要汇款用户所在过的**头部留学生、海外工作、海外生活类 KOC**，等平台合作头部华人财经、留学和海外生活博主。测试不同国家和人群的内容表达。<br/><br/>_**平台：**小红书、小宇宙、苹果Podcast、bilibili、youtube、_  | **1）品牌类：和头部KOL做视频广告植入**<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45108898)<br/><br/>**主题：“钱是怎么在国家间流通的？”** <br/><br/>KOL蹭《阿嬷》热点选题，我们植入品牌广告；通过财经科普的方式讲清产品定位。 | **2）教程类：小红书合作海外地区头部博主（按地区）**<br/><br/>![Clipboard_Screenshot_1779363013.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45118343)<br/><br/>![Clipboard_Screenshot_1779363067.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45118375)<br/><br/>当前已对新加坡的汇款进行营销，未来可以继续复制到其他地区的头腰部KOL博主 |
+| **F：**<br/><br/>**Feeds 投流** | **加热**：放大已验证的有效内容 | 将高收藏、高评论、高私信、高试算内容**按国家、人群、职业投流**<br/><br/>_**平台：**小红书_ |  |  |
+| **S：**<br/><br/>**Search 拦截** | **卡位**：承接主动搜索的高意图用户 | 按 **“国别 × 关键词类型”** 长期布局搜索内容，用官方笔记、FAQ 和达人笔记承接用户主动搜索。具体可以拆成四类：<br/><br/>1）**品类词**：承接泛汇款需求  <br/>例如“美国汇款回国”“日本汇款回国”“新加坡汇款到国内”“澳洲跨境汇款”“英国海外汇款回国”。<br/><br/>2）**费用词** ：解决价格比较问题  <br/>例如“美国汇款回国手续费”“日本汇款回国汇率”“新加坡汇款到账金额怎么算”“加拿大汇款回国怎么更划算”。<br/><br/>3）**时效词**：解决到账焦虑  <br/>例如“日本汇款回国多久到账”“美国汇款到中国多久到账”“春节前澳洲汇款回国多久到账”“英国汇款回国会不会延迟”。<br/><br/>4）**收款词** ：解释微信收款和家人操作  <br/>例如“美国汇款到微信怎么收”“日本汇款给父母怎么收款”“新加坡汇款到微信怎么确认到账”“加拿大汇款回国家人怎么收”。<br/><br/>_**平台：小红书、Web 网页 SEO**（便于纳入 AI 搜索结果）_ | **1）小红书卡搜索点位：**<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45116150)<br/><br/>仅供参考：实际搜索覆盖将笔记更多样，而非示例图的呆板，实现图文笔记+评论区覆盖<br/><br/> | **2）Google SEO 优化：**<br/><br/>当前状态：<br/><br/>![Clipboard_Screenshot_1779361451.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45117957)<br/><br/> <br/><br/>理想状态：<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45117956) |
+
+
+#### 2）小红书官方账号：建立品牌认知
+
+**小红书不应只作为广告投放渠道，而应成为微汇款的主要内容阵地**。
+
+**开通微汇款小红书官方账号/地区矩阵账号。由小红书承担微汇款的主要内容获客功能。**选择小红书主要有三点原因：1）**用户匹配度高**，小红书聚集大量海外华人、留学生和海外生活用户，与微汇款目标人群高度重合；**2）搜索心智强**，用户在汇款前会主动搜索手续费、到账时间、材料和收款方式，小红书适合承接这类高意图需求；**3）适合教育转化**，微汇款需要解释清楚自身角色和使用价值，小红书的图文、短视频和评论区问答适合做用户教育，降低首次使用门槛。
+
+**账号定位可以从“跨境汇款工具”升级为 海外华人生活资讯助手**，在生活内容中自然承接汇款需求。官方账号运营逻辑可以参考 Weee!，它的官方账号不只讲“买菜”，而是通过菜谱、食材、节日和家庭场景持续创造价值。微汇款也不应只讲“汇款”，而应围绕海外华人的生活、工作和家庭责任，成为用户长期关注的海外生活助手。重点做三类内容：
+
+| **内容营销方向** | **账号主站** | **品牌认知图文** |
+| - | - | - |
+| **1）海外生活资讯**  <br/>围绕海外用户真实关心的问题持续输出，例如国外税务管理、工资到账、报税常识、海外工作谈薪、职场避坑、务工机会、机票攻略、工签续签、租房押金、银行卡使用等。内容不应单一停留在汇款，更多帮助用户解决“人在海外怎么生活、赚钱、办事”的具体问题 | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45117389)<br/><br/> | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45118771) |
+| **2）地区资讯运营**  <br/>按国家和城市拆分内容，例如“美国华人报税季汇款注意事项”“英国留学生生活费怎么安排”“加拿大打工人发薪后如何规划汇款”“澳洲工签用户如何给国内家人转钱”。不同地区可以结合当地的职场信息、报税、签证节点，形成更强的本地化触达。 |   |   |
+| **3）汇款场景承接**  <br/>在生活资讯中自然植入汇款需求，例如发薪后给国内家人转生活费、父母急用钱、春节红包、留学生和家里互相转账、海外务工人员定期寄钱回国等。用户先被实用内容吸引，再通过评论区、私信和落地页进入微汇款服务。 |   |   |
+
+
+### 4.2 线下触达：和本地生活平台联合获客
+
+**线下触达的重点是借助饭团、熊猫外卖、Weee! 等已经深入海外华人生活场景的平台**，直接接触留学生、海外工作人群和华人家庭。相比单独做广告，这类合作更接近用户日常消费场景，适合把微汇款嵌入“吃饭、买菜”等高频具体需求中。
+
+| **合作对象** | **联合获客方式** | **合作内容示例** |  |
+| - | - | - | - |
+| 饭团 / 熊猫外卖 /<br/><br/>Weee!<br/><br/> | App banner、订单页权益、优惠券联合、节日活动 | **1）饭团联名活动：**核心是获取饭团的高度重合目标用户<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45108850) | **2）和Weee！**进行投流合作，打入北美华人社区，覆盖更多当地用户<br/><br/>![Clipboard_Screenshot_1779365728.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45120616) |
+| 本地华人生活平台 | 城市频道露出、社群推文、专属优惠码 | “在美国/日本/新加坡生活，给家里汇钱怎么更方便” |  |
+
+
+### 4.3 运营承接：强调微信亲情属性 + 节点提醒复汇
+
+复汇阶段，围绕发薪日、春节、中秋、父母生日等周期性场景做提醒和权益。可以通过汇率提醒、发薪日提醒、复汇券和亲友推荐，把一次性使用转化为长期习惯。内容获客完成后，微汇款需要通过运营动作承接首汇用户，把一次性使用转化为长期复汇。复汇运营应围绕用户的周期性汇款场景展开，例如发薪日、春节、中秋、父母生日和家庭应急等节点。
+
+| **运营场景** | **用户需求** | **承接打法** |
+| - | - | - |
+| **发薪日** | 固定给国内父母或家人汇钱 | **发薪日前推送提醒**、**复汇入口** |
+| **节日节点** | 春节、中秋等家庭转账需求 | **推出亲情主题活动，强调微信亲人社交 x 汇款的属性，形成汇款业务的“支付红包效应”**<br/><br/>示例：<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45121587) |
+| **亲友推荐** | 海外华人圈层信任强 | **重启裂变推荐奖励，作为长期激励。引导用户推荐同事和亲友使用，做投流增长期配合，加速用户增长冲量。**<br/><br/>![Clipboard_Screenshot_1779366768.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45121542) |
+
+### 4.4 执行优先级：先补“解释清楚”，再放大投流
+
+如果按优先级推进，建议不要一开始就把重点放在大规模投流，而是先补齐用户理解微汇款所需要的基础内容，再用 KFS 和本地生活合作放大。
+
+| **优先级** | **先做什么** | **为什么先做** |
+| - | - | - |
+| P0 | 微汇款角色解释、合作机构关系、微信收款流程、费用/汇率/到账 FAQ | 先解决“微汇款到底是什么、为什么值得用”的认知问题 |
+| P1 | 国家词 + 费用词 + 到账词 + 收款词的搜索内容 | 用户主动搜索时先出现，承接高意图需求 |
+| P2 | 小红书 KOC 内容打样和 Feeds 放大 | 先用真实场景跑出有效表达，再扩大投放 |
+| P3 | 本地生活平台联合获客、节日复汇、亲友推荐 | 在内容获客之后承接首汇、复汇和裂变 |
+
+
+
+
+
+
+
+</script>
+
+  <script>
+    const source = document.getElementById('markdown-source').textContent.trim();
+    const content = document.getElementById('content');
+    const toc = document.getElementById('toc');
+    const progress = document.getElementById('progress');
+
+    const escapeHTML = (value) => value
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+    const slugCounts = new Map();
+    function slugify(text) {
+      const base = text
+        .replace(/<[^>]+>/g, '')
+        .replace(/[*_`]/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .trim()
+        .slice(0, 60) || 'section';
+      const key = encodeURIComponent(base).replace(/%/g, '').toLowerCase();
+      const count = slugCounts.get(key) || 0;
+      slugCounts.set(key, count + 1);
+      return count ? `${key}-${count + 1}` : key;
+    }
+
+    function renderInline(input) {
+      let html = escapeHTML(input);
+      html = html.replace(/&lt;br\s*\/?&gt;/gi, '<br/>');
+      html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => `<figure><img src="${url}" alt="" loading="lazy" onerror="this.closest('figure')?.classList.add('is-missing')"></figure>`);
+      html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, url) => `<a href="${url}" target="_blank" rel="noreferrer">${text}</a>`);
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+      return html;
+    }
+
+    function splitTableRow(line) {
+      const trimmed = line.trim().replace(/^\|/, '').replace(/\|$/, '');
+      return trimmed.split('|').map(cell => cell.trim());
+    }
+
+    function isTableDivider(line) {
+      return /^\s*\|?\s*:?-{1,}:?\s*(\|\s*:?-{1,}:?\s*)+\|?\s*$/.test(line);
+    }
+
+    function isTableStart(lines, index) {
+      return lines[index]?.includes('|') && isTableDivider(lines[index + 1] || '');
+    }
+
+    function renderTable(lines) {
+      const head = splitTableRow(lines[0]);
+      const body = lines.slice(2).map(splitTableRow);
+      const ths = head.map(cell => `<th>${renderInline(cell)}</th>`).join('');
+      const rows = body.map(row => `<tr>${row.map(cell => `<td>${renderInline(cell)}</td>`).join('')}</tr>`).join('');
+      return `<div class="table-wrap"><table><thead><tr>${ths}</tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+
+    function renderMarkdown(md) {
+      const lines = md.split(/\r?\n/);
+      const html = [];
+      let paragraph = [];
+      let list = [];
+      let listType = null;
+      let quote = [];
+
+      function flushParagraph() {
+        if (!paragraph.length) return;
+        const text = paragraph.join('<br/>').trim();
+        if (/^\s*!\[[^\]]*\]\([^)]+\)\s*$/.test(paragraph.join('\n').trim())) {
+          html.push(renderInline(paragraph.join('\n').trim()));
+        } else {
+          html.push(`<p>${renderInline(text)}</p>`);
+        }
+        paragraph = [];
+      }
+      function flushList() {
+        if (!list.length) return;
+        const tag = listType === 'ol' ? 'ol' : 'ul';
+        html.push(`<${tag}>${list.map(item => `<li>${renderInline(item)}</li>`).join('')}</${tag}>`);
+        list = [];
+        listType = null;
+      }
+      function flushQuote() {
+        if (!quote.length) return;
+        html.push(`<blockquote><p>${renderInline(quote.join('<br/>'))}</p></blockquote>`);
+        quote = [];
+      }
+      function flushAll() { flushParagraph(); flushList(); flushQuote(); }
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+          flushAll();
+          continue;
+        }
+
+        if (isTableStart(lines, i)) {
+          flushAll();
+          const tableLines = [lines[i], lines[i + 1]];
+          i += 2;
+          while (i < lines.length && lines[i].includes('|') && lines[i].trim()) {
+            tableLines.push(lines[i]);
+            i += 1;
+          }
+          i -= 1;
+          html.push(renderTable(tableLines));
+          continue;
+        }
+
+        const heading = trimmed.match(/^(#{2,4})\s+(.+)$/);
+        if (heading) {
+          flushAll();
+          const level = heading[1].length;
+          const title = heading[2].trim();
+          const id = slugify(title);
+          html.push(`<h${level} id="${id}">${renderInline(title)}</h${level}>`);
+          continue;
+        }
+
+        if (/^---+$/.test(trimmed)) {
+          flushAll();
+          html.push('<hr/>');
+          continue;
+        }
+
+        if (trimmed.startsWith('>')) {
+          flushParagraph();
+          flushList();
+          quote.push(trimmed.replace(/^>\s?/, ''));
+          continue;
+        }
+
+        const unordered = trimmed.match(/^[-*]\s+(.+)$/);
+        if (unordered) {
+          flushParagraph();
+          flushQuote();
+          if (listType && listType !== 'ul') flushList();
+          listType = 'ul';
+          list.push(unordered[1]);
+          continue;
+        }
+
+        const ordered = trimmed.match(/^\d+\.\s+(.+)$/);
+        if (ordered) {
+          flushParagraph();
+          flushQuote();
+          if (listType && listType !== 'ol') flushList();
+          listType = 'ol';
+          list.push(ordered[1]);
+          continue;
+        }
+
+        flushList();
+        flushQuote();
+        paragraph.push(trimmed);
+      }
+      flushAll();
+      return html.join('\n');
+    }
+
+    function wrapChapters() {
+      const nodes = [...content.childNodes];
+      let current = null;
+      nodes.forEach(node => {
+        if (node.nodeType === 1 && node.matches('h2')) {
+          current = document.createElement('section');
+          current.className = 'chapter-card';
+          content.insertBefore(current, node);
+        }
+        if (current) current.appendChild(node);
+      });
+    }
+
+    function visualLength(text) {
+      return [...text.replace(/\s+/g, ' ').trim()].reduce((sum, char) => {
+        return sum + (/[^\x00-\xff]/.test(char) ? 1.8 : 1);
+      }, 0);
+    }
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function fitTableColumns(wrap, table, headers, imageCount) {
+      const rows = [...table.querySelectorAll('tr')];
+      const colCount = Math.max(...rows.map(row => row.children.length), 0);
+      if (!colCount) return;
+
+      const widths = Array.from({ length: colCount }, (_, colIndex) => {
+        const cells = rows.map(row => row.children[colIndex]).filter(Boolean);
+        const header = headers[colIndex] || '';
+        const maxText = Math.max(...cells.map(cell => visualLength(cell.textContent)), 0);
+        const hasImage = cells.some(cell => cell.querySelector('img'));
+        const hasGallery = cells.some(cell => cell.querySelector('.table-image-row'));
+        const hasPercent = cells.some(cell => /\d+(\.\d+)?%/.test(cell.textContent));
+        const hasScale = cells.some(cell => cell.classList.contains('scale-cell'));
+        const hasManyBreaks = cells.some(cell => cell.querySelectorAll('br').length >= 2);
+        const mostlyShort = cells.slice(1).every(cell => visualLength(cell.textContent) <= 8);
+
+        let width = maxText * 7.2 + 44;
+        let min = 96;
+        let max = 300;
+
+        if (/排序/.test(header)) {
+          min = 72;
+          max = 92;
+          width = 78;
+        } else if (/GAP/i.test(header) || (mostlyShort && visualLength(header) <= 8)) {
+          min = 88;
+          max = 116;
+        } else if (hasPercent || hasScale) {
+          min = 150;
+          max = 190;
+          width = 172;
+        } else if (hasGallery) {
+          min = 420;
+          max = 620;
+          width = 520;
+        } else if (hasImage) {
+          min = imageCount > 3 ? 220 : 190;
+          max = imageCount > 3 ? 280 : 240;
+          width = imageCount > 3 ? 240 : 210;
+        } else if (hasManyBreaks || maxText > 46) {
+          min = 230;
+          max = imageCount ? 340 : 380;
+          width = maxText * 4.8 + 64;
+        } else if (maxText <= 12) {
+          min = 110;
+          max = 170;
+        } else if (maxText <= 24) {
+          min = 150;
+          max = 240;
+        }
+
+        return Math.round(clamp(width, min, max));
+      });
+
+      const floor = colCount <= 3 ? 720 : colCount <= 4 ? 840 : colCount <= 5 ? 980 : colCount <= 7 ? 1080 : 1240;
+      let total = widths.reduce((sum, width) => sum + width, 0);
+      if (total < floor) {
+        const growable = widths.map((width, index) => (/排序/.test(headers[index] || '') ? 0 : Math.max(0, 320 - width)));
+        const growableTotal = growable.reduce((sum, value) => sum + value, 0) || 1;
+        const extra = floor - total;
+        widths.forEach((width, index) => {
+          widths[index] = Math.round(width + extra * (growable[index] / growableTotal));
+        });
+        total = widths.reduce((sum, width) => sum + width, 0);
+      }
+
+      table.querySelector('colgroup')?.remove();
+      const colgroup = document.createElement('colgroup');
+      widths.forEach(width => {
+        const col = document.createElement('col');
+        col.style.width = `${width}px`;
+        colgroup.appendChild(col);
+      });
+      table.prepend(colgroup);
+      table.style.setProperty('--table-width', `${total}px`);
+      table.style.setProperty('--table-min-width', `${Math.min(total, floor)}px`);
+    }
+
+    function mergeTrailingImageColumn(table, headers) {
+      const lastIndex = headers.length - 1;
+      const hasDuplicateHeader = headers.slice(0, -1).includes(headers[lastIndex]);
+      const bodyRows = [...(table.tBodies[0]?.rows || [])];
+      if (!hasDuplicateHeader || bodyRows.length < 2) return;
+
+      const firstCell = bodyRows[0].cells[lastIndex];
+      const trailingCells = bodyRows.slice(1).map(row => row.cells[lastIndex]).filter(Boolean);
+      const canMerge = firstCell?.querySelector('img') && trailingCells.every(cell => !cell.textContent.trim() && !cell.querySelector('img'));
+      if (!canMerge) return;
+
+      firstCell.rowSpan = bodyRows.length;
+      firstCell.classList.add('merged-image-cell');
+      trailingCells.forEach(cell => cell.remove());
+    }
+
+    function groupTableCellImages(table) {
+      [...table.querySelectorAll('td')].forEach(td => {
+        if (td.classList.contains('merged-image-cell')) return;
+        const figures = [...td.querySelectorAll(':scope > figure')];
+        if (figures.length < 2) return;
+
+        td.classList.add('image-gallery-cell');
+        [...td.querySelectorAll(':scope > br')].forEach(br => {
+          const nearFigure = br.previousElementSibling?.tagName === 'FIGURE' || br.nextElementSibling?.tagName === 'FIGURE';
+          if (nearFigure) br.remove();
+        });
+
+        const row = document.createElement('div');
+        row.className = 'table-image-row';
+        figures[0].parentNode.insertBefore(row, figures[0]);
+        figures.forEach(figure => row.appendChild(figure));
+      });
+    }
+
+    function parseCommunityScale(text) {
+      const match = text.trim().match(/^(\d+(?:\.\d+)?)\s*([MK])$/i);
+      if (!match) return null;
+      const value = Number(match[1]);
+      return match[2].toUpperCase() === 'M' ? value : value / 1000;
+    }
+
+    function enhanceCommunityScaleColumn(table, headers) {
+      const scaleIndex = headers.findIndex((header, index) => index > 0 && header.includes('全球华人社区规模'));
+      if (scaleIndex < 0) return;
+
+      const cells = [...(table.tBodies[0]?.rows || [])]
+        .map(row => row.cells[scaleIndex])
+        .filter(Boolean);
+      const values = cells.map(cell => parseCommunityScale(cell.textContent));
+      const max = Math.max(...values.filter(value => value !== null), 1);
+
+      cells.forEach((cell, index) => {
+        const value = values[index];
+        if (value === null) return;
+        cell.classList.add('scale-cell');
+        const width = Math.max(5, Math.round(value / max * 100));
+        cell.insertAdjacentHTML('beforeend', `<span class="scale-bar" aria-hidden="true"><span style="--p:${width}%"></span></span>`);
+      });
+    }
+
+    function enhanceTables() {
+      [...content.querySelectorAll('.table-wrap')].forEach((wrap, index) => {
+        const table = wrap.querySelector('table');
+        const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+        const colCount = headers.length;
+        const text = table.textContent;
+        const imageCount = table.querySelectorAll('img').length;
+        wrap.dataset.label = `表格 ${String(index + 1).padStart(2, '0')}`;
+        if (index === 0) wrap.classList.add('case-icon-table');
+        if (imageCount) wrap.classList.add('media-table');
+        if (text.includes('微汇款当前用户占比')) wrap.classList.add('market-table');
+        if (colCount <= 4 && table.querySelectorAll('tbody tr').length <= 4) wrap.classList.add('compact-table');
+        mergeTrailingImageColumn(table, headers);
+        groupTableCellImages(table);
+        enhanceCommunityScaleColumn(table, headers);
+        fitTableColumns(wrap, table, headers, imageCount);
+
+        const percentCells = [...table.querySelectorAll('td')].filter(td => /\d+(\.\d+)?%/.test(td.textContent));
+        const values = percentCells.map(td => Number(td.textContent.match(/(\d+(?:\.\d+)?)%/)?.[1] || 0));
+        const max = Math.max(...values, 1);
+        percentCells.forEach((td, i) => {
+          td.classList.add('percent-cell');
+          const width = Math.max(5, Math.round(values[i] / max * 100));
+          td.insertAdjacentHTML('beforeend', `<span class="percent-bar" aria-hidden="true"><span style="--p:${width}%"></span></span>`);
+        });
+
+        [...table.querySelectorAll('td')].forEach(td => {
+          const clean = td.textContent.trim();
+          if (/^(\+|-|≥)/.test(clean) && clean.length <= 8) {
+            td.innerHTML = `<span class="gap-pill">${td.innerHTML}</span>`;
+          }
+        });
+      });
+    }
+
+    function clusterImages(root) {
+      const children = [...root.children];
+      let cluster = [];
+      const flush = () => {
+        if (cluster.length < 2) { cluster = []; return; }
+        const box = document.createElement('div');
+        box.className = 'image-cluster';
+        cluster[0].parentNode.insertBefore(box, cluster[0]);
+        cluster.forEach(figure => box.appendChild(figure));
+        cluster = [];
+      };
+      children.forEach(child => {
+        if (child.tagName === 'FIGURE') {
+          cluster.push(child);
+        } else {
+          flush();
+        }
+      });
+      flush();
+    }
+
+    content.innerHTML = renderMarkdown(source);
+    wrapChapters();
+    enhanceTables();
+    [...content.querySelectorAll('.chapter-card')].forEach(clusterImages);
+
+    const headings = [...content.querySelectorAll('h2, h3, h4')];
+    toc.innerHTML = headings.map(h => `<a class="${h.tagName.toLowerCase()}" href="#${h.id}">${h.textContent}</a>`).join('');
+
+    const tocLinks = [...toc.querySelectorAll('a')];
+    const observer = new IntersectionObserver(entries => {
+      const active = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!active) return;
+      tocLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${active.target.id}`));
+    }, { rootMargin: '-25% 0px -65% 0px', threshold: [0, .2, .6, 1] });
+    headings.forEach(h => observer.observe(h));
+
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = `${Math.max(0, Math.min(100, (window.scrollY / max) * 100))}%`;
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  </script>
+</body>
+</html>
