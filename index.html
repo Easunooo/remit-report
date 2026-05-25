@@ -273,19 +273,19 @@
       margin: 20px 0 28px;
       padding: 0;
       border-radius: 14px;
-      background: #ffffff;
+      background: transparent;
       box-shadow: none;
       scrollbar-gutter: stable both-edges;
     }
     .table-wrap::before { display: none; }
     table {
-      width: var(--table-width, auto);
+      width: var(--table-width, 100%);
       min-width: var(--table-min-width, 860px);
       margin: 0 auto;
       border-collapse: separate;
-      border-spacing: 0 2px;
+      border-spacing: 0 6px;
       table-layout: fixed;
-      background: #ffffff;
+      background: transparent;
     }
     th, td {
       vertical-align: top;
@@ -411,8 +411,8 @@
     .table-wrap.media-table td:last-child img,
     .table-wrap.media-table td:nth-last-child(2) img { max-width: 190px; max-height: 150px; }
     .table-wrap.case-icon-table td:first-child img {
-      max-width: 96px;
-      max-height: 76px;
+      max-width: 80px;
+      max-height: 60px;
     }
     .table-image-row {
       display: flex;
@@ -642,14 +642,34 @@
       color: #ffffff;
     }
     
+    .persona-card.p-family {
+      --btn-text: #0284c7;
+      --btn-border: rgba(2, 132, 199, 0.18);
+      --btn-hover-bg: rgba(2, 132, 199, 0.06);
+    }
     .persona-card.p-family .persona-card-header {
       background: linear-gradient(135deg, #0284c7, #0ea5e9);
+    }
+    .persona-card.p-professional {
+      --btn-text: #059669;
+      --btn-border: rgba(5, 150, 105, 0.18);
+      --btn-hover-bg: rgba(5, 150, 105, 0.06);
     }
     .persona-card.p-professional .persona-card-header {
       background: linear-gradient(135deg, #059669, #10b981);
     }
+    .persona-card.p-young {
+      --btn-text: #ea580c;
+      --btn-border: rgba(234, 88, 12, 0.18);
+      --btn-hover-bg: rgba(234, 88, 12, 0.06);
+    }
     .persona-card.p-young .persona-card-header {
       background: linear-gradient(135deg, #ea580c, #f97316);
+    }
+    .persona-card.p-investor {
+      --btn-text: #7c3aed;
+      --btn-border: rgba(124, 58, 237, 0.18);
+      --btn-hover-bg: rgba(124, 58, 237, 0.06);
     }
     .persona-card.p-investor .persona-card-header {
       background: linear-gradient(135deg, #7c3aed, #8b5cf6);
@@ -834,52 +854,62 @@
     .p-young .freq-dot.active { background: #f97316; }
     .p-investor .freq-dot.active { background: #8b5cf6; }
     
-    /* Details Accordion Styles */
-    .persona-card-details {
-      margin-top: auto;
-      border-top: 1px solid #f0fdf4;
-      padding-top: 14px;
-    }
-    .persona-card-details summary {
-      font-size: 12px;
-      font-weight: 850;
-      color: var(--green-deep);
-      cursor: pointer;
-      list-style: none;
-      text-align: center;
-      padding: 6px 0;
-      outline: none;
-      transition: color 0.2s ease;
+    /* Global Actions Layout */
+    .persona-view-actions {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 4px;
+      gap: 12px;
     }
-    .persona-card-details summary:hover {
-      color: var(--green);
-    }
-    .persona-card-details summary::-webkit-details-marker {
-      display: none;
-    }
-    .persona-card-details summary::after {
-      content: " ▾";
-      font-size: 10px;
-      transition: transform 0.2s ease;
-    }
-    .persona-card-details[open] summary::after {
-      content: " ▴";
-    }
+
+    /* Details Panel Styles */
     .persona-details-content {
-      padding: 10px 4px 4px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding: 0 4px;
       display: flex;
       flex-direction: column;
       gap: 8px;
       font-size: 12px;
-      animation: slideDown 0.3s ease;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.3s ease, border-top-color 0.3s ease, margin-top 0.3s ease;
+      border-top: 1px solid transparent;
     }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
+    .persona-view-wrapper.show-details .persona-details-content {
+      max-height: 350px;
+      opacity: 1;
+      padding: 14px 4px 4px;
+      border-top: 1px solid var(--btn-border);
+      margin-top: 12px;
+    }
+
+    /* Card Toggle Button Styles */
+    .persona-card-toggle-btn {
+      width: 100%;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 850;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid var(--btn-border);
+      color: var(--btn-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: auto; /* Push to the very bottom of the card body */
+      outline: none;
+    }
+    .persona-card-toggle-btn:hover {
+      background: var(--btn-hover-bg);
+      border-color: var(--btn-text);
+    }
+    .persona-card-toggle-btn .chevron-icon {
+      transition: transform 0.3s ease;
+    }
+    .persona-view-wrapper.show-details .persona-card-toggle-btn .chevron-icon {
+      transform: rotate(180deg);
     }
     .persona-detail-row {
       display: flex;
@@ -956,6 +986,315 @@
       }
       .view-switch-control {
         align-self: flex-end;
+      }
+    }
+
+    /* KFS PPT Interactive Component Styles - Flat & Minimal */
+    .kfs-ppt-container {
+      background: #ffffff;
+      border: 1px solid rgba(39, 214, 111, 0.15);
+      border-radius: 24px;
+      padding: 32px;
+      margin: 36px 0;
+      box-shadow: none;
+    }
+    .kfs-ppt-header {
+      margin-bottom: 28px;
+    }
+    .kfs-ppt-title {
+      font-size: 20px;
+      font-weight: 850;
+      color: #173a28;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.02em;
+    }
+    .kfs-ppt-title::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 20px;
+      border-radius: 99px;
+      background: var(--green);
+    }
+    .kfs-ppt-subtitle {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 5px;
+      font-weight: 550;
+      padding-left: 15px;
+    }
+    .kfs-ppt-content {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    
+    /* Pyramid Column */
+    .kfs-pyramid-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .kfs-pyramid {
+      width: 100%;
+      max-width: 280px;
+      position: relative;
+    }
+    .pyramid-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    
+    /* Pyramid Slices - Flat Minimal Style */
+    .pyramid-group {
+      cursor: pointer;
+      opacity: 0.45;
+      transition: opacity 0.2s ease;
+    }
+    .pyramid-group:hover {
+      opacity: 0.75;
+    }
+    .pyramid-group.active {
+      opacity: 1;
+    }
+    .pyramid-slice {
+      stroke: #ffffff;
+      stroke-width: 2px;
+    }
+    .pyramid-text {
+      font-family: inherit;
+      font-size: 26px;
+      font-weight: 900;
+      fill: #ffffff;
+      pointer-events: none;
+      user-select: none;
+      transition: font-size 0.2s ease;
+    }
+    .pyramid-group.active .pyramid-text {
+      font-size: 30px;
+    }
+    
+    .pyramid-help-text {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 12px;
+      font-weight: 700;
+      text-align: center;
+    }
+    
+    /* Details Column & Slides */
+    .kfs-details-column {
+      position: relative;
+      min-height: 320px;
+    }
+    .kfs-slide {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .kfs-slide.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .slide-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 11.5px;
+      font-weight: 850;
+      margin-bottom: 12px;
+    }
+    .badge-k { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .badge-f { background: rgba(99, 102, 241, 0.1); color: #6366f1; }
+    .badge-s { background: rgba(13, 148, 136, 0.1); color: #0d9488; }
+    
+    .slide-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: #0f172a;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+    
+    .slide-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .meta-item {
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .meta-label {
+      display: block;
+      font-size: 10.5px;
+      color: var(--muted);
+      font-weight: 850;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .meta-val {
+      font-size: 13px;
+      color: #334155;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+    
+    .slide-matrix-title {
+      font-size: 12.5px;
+      font-weight: 850;
+      color: #475569;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .slide-matrix-title::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+    
+    .slide-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .slide-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      position: relative;
+    }
+    
+    /* PPT Flat Accent Borders */
+    .kfs-slide[data-slide="0"] .slide-card { border-left: 3px solid #3b82f6; }
+    .kfs-slide[data-slide="1"] .slide-card { border-left: 3px solid #6366f1; }
+    .kfs-slide[data-slide="2"] .slide-card { border-left: 3px solid #0d9488; }
+    
+    .card-title {
+      font-size: 13.5px;
+      font-weight: 855;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.5;
+      margin: 0;
+    }
+    
+    /* PPT Navigation Controls */
+    .kfs-ppt-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .ppt-control-btn {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+    .ppt-control-btn:hover {
+      border-color: #cbd5e1;
+      color: #334155;
+      background: #f8fafc;
+    }
+    .ppt-indicator {
+      display: flex;
+      gap: 8px;
+    }
+    .indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .indicator-dot.active {
+      background: var(--green);
+      transform: scale(1.2);
+    }
+    .ppt-play-btn {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: 850;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      outline: none;
+      margin-left: 8px;
+    }
+    .ppt-play-btn:hover {
+      border-color: #cbd5e1;
+      color: #334155;
+      background: #f8fafc;
+    }
+    .ppt-play-btn.playing {
+      color: var(--green-deep);
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+    
+    /* Responsive design adjustments */
+    @media (max-width: 980px) {
+      .kfs-ppt-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .kfs-pyramid-column {
+        max-width: 260px;
+        margin: 0 auto;
+      }
+      .kfs-ppt-container {
+        padding: 24px 18px;
+      }
+    }
+    @media (max-width: 580px) {
+      .slide-meta-grid, .slide-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .kfs-details-column {
+        min-height: 420px;
+      }
+      .kfs-ppt-controls {
+        flex-wrap: wrap;
       }
     }
   </style>
@@ -1038,7 +1377,17 @@
 | **转化驱动** | 可靠优先：费用 + 品牌权威 | 价值最优：汇率 + 机构信任 | 无摩擦体验：简单 + 速度 | 合规能力：安全 + 高限额 |
 
 :::details Q：为什么说微汇款仍有较大增长空间？
-对比全球华人社区规模可见，印尼、泰国、马来西亚等华人基数大但微汇款占比仍有释放空间；英国、日本等华人规模相对不大的国家却能贡献较高占比，微汇款当前远未渗透完全，无论美加澳发达国家还是东南亚，重点国家 / 地区都仍有较大增长空间。
+**结论：微汇款的增长空间，不能只理解为“海外华人规模大”，而应理解为三个更可捕获的机会：存量汇款用户的渠道再选择、长期回国用钱场景的复汇需求、以及微信收款在小额即时场景中的差异化承接。** 也就是说，微汇款的机会不是泛泛地吃下整个跨境汇款市场，而是在用户已经有汇款需求、已经在比较渠道、已经需要国内收款和使用资金时，把“汇到微信”变成一个更清楚、更可信、更顺手的选项。
+
+| **论证层** | **报告依据** | **对微汇款的增长含义** |
+| - | - | - |
+| 1. 市场底盘仍大 | 海外华人汇款渗透率约 19%，且美国、澳大利亚、新加坡、韩国等市场均存在稳定汇款用户 | 增长重点不是教育“是否需要汇款”，而是让已有或潜在汇款用户在选择渠道时看到微汇款 |
+| 2. 汇款不是单一赡养行为 | 家庭生活费 52%、水电账单 39%、网购 39%、节日红包 42%、朋友转账 36%、虚拟商品 33% | 微汇款可从“给家里打一笔钱”扩展到家庭支持、自用支付、小额社交三类复汇场景 |
+| 3. 渠道选择仍在松动 | 银行 Most Used 仍高，但 78% 银行用户会因汇率 / 费用离开，75% 会因操作繁琐离开 | 用户并非只认银行；只要把费用、到账、流程和安全感讲清楚，就有机会影响其渠道再选择 |
+| 4. 线上平台增长但忠诚度低 | 线上平台 Current Usage 全球 63%，美国 Most Used 已达 45%；线上用户也会因价格和安全感反复切换 | 微汇款内容不能只讲“便宜”，还要讲清楚与合作机构、到账确认、微信收款之间的完整链路 |
+| 5. 微信收款有明确场景心智 | 微信收款的核心驱动包括用户习惯 62%、社交便利 48%、速度 44% | 微汇款最应优先占领“小额、即时、熟人、生活化”的收款场景，而不是泛化成所有资金的唯一终点 |
+
+从国家分布看，微汇款当前占比与全球华人社区规模之间也存在结构性 Gap：印尼、泰国、马来西亚等华人基数大但当前占比仍低；法国、南非等市场也尚未充分释放。这一 Gap 的意义不是简单证明“所有国家都能自然增长”，而是提示微汇款仍有市场覆盖、用户认知、合作机构承接和本地化内容教育的提升空间。
 
 | **国家/地区** | **全球华人社区规模** | **排序** | **微汇款当前用户占比** | **排序** | **排序GAP** | **全球华人社区规模** |
 | - | - | - | - | - | - | - |
@@ -1053,6 +1402,56 @@
 | 英国 | 500K | **9** | 4.61% | **8** | -1 |   |
 | 南非 | 500K | **10** | 未进入前 20 | **-** | **≥+11** |   |
 | 日本 | - | **-** | 9.17% | **2** |  |   |
+:::
+
+:::details Q：增长空间具体来自哪些可转化场景？
+**结论：微汇款的增长不是靠一个抽象的“跨境汇款需求”，而是来自三类可被内容触发、可被产品承接、可形成复汇的具体场景。** 报告中约 60% 用户同时存在“汇给别人”和“汇给自己”两类行为，说明用户并非只有单一汇款目的，而是在家庭、个人和社交消费之间反复切换。
+
+| **场景类型** | **代表需求** | **报告依据** | **内容切入点** | **增长价值** |
+| - | - | - | - | - |
+| 家庭支持型 | 父母生活费、子女学费、亲友还款 | 家庭日常开销 52%，子女费用 19%，亲友借款 21% | “每月 / 每两三个月怎么稳定汇回家”“父母怎么收更方便” | 频率稳定、信任要求高，是复汇基本盘 |
+| 自用支付型 | 国内账单、网购、投资、信用卡 / 房贷 | 水电账单 39%，网购 39%，国内投资 25% | “人在海外怎么交国内账单 / 还款 / 网购付款” | 用户自己既是汇款人也是资金使用人，更容易形成主动复用 |
+| 小额社交型 | 节日红包、朋友转账、虚拟商品 | 节日红包 42%，朋友转账 36%，虚拟商品 33% | “春节红包怎么发”“给朋友临时转钱”“国内 App / 游戏怎么充值” | 高频、突发、金额小，最适合微信即时使用心智 |
+
+因此，微汇款内容不应只回答“怎么汇钱回国”，而应把汇款需求拆成更具体的生活问题：发薪后给父母生活费、海外缴国内账单、节日发红包、给朋友临时转账、为国内 App 和虚拟服务充值。越接近用户真实问题，越容易把内容曝光转化成首汇和复汇。
+:::
+
+:::details Q：为什么渠道变化会继续释放微汇款机会？
+**结论：渠道变化带来的机会，不是微汇款单独替代银行或线上汇款平台，而是在用户“比较渠道—选择汇出机构—选择国内收款方式”的链路中，提升微信收款选项的可见度和可信度。**
+
+| **渠道变化** | **报告依据** | **用户真实动作** | **微汇款应承接的机会** |
+| - | - | - | - |
+| 银行仍被信任，但价格和流程形成迁移动因 | 银行 Most Used 全球 61%；78% 用户因汇率 / 费用离开，75% 因操作繁琐离开 | 用户会搜索更便宜、更快、更简单的替代方案 | 在“银行 vs 线上平台”的比较内容中，补充“汇到微信怎么收、多久到账、是否方便家人使用” |
+| 线上平台增长快，但用户会持续比较 | 线上平台 Current Usage 全球 63%，美国 Most Used 45%；74% 用户会因更低价格流向竞品 | 用户不会只忠于一个品牌，而是反复比价、比速度、比安全感 | 与合作机构共同讲清费用、到账、状态通知、收款确认，降低用户在收款端的疑虑 |
+| 线下和 P2P 用户向正规渠道迁移 | 韩国线下渠道 Most Used 26%，线下换汇点 14%；P2P 用户受诈骗、冻结、无追索影响 | 用户需要更正规但仍有中文支持和操作指导的替代方式 | 用中文指引、流程图、风险教育和客服承接，把线下安全感迁移到线上正规链路 |
+
+所以，微汇款内容营销的关键不是喊“我们比银行好”，而是在用户做渠道选择时补齐一个常被忽略的问题：**钱汇出之后，国内怎么收、谁来确认、到账后能不能马上用。** 这正是微汇款可以发挥差异化的地方。
+:::
+
+:::details Q：为什么微信收款入口本身有差异化增长机会？
+**结论：微信收款的差异化不在于替代所有收款方式，而在于它把跨境到账后的资金，直接连接到国内社交和生活消费场景。** 报告中，银行卡更偏安全和大额沉淀，支付宝更偏正式数字钱包，而微信的优势集中在用户习惯、社交便利和即时使用。
+
+| **收款方式** | **用户心智** | **核心驱动** | **适合承接的汇款场景** | **微汇款定位启示** |
+| - | - | - | - | - |
+| 银行卡 | 安全、正式、资金沉淀 | 机构安全 56%-69%，直接入账 41% | 大额资金、房贷、投资、家庭储蓄 | 银行卡适合“资金终点”，微汇款可避开纯大额心智竞争 |
+| 支付宝 | 专业、高效、数字金融工具 | 速度 53%，平台安全 52%-64%，生态使用 32% | 电商、账单、中大额数字支付 | 支付宝强在正式支付，微汇款需突出微信的熟人和社交场景 |
+| 微信 | 即时、熟人、生活化 | 用户习惯 62%，社交便利 48%，速度 44% | 红包、朋友转账、游戏、虚拟服务、本地生活 | 微汇款应主打“小额快用、熟人好收、到账即用”的心智 |
+
+因此，微汇款不是简单告诉用户“可以汇到微信”，而是要把利益点讲成用户语言：父母不用填复杂银行卡信息、朋友之间可直接收、节日红包和国内消费能马上用。微信的增长机会，本质上来自“到账后的可用性”，而不只是“到账本身”。
+:::
+
+:::details Q：哪些市场和人群最值得优先做增长？
+**结论：优先级应由“市场规模 × 渠道迁移空间 × 微信场景适配度 × 内容可触达性”共同决定。** 这意味着不同国家不是同一套投放话术，而是对应不同增长任务：有的市场做搜索拦截，有的做场景教育，有的做线下替代，有的做认知补课。
+
+| **市场 / 人群** | **报告特征** | **核心增长任务** | **内容打法重点** |
+| - | - | - | - |
+| 美国 | 线上汇款成熟，线上平台 Most Used 45%，家庭支持者、专业人士、投资者结构均衡 | 在成熟线上比较环境中争取被纳入决策 | 做费用 / 汇率 / 到账 / 收款方式对比，拦截“怎么汇款回国”类搜索 |
+| 新加坡 | 偶发年轻汇款者占比 31%，网购、虚拟商品、小额消费更突出 | 抢占小额即时和国内数字消费场景 | 做“海外怎么付国内 App / 网购 / 游戏 / 红包”的轻量内容 |
+| 澳大利亚 | 高效专业人士和中产外派投资者合计占比高，账单、房贷、资产场景明显 | 建立安全、透明、可规划的资金管理心智 | 做国内账单、房贷车贷、家庭资金安排、汇率提醒内容 |
+| 韩国 | 家庭支持者占主导，蓝领和线下渠道依赖高 | 把线下安全感迁移到正规线上链路 | 做中文步骤指引、合规安全、避免私兑风险、家人收款说明 |
+| 东南亚大盘市场 | 华人基数大，微汇款当前占比仍有提升空间 | 先补基础认知，再做场景转化 | 做本地化语言 / 社群 / KOC 触达，解释微汇款与微信收款关系 |
+
+这样拆分后，微汇款的增长逻辑会更清楚：不是所有市场同时讲“安全快捷低费率”，而是按市场的主要矛盾制定内容。美国解决“比较时看不见”，新加坡解决“小额场景未占领”，澳洲解决“规划型资金决策”，韩国解决“线下用户线上迁移”，东南亚解决“基础认知和本地触达”。
 :::
 
 #### 现状2: 认知浅，定位弱  → 做什么
@@ -1105,6 +1504,13 @@
 
 > _**一句话概括：**海外华人本地生活服务平台——北美版美团_
 
+:::details open Q：选择 饭团外卖 作为案例的理由是什么？
+
+**1）用户画像高度重合。**饭团和微汇款当前客户都集中在加拿大、美国、澳大利亚和英国。饭团同样面向海外华人用户，场景集中在城市、校园、社区和本地生活服务，**是海外华人的高频场景，且同时链接蓝领和白领、留学生多维度核心华人群体**，海外华人认知明显。
+
+**2）成熟的小红书获客打法：**饭团有通过小红书、微信生态、KOL/KOC 和本地生活内容的成熟经验，可以供饭团触达海外华人，并把具体生活需求转化为内容入口提供借鉴。
+:::
+
 饭团 Fantuan 于 2014 年创立于加拿大温哥华，2023 年完成 4,000 万美元 C 轮融资。早期以中餐外卖配送切入海外华人市场，解决华人用户在海外获取中餐、本地商家服务和中文消费体验不便的问题。随着用户规模扩大，饭团逐步从单一外卖平台，延伸至**生鲜零售、即时配送、到店团购、本地生活服务**等多个场景，覆盖餐饮、商超、跑腿、优惠消费和生活服务等需求。其核心用户主要包括**海外华人、留学生、中国游客**，以及对亚洲餐饮、亚洲商品和华人社区服务有需求的本地用户。整体来看，饭团的定位已从“海外中餐外卖平台”升级为面向海外华人社区的综合型本地生活服务平台。
 
 - **核心业务：亚洲餐饮外卖**，提供外卖到家、到店自取、生鲜杂货配送、跑腿代办、团购与生活服务等一站式本地生活服务。其定位为连接用户与本地社区的 local lifestyle / life service platform。
@@ -1116,13 +1522,6 @@
 ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45039542)
 
    ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45039553)
-
-
-**Q：选择 饭团外卖 作为案例的理由是什么？**
-
-**1）用户画像高度重合。**饭团和微汇款当前客户都集中在加拿大、美国、澳大利亚和英国。饭团同样面向海外华人用户，场景集中在城市、校园、社区和本地生活服务，**是海外华人的高频场景，且同时链接蓝领和白领、留学生多维度核心华人群体**，海外华人认知明显。
-
-**2）成熟的小红书获客打法：**饭团有通过小红书、微信生态、KOL/KOC 和本地生活内容的成熟经验，可以供饭团触达海外华人，并把具体生活需求转化为内容入口提供借鉴。
 
 
 ---
@@ -1254,6 +1653,12 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
 | 运营承接 | 如何从首汇走向复汇和推荐？ | 发薪日提醒、节日权益、亲友推荐、复汇券 |
 
 ### 4.1 线上打法：KFS + 主账号
+
+| **KFS核心思路** | **KOL (K) - 信任建立** | **Feeds (F) - 放大触达** | **Search (S) - 搜索拦截** |
+| - | - | - | - |
+| 核心定位 | 触达与心智建立 | 放大与放量 | 筛选与高意图拦截 |
+| 目标人群 | 潜在人群、机会人群 | 兴趣人群 | 核心意向人群 |
+| 运营重点 | 差异化渠道矩阵：头尾部KOL建立信任，腰部KOC种草 | 内容策略：生活、品牌、平台热点、产品功能内容 | 关键词布局：品类词、功能词、时效词、收款词 |
 
 #### 1）KFS 投流：认知、加热、卡位
 
@@ -1422,14 +1827,23 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
 
         if (/^:::details\b/.test(trimmed)) {
           flushAll();
-          const summary = trimmed.replace(/^:::details\s*/, '').trim() || '展开查看';
+          let rest = trimmed.replace(/^:::details\s*/, '').trim();
+          let isOpen = false;
+          if (rest.startsWith('open ')) {
+            isOpen = true;
+            rest = rest.replace(/^open\s+/, '').trim();
+          } else if (rest === 'open') {
+            isOpen = true;
+            rest = '';
+          }
+          const summary = rest || '展开查看';
           const detailLines = [];
           i += 1;
           while (i < lines.length && lines[i].trim() !== ':::') {
             detailLines.push(lines[i]);
             i += 1;
           }
-          html.push(`<details class="collapsible-question"><summary>${renderInline(summary)}</summary><div class="collapsible-body">${renderMarkdown(detailLines.join('\n'))}</div></details>`);
+          html.push(`<details class="collapsible-question"${isOpen ? ' open' : ''}><summary>${renderInline(summary)}</summary><div class="collapsible-body">${renderMarkdown(detailLines.join('\n'))}</div></details>`);
           continue;
         }
 
@@ -1667,7 +2081,7 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         const text = table.textContent;
         const imageCount = table.querySelectorAll('img').length;
         wrap.dataset.label = `表格 ${String(index + 1).padStart(2, '0')}`;
-        if (index === 0) wrap.classList.add('case-icon-table');
+        if (headers.includes('案例')) wrap.classList.add('case-icon-table');
         if (imageCount) wrap.classList.add('media-table');
         if (text.includes('微汇款当前用户占比')) wrap.classList.add('market-table');
         if (colCount <= 4 && table.querySelectorAll('tbody tr').length <= 4) wrap.classList.add('compact-table');
@@ -1736,8 +2150,17 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         return html;
       }
 
+      function escapeTxt(val) {
+        return val
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
       function renderAmountVisual(text, id) {
-        const parts = text.split(/[；;]/);
+        // Normalize HTML entities first to avoid splitting on semicolons inside entities
+        const cleanText = text.replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&amp;/gi, '&');
+        const parts = cleanText.split(/[；;]/);
         const desc = parts[0] ? parts[0].trim() : '';
         let amount = parts[1] ? parts[1].trim() : '';
         amount = amount.replace(/Top：|Top:/g, '').trim();
@@ -1748,8 +2171,8 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         
         return `
           <div class="amount-visual">
-            <span class="amount-number">${amount}</span>
-            <span class="amount-desc">${desc}</span>
+            <span class="amount-number">${escapeTxt(amount)}</span>
+            <span class="amount-desc">${escapeTxt(desc)}</span>
             <div class="amount-scale-track">
               <div class="amount-scale-bar" style="width: ${width}"></div>
             </div>
@@ -1758,7 +2181,9 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       }
 
       function renderFrequencyVisual(text, id) {
-        const parts = text.split(/[；;]/);
+        // Normalize HTML entities first to avoid splitting on semicolons inside entities
+        const cleanText = text.replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&amp;/gi, '&');
+        const parts = cleanText.split(/[；;]/);
         const desc = parts[0] ? parts[0].trim() : '';
         const freqText = parts[1] ? parts[1].trim() : '';
         
@@ -1775,8 +2200,8 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         
         return `
           <div class="frequency-visual">
-            <span class="frequency-text">${freqText}</span>
-            <span class="frequency-desc">${desc}</span>
+            <span class="frequency-text">${escapeTxt(freqText)}</span>
+            <span class="frequency-desc">${escapeTxt(desc)}</span>
             ${dotsHtml}
           </div>
         `;
@@ -1826,10 +2251,12 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       headerDiv.className = 'persona-view-header';
       headerDiv.innerHTML = `
         <div class="persona-view-title">核心用户四类画像看板</div>
-        <div class="view-switch-control">
-          <button class="switch-btn active" data-view="cards">图卡视图</button>
-          <button class="switch-btn" data-view="table">表格视图</button>
-          <span class="switch-slider"></span>
+        <div class="persona-view-actions">
+          <div class="view-switch-control">
+            <button class="switch-btn active" data-view="cards">图卡视图</button>
+            <button class="switch-btn" data-view="table">表格视图</button>
+            <span class="switch-slider"></span>
+          </div>
         </div>
       `;
       viewWrapper.appendChild(headerDiv);
@@ -1904,39 +2331,43 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
               <span class="persona-info-value">${media}</span>
             </div>
             
-            <details class="persona-card-details">
-              <summary>查看完整画像</summary>
-              <div class="persona-details-content">
-                <div class="persona-detail-row">
-                  <span>核心角色</span>
-                  <span>${p.attributes['核心角色'] || ''}</span>
-                </div>
-                <div class="persona-detail-row">
-                  <span>典型年龄</span>
-                  <span>${p.attributes['典型年龄'] || ''}</span>
-                </div>
-                <div class="persona-detail-row">
-                  <span>典型职业</span>
-                  <span>${p.attributes['典型职业'] || ''}</span>
-                </div>
-                <div class="persona-detail-row">
-                  <span>核心需求</span>
-                  <span>${p.attributes['核心需求'] || ''}</span>
-                </div>
-                <div class="persona-detail-row">
-                  <span>主要痛点</span>
-                  <span>${p.attributes['主要痛点'] || ''}</span>
-                </div>
-                <div class="persona-detail-row">
-                  <span>常用平台</span>
-                  <span>${p.attributes['常用平台'] || ''}</span>
-                </div>
-                <div class="persona-detail-row">
-                  <span>转化驱动</span>
-                  <span>${p.attributes['转化驱动'] || ''}</span>
-                </div>
+            <div class="persona-details-content">
+              <div class="persona-detail-row">
+                <span>核心角色</span>
+                <span>${p.attributes['核心角色'] || ''}</span>
               </div>
-            </details>
+              <div class="persona-detail-row">
+                <span>典型年龄</span>
+                <span>${p.attributes['典型年龄'] || ''}</span>
+              </div>
+              <div class="persona-detail-row">
+                <span>典型职业</span>
+                <span>${p.attributes['典型职业'] || ''}</span>
+              </div>
+              <div class="persona-detail-row">
+                <span>核心需求</span>
+                <span>${p.attributes['核心需求'] || ''}</span>
+              </div>
+              <div class="persona-detail-row">
+                <span>主要痛点</span>
+                <span>${p.attributes['主要痛点'] || ''}</span>
+              </div>
+              <div class="persona-detail-row">
+                <span>常用平台</span>
+                <span>${p.attributes['常用平台'] || ''}</span>
+              </div>
+              <div class="persona-detail-row">
+                <span>转化驱动</span>
+                <span>${p.attributes['转化驱动'] || ''}</span>
+              </div>
+            </div>
+            
+            <button class="persona-card-toggle-btn">
+              <span>查看完整画像</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
           </div>
         `;
         grid.appendChild(card);
@@ -1951,6 +2382,19 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       tableView.appendChild(targetWrap);
       viewWrapper.appendChild(tableView);
       
+      const toggleBtns = grid.querySelectorAll('.persona-card-toggle-btn');
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isShowing = viewWrapper.classList.toggle('show-details');
+          toggleBtns.forEach(b => {
+            const spanEl = b.querySelector('span');
+            if (spanEl) {
+              spanEl.textContent = isShowing ? '收起完整画像' : '查看完整画像';
+            }
+          });
+        });
+      });
+
       const switchControl = headerDiv.querySelector('.view-switch-control');
       const btns = headerDiv.querySelectorAll('.switch-btn');
       
@@ -1993,10 +2437,285 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       flush();
     }
 
+    function enhanceKfsPyramid() {
+      const wraps = [...content.querySelectorAll('.table-wrap')];
+      let targetWrap = null;
+      for (const wrap of wraps) {
+        const table = wrap.querySelector('table');
+        if (!table) continue;
+        const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+        if (headers.includes('KFS核心思路')) {
+          targetWrap = wrap;
+          break;
+        }
+      }
+      if (!targetWrap) return;
+
+      const pptHTML = `
+        <div class="kfs-ppt-container">
+          <div class="kfs-ppt-header">
+            <div class="kfs-ppt-title">KFS 核心打法思路总览</div>
+            <div class="kfs-ppt-subtitle">KOL/KOC (种草) + Feeds (放大) + Search (收口) 整合链路</div>
+          </div>
+          
+          <div class="kfs-ppt-content">
+            <!-- Left Column: The Interactive Funnel -->
+            <div class="kfs-pyramid-column">
+              <div class="kfs-pyramid">
+                <svg class="pyramid-svg" viewBox="0 0 300 260" width="100%" height="100%">
+                  <!-- Flat design: No shadows, no gradients, no filters -->
+                  <g>
+                    <!-- Search Layer (Top - Narrow) -->
+                    <g class="pyramid-group group-s" data-index="2">
+                      <polygon class="pyramid-slice slice-s" points="150,4 198,84 102,84" fill="#0d9488" />
+                      <text class="pyramid-text text-s" x="150" y="58" text-anchor="middle">S</text>
+                    </g>
+                    
+                    <!-- Feeds Layer (Middle) -->
+                    <g class="pyramid-group group-f" data-index="1">
+                      <polygon class="pyramid-slice slice-f" points="98,90 202,90 248,171 52,171" fill="#6366f1" />
+                      <text class="pyramid-text text-f" x="150" y="138" text-anchor="middle">F</text>
+                    </g>
+
+                    <!-- KOL Layer (Bottom - Wide) -->
+                    <g class="pyramid-group group-k active" data-index="0">
+                      <polygon class="pyramid-slice slice-k" points="48,177 252,177 297,256 3,256" fill="#3b82f6" />
+                      <text class="pyramid-text text-k" x="150" y="222" text-anchor="middle">K</text>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              
+              <!-- Interactive Tips -->
+              <div class="pyramid-help-text">点击金字塔层级可切换查看打法详情</div>
+            </div>
+            
+            <!-- Right Column: PPT Slides Details -->
+            <div class="kfs-details-column">
+              <!-- Slide 0: KOL -->
+              <div class="kfs-slide active" data-slide="0">
+                <div class="slide-badge badge-k">K · KOL/KOC 种草</div>
+                <h3 class="slide-title">场景触达建立信任</h3>
+                
+                <div class="slide-meta-grid">
+                  <div class="meta-item">
+                    <span class="meta-label">核心作用</span>
+                    <span class="meta-val">建立场景认知与用户可信度</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">覆盖人群</span>
+                    <span class="meta-val">潜在人群、机会人群</span>
+                  </div>
+                </div>
+                
+                <div class="slide-matrix-title">核心策略</div>
+                <div class="slide-cards-grid">
+                  <div class="slide-card">
+                    <div class="card-title">头尾合理搭配</div>
+                    <p class="card-desc">头部博主科普背书，讲透定位；尾部达人真实分享，铺设口碑。</p>
+                  </div>
+                  <div class="slide-card">
+                    <div class="card-title">动态组合矩阵</div>
+                    <p class="card-desc">新品期侧重头尾建立信任；成长期加入腰部扩大声量。</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Slide 1: Feeds -->
+              <div class="kfs-slide" data-slide="1">
+                <div class="slide-badge badge-f">F · Feeds 流量放大</div>
+                <h3 class="slide-title">信息流定向放量加热</h3>
+                
+                <div class="slide-meta-grid">
+                  <div class="meta-item">
+                    <span class="meta-label">核心作用</span>
+                    <span class="meta-val">商业放量，快速放大验证爆款</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">覆盖人群</span>
+                    <span class="meta-val">相似人群、兴趣人群</span>
+                  </div>
+                </div>
+                
+                <div class="slide-matrix-title">核心策略</div>
+                <div class="slide-cards-grid">
+                  <div class="slide-card">
+                    <div class="card-title">多维场景投放</div>
+                    <p class="card-desc">围绕日常、节日发红包、交学费等真实场景，结合功能长效投放。</p>
+                  </div>
+                  <div class="slide-card">
+                    <div class="card-title">数据驱动加热</div>
+                    <p class="card-desc">筛选高互动（点赞/收藏）爆款笔记，进行定向算法放大。</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Slide 2: Search -->
+              <div class="kfs-slide" data-slide="2">
+                <div class="slide-badge badge-s">S · Search 搜索拦截</div>
+                <h3 class="slide-title">精准卡位承接转化</h3>
+                
+                <div class="slide-meta-grid">
+                  <div class="meta-item">
+                    <span class="meta-label">核心作用</span>
+                    <span class="meta-val">拦截主动搜索，达成闭环收口</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">覆盖人群</span>
+                    <span class="meta-val">高意向人群、决策边缘用户</span>
+                  </div>
+                </div>
+                
+                <div class="slide-matrix-title">核心策略</div>
+                <div class="slide-cards-grid">
+                  <div class="slide-card">
+                    <div class="card-title">布局高频词包</div>
+                    <p class="card-desc">卡位品类词（美国汇款）、费用词、时效词及收款词（微信收款）。</p>
+                  </div>
+                  <div class="slide-card">
+                    <div class="card-title">搜索直达转化</div>
+                    <p class="card-desc">用教程/问答承接流量，直引小程序，解除到账操作焦虑。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- PPT Navigation Controller -->
+          <div class="kfs-ppt-controls">
+            <button class="ppt-control-btn btn-prev" aria-label="上一页">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="ppt-indicator">
+              <span class="indicator-dot active" data-index="0"></span>
+              <span class="indicator-dot" data-index="1"></span>
+              <span class="indicator-dot" data-index="2"></span>
+            </div>
+            <button class="ppt-control-btn btn-next" aria-label="下一页">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            
+            <button class="ppt-play-btn" aria-label="自动播放">
+              <svg class="play-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <svg class="pause-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+              <span>自动播放</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = pptHTML;
+      const pptNode = tempDiv.firstElementChild;
+      
+      targetWrap.parentNode.replaceChild(pptNode, targetWrap);
+
+      const groups = pptNode.querySelectorAll('.pyramid-group');
+      const slides = pptNode.querySelectorAll('.kfs-slide');
+      const dots = pptNode.querySelectorAll('.indicator-dot');
+      const prevBtn = pptNode.querySelector('.btn-prev');
+      const nextBtn = pptNode.querySelector('.btn-next');
+      const playBtn = pptNode.querySelector('.ppt-play-btn');
+      const playIcon = playBtn.querySelector('.play-icon');
+      const pauseIcon = playBtn.querySelector('.pause-icon');
+      const playText = playBtn.querySelector('span');
+      
+      let currentIndex = 0;
+      let playInterval = null;
+      
+      function showSlide(index) {
+        currentIndex = (index + 3) % 3;
+        
+        // Update slices
+        groups.forEach(group => {
+          const idx = parseInt(group.dataset.index);
+          group.classList.toggle('active', idx === currentIndex);
+        });
+        
+        // Update slides
+        slides.forEach(slide => {
+          const idx = parseInt(slide.dataset.slide);
+          slide.classList.toggle('active', idx === currentIndex);
+        });
+        
+        // Update dots
+        dots.forEach(dot => {
+          const idx = parseInt(dot.dataset.index);
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+      }
+      
+      function nextSlide() {
+        showSlide(currentIndex + 1);
+      }
+      
+      function prevSlide() {
+        showSlide(currentIndex - 1);
+      }
+      
+      function stopAutoPlay() {
+        if (playInterval) {
+          clearInterval(playInterval);
+          playInterval = null;
+          playIcon.style.display = 'block';
+          pauseIcon.style.display = 'none';
+          playText.textContent = '自动播放';
+          playBtn.classList.remove('playing');
+        }
+      }
+      
+      function startAutoPlay() {
+        stopAutoPlay();
+        playInterval = setInterval(nextSlide, 4000);
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        playText.textContent = '暂停播放';
+        playBtn.classList.add('playing');
+      }
+      
+      // Event listeners for groups
+      groups.forEach(group => {
+        group.addEventListener('click', () => {
+          stopAutoPlay();
+          const idx = parseInt(group.dataset.index);
+          showSlide(idx);
+        });
+      });
+      
+      // Event listeners for dots
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          stopAutoPlay();
+          const idx = parseInt(dot.dataset.index);
+          showSlide(idx);
+        });
+      });
+      
+      // Arrows
+      prevBtn.addEventListener('click', () => {
+        stopAutoPlay();
+        prevSlide();
+      });
+      nextBtn.addEventListener('click', () => {
+        stopAutoPlay();
+        nextSlide();
+      });
+      
+      // Play/Pause
+      playBtn.addEventListener('click', () => {
+        if (playInterval) {
+          stopAutoPlay();
+        } else {
+          startAutoPlay();
+        }
+      });
+    }
+
     content.innerHTML = renderMarkdown(source);
     wrapChapters();
     enhanceTables();
     enhancePersonas();
+    enhanceKfsPyramid();
     [...content.querySelectorAll('.chapter-card')].forEach(clusterImages);
 
     const headings = [...content.querySelectorAll('h2, h3, h4')];
