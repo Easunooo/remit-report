@@ -208,6 +208,37 @@
     }
     blockquote p { margin: 0; }
 
+    .collapsible-question {
+      margin: 28px 0;
+      border-radius: 18px;
+      background: rgba(39, 214, 111, .08);
+      overflow: hidden;
+    }
+    .collapsible-question summary {
+      position: relative;
+      padding: 18px 54px 18px 22px;
+      color: #173a28;
+      font-weight: 900;
+      cursor: pointer;
+      list-style: none;
+    }
+    .collapsible-question summary::-webkit-details-marker { display: none; }
+    .collapsible-question summary::after {
+      content: "+";
+      position: absolute;
+      right: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: var(--green-deep);
+    }
+    .collapsible-question[open] summary::after { content: "−"; }
+    .collapsible-body {
+      padding: 0 22px 22px;
+      border-top: 1px solid rgba(39, 214, 111, .16);
+    }
+    .collapsible-body > *:first-child { margin-top: 18px; }
+
     ul, ol { margin: 18px 0 22px; padding-left: 0; list-style: none; display: grid; gap: 10px; }
     li { position: relative; padding-left: 25px; color: #3f4d46; }
     li::before {
@@ -355,7 +386,8 @@
       background: #f2f8f4;
     }
     figure.is-missing { display: none; }
-    .chapter-card > .table-wrap {
+    .chapter-card > .table-wrap,
+    .chapter-card > .persona-view-wrapper {
       width: min(calc(100vw - 64px), var(--table-max-width));
       max-width: none;
       margin-left: 50%;
@@ -368,7 +400,8 @@
       margin-left: 50%;
       transform: translateX(-50%);
     }
-    .chapter-card > .table-wrap { margin-top: 34px; margin-bottom: 30px; }
+    .chapter-card > .table-wrap,
+    .chapter-card > .persona-view-wrapper { margin-top: 34px; margin-bottom: 30px; }
     .chapter-card > figure img { width: auto; max-width: 100%; margin: 0 auto; }
     .chapter-card > .image-cluster figure { transform: none; }
     .chapter-card > .image-cluster img { width: 100%; max-width: 100%; }
@@ -471,12 +504,459 @@
       h2 { font-size: 28px; }
       h3 { padding: 0; font-size: 22px; }
       .chapter-card > .table-wrap,
+      .chapter-card > .persona-view-wrapper,
       .chapter-card > figure,
       .chapter-card > .image-cluster { width: calc(100vw - 36px); }
       .table-wrap { border-radius: 18px; }
       .table-wrap::before { position: sticky; left: 8px; }
       .image-cluster { grid-template-columns: 1fr; }
       img { max-height: none; }
+    }
+
+    /* Disable double breakout for table inside switcher */
+    .persona-view-wrapper .table-wrap {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      transform: none !important;
+    }
+
+    /* Persona Card Layout Styles */
+    .persona-view-wrapper {
+      margin: 34px 0 40px;
+      position: relative;
+    }
+    .persona-view-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid rgba(39, 214, 111, 0.15);
+    }
+    .persona-view-title {
+      font-size: 20px;
+      font-weight: 850;
+      color: #1b3226;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.02em;
+    }
+    .persona-view-title::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 22px;
+      border-radius: 99px;
+      background: var(--green);
+    }
+    .view-switch-control {
+      display: inline-flex;
+      position: relative;
+      background: #eef7f2;
+      padding: 4px;
+      border-radius: 99px;
+      border: 1px solid rgba(39, 214, 111, 0.15);
+      cursor: pointer;
+      user-select: none;
+    }
+    .switch-btn {
+      position: relative;
+      z-index: 2;
+      border: 0;
+      background: transparent;
+      padding: 6px 18px;
+      font-size: 13px;
+      font-weight: 850;
+      color: var(--muted);
+      border-radius: 99px;
+      cursor: pointer;
+      transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+    }
+    .switch-btn.active {
+      color: var(--green-deep);
+    }
+    .switch-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      bottom: 4px;
+      width: calc(50% - 4px);
+      background: #ffffff;
+      border-radius: 99px;
+      box-shadow: 0 2px 8px rgba(32, 39, 43, 0.1);
+      z-index: 1;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .persona-view-wrapper.show-table .switch-slider {
+      transform: translateX(100%);
+    }
+    .persona-cards-view {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .persona-table-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .persona-view-wrapper.show-table .persona-cards-view {
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .persona-view-wrapper.show-table .persona-table-view {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .persona-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .persona-card {
+      background: #ffffff;
+      border: 1px solid rgba(39, 214, 111, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(32, 39, 43, 0.03);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s ease;
+    }
+    .persona-card:hover {
+      box-shadow: 0 12px 36px rgba(32, 39, 43, 0.06);
+    }
+    
+    /* Persona Card Headers */
+    .persona-card-header {
+      padding: 28px 20px 22px;
+      text-align: center;
+      position: relative;
+      color: #ffffff;
+    }
+    
+    .persona-card.p-family .persona-card-header {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+    }
+    .persona-card.p-professional .persona-card-header {
+      background: linear-gradient(135deg, #059669, #10b981);
+    }
+    .persona-card.p-young .persona-card-header {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+    }
+    .persona-card.p-investor .persona-card-header {
+      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+    }
+
+    .persona-card-share-ring {
+      width: 44px;
+      height: 44px;
+      position: absolute;
+      top: 14px;
+      right: 14px;
+    }
+    .persona-card-share-ring .ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.25);
+      stroke-width: 3.5;
+    }
+    .persona-card-share-ring .ring-active {
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 3.5;
+      stroke-linecap: round;
+    }
+    .persona-card-share-ring .ring-text {
+      fill: #ffffff;
+      font-size: 9px;
+      font-weight: 850;
+      text-anchor: middle;
+      font-family: inherit;
+    }
+    .persona-card-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 4px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .persona-card-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+    .persona-card-tagline {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 6px 0 0;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .avatar-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: 20px auto 26px;
+    }
+    .occupation-tag {
+      position: absolute;
+      font-size: 9.5px;
+      color: #ffffff;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      white-space: nowrap;
+      pointer-events: none;
+      transform: rotate(var(--rot));
+      transform-origin: center;
+    }
+    .occupation-tag.tag-0 { top: -14px; left: -52px; --rot: -6deg; }
+    .occupation-tag.tag-1 { top: -14px; right: -52px; --rot: 8deg; }
+    .occupation-tag.tag-2 { top: 32px; left: -64px; --rot: -10deg; }
+    .occupation-tag.tag-3 { top: 32px; right: -64px; --rot: 5deg; }
+    .occupation-tag.tag-4 { bottom: -8px; left: -42px; --rot: -4deg; }
+    .occupation-tag.tag-5 { bottom: -8px; right: -42px; --rot: 12deg; }
+    
+    .persona-card-body {
+      padding: 22px 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: #ffffff;
+    }
+    
+    /* Persona Info Row */
+    .persona-info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .persona-info-row:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .persona-info-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 850;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.03em;
+    }
+    .persona-info-value {
+      font-size: 13.5px;
+      color: #1a251f;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    /* Visual components for Amount and Frequency */
+    .amount-visual, .frequency-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 100%;
+      padding-top: 2px;
+    }
+    .amount-number, .frequency-text {
+      font-size: 15.5px;
+      color: #1a251f;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .amount-desc, .frequency-desc {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    
+    /* Amount Scale Bar */
+    .amount-scale-track {
+      width: 100%;
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 2px;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+    .amount-scale-bar {
+      height: 100%;
+      border-radius: 2px;
+    }
+    
+    /* Assign color accents to bars */
+    .p-family .amount-scale-bar { background: #0ea5e9; }
+    .p-professional .amount-scale-bar { background: #10b981; }
+    .p-young .amount-scale-bar { background: #f97316; }
+    .p-investor .amount-scale-bar { background: #8b5cf6; }
+    
+    /* Frequency Dots */
+    .frequency-dots {
+      display: flex;
+      gap: 5px;
+      margin-top: 4px;
+    }
+    .freq-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: #e2e8f0;
+    }
+    
+    /* Active dots colored by persona */
+    .p-family .freq-dot.active { background: #0ea5e9; }
+    .p-professional .freq-dot.active { background: #10b981; }
+    .p-young .freq-dot.active { background: #f97316; }
+    .p-investor .freq-dot.active { background: #8b5cf6; }
+    
+    /* Details Accordion Styles */
+    .persona-card-details {
+      margin-top: auto;
+      border-top: 1px solid #f0fdf4;
+      padding-top: 14px;
+    }
+    .persona-card-details summary {
+      font-size: 12px;
+      font-weight: 850;
+      color: var(--green-deep);
+      cursor: pointer;
+      list-style: none;
+      text-align: center;
+      padding: 6px 0;
+      outline: none;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .persona-card-details summary:hover {
+      color: var(--green);
+    }
+    .persona-card-details summary::-webkit-details-marker {
+      display: none;
+    }
+    .persona-card-details summary::after {
+      content: " ▾";
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+    .persona-card-details[open] summary::after {
+      content: " ▴";
+    }
+    .persona-details-content {
+      padding: 10px 4px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .persona-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      border-bottom: 1px solid #f6fbf8;
+      padding-bottom: 6px;
+    }
+    .persona-detail-row span:first-child {
+      color: var(--muted);
+      font-weight: 800;
+      flex-shrink: 0;
+      font-size: 11px;
+    }
+    .persona-detail-row span:last-child {
+      color: #24332c;
+      font-weight: 800;
+      text-align: right;
+      line-height: 1.35;
+    }
+
+    /* Media badge specific styles */
+    .media-habit-desc {
+      font-size: 13px;
+      color: #1a251f;
+      font-weight: 850;
+      margin-bottom: 8px;
+    }
+    .media-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .media-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 750;
+      color: #334155;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .media-badge:hover {
+      border-color: #cbd5e1;
+      background: #f1f5f9;
+    }
+    .svg-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 980px) {
+      .persona-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 580px) {
+      .persona-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .persona-view-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .view-switch-control {
+        align-self: flex-end;
+      }
     }
   </style>
 </head>
@@ -539,15 +1019,26 @@
 
 **第一，仍有巨大增长空间。微汇款核心用户画像是海外务工/长期驻外华人，但当前使用情况与全球华人群体规模之间存在结构性 Gap，各区域重点市场仍有巨大增长空间。**
 
-当前微汇款核心用户画像如下：
+当前微汇款核心用户可拆成四类画像，后续内容分层会围绕不同人群的动机、痛点和转化驱动展开：
 
-| **画像维度** | **典型特征** | **典型场景举例** |
-| - | - | - |
-| 汇款端主力人群 | 23–34 岁年轻用户占比较高，学生/留学生、海外工作和长期驻外人群突出 | 工资汇回、家庭备用金 |
-| 资金关系 | 汇款端在海外，收款端多为国内父母、亲属或家庭成员 | 赡养、生活费、节日汇款、应急转账 |
-| 地域特征 | - 海外端集中在美国（19.00%）、日本（9.17%）、韩国（6.60%）、澳大利亚（6.17%）、新加坡（5.24%）、加拿大（4.63%）、英国（4.61%）等；<br/>- 国内端沿海、侨乡特征明显，如福建（11.67%）、广东（5.14%）、长三角、东三省、山东等区域突出。<br/><br/> | 日本发薪后汇款、美国留学生汇款、福建/广东家庭收款<br/><br/> |
+| **画像维度** | **家庭支持者** | **高效专业人士** | **偶发年轻汇款者** | **中产外派投资者** |
+| - | - | - | - | - |
+| **典型标签** | 家庭支柱 | 精明优化者 | 数字消费者 | 资产规划者 |
+| **人群占比** | 32.4% | 27.4% | 18.1% | 22.1% |
+| **核心角色** | 跨国养家者 / 家庭经济支柱 | 高效率、会比较的理性汇款者 | 数字消费型年轻用户 | 资产配置和财富搬运型用户 |
+| **典型年龄** | 31–50 岁；已婚、有孩子 | 31–40 岁；职业稳定 | 18–24 岁；学生 / 单身 | 31–50 岁；财富驱动 |
+| **典型职业** | 护工、机械、配送、服务业、熟练工 | 软件 / IT、医疗、金融、医生、研发、教授 | 学生、餐饮、零售、国际学生、访问者 | 管理、金融、工程、投资者、企业主、审计等 |
+| **汇款目的** | 家庭生活费、学费、家庭支持 | 日常账单、信用卡、财务维护 | 网购、虚拟商品、数字生活消费 | 投资、房贷、资产转移 |
+| **单笔金额** | 标准生活支持；Top：USD 500–2,000 | 优化型转账；Top：USD 500–2,000 | 小额消费；Top：USD <2,000 | 大额资本；Top：USD >5,000 |
+| **交易模式** | 紧急且规律；每 2–3 个月 | 理性且稳定；每 2–3 个月 | 碎片化、突发；半年 / 偶发 | 战略性、计划性；半年 / 定期 |
+| **核心需求** | 低成本 + 信任；低费用、24/7 可用 | 价值准确；好汇率、透明 | 速度和体验；即时到账、移动优先 | 安全和限额；安全、高限额、合规 |
+| **主要痛点** | 数字门槛；复杂 UI、费用焦虑 | 流程摩擦；KYC 繁琐、限额障碍 | 体验落差；汇率敏感、UX 差 | 风险规避；怕冻结、不信任 |
+| **常用平台** | 银行 + 线下；传统银行（72%）+ 线下门店 | 数字效率；线上平台（59%） | 银行 / 移动混合；App 优先 | 权威安全；银行（66%） |
+| **媒体习惯** | 社群视频；YouTube、微信、小红书、快手 | 生活方式社交；小红书、微信、抖音 | 信息搜寻；小红书（60%）、微信 | 财经新闻；微信、小红书、商业媒体 |
+| **转化驱动** | 可靠优先：费用 + 品牌权威 | 价值最优：汇率 + 机构信任 | 无摩擦体验：简单 + 速度 | 合规能力：安全 + 高限额 |
 
-对比全球华人社区规模可见，印尼、泰国、马来西亚等华人基数大但微汇款占比仍有释放空间；英国、日本等华人规模相对不大的国家却能贡献较高占比，微汇款当前远未渗透完全，无论美加澳发达国家还是东南亚，重点国家/地区都仍有较大增长空间。
+:::details Q：为什么说微汇款仍有较大增长空间？
+对比全球华人社区规模可见，印尼、泰国、马来西亚等华人基数大但微汇款占比仍有释放空间；英国、日本等华人规模相对不大的国家却能贡献较高占比，微汇款当前远未渗透完全，无论美加澳发达国家还是东南亚，重点国家 / 地区都仍有较大增长空间。
 
 | **国家/地区** | **全球华人社区规模** | **排序** | **微汇款当前用户占比** | **排序** | **排序GAP** | **全球华人社区规模** |
 | - | - | - | - | - | - | - |
@@ -562,17 +1053,7 @@
 | 英国 | 500K | **9** | 4.61% | **8** | -1 |   |
 | 南非 | 500K | **10** | 未进入前 20 | **-** | **≥+11** |   |
 | 日本 | - | **-** | 9.17% | **2** |  |   |
-
-这里需要补充一个口径：**上面的国家分布来自微汇款当前用户和全球华人社区规模对比；澳大利亚、美国、新加坡、韩国四国调研则主要用于理解不同市场里的用户决策差异，不代表微汇款的全部市场边界。**换句话说，四国调研不是把市场范围缩小到四个国家，而是帮助我们形成几类可迁移的市场打法。
-
-| **调研市场** | **可以理解成的市场类型** | **对内容打法的启发** |
-| - | - | - |
-| 美国 | 线上汇款成熟、用户会主动比价 | 更适合做平台对比、费用/汇率解释、SEO 和 Search 拦截 |
-| 新加坡 | 年轻用户和数字消费突出 | 更适合讲微信收款、小额高频、网购/红包/虚拟服务等场景 |
-| 澳大利亚 | 中产、资产和银行信任心智较强 | 更需要强调安全、合规、高限额、到账透明和资产/账单场景 |
-| 韩国 | 蓝领家庭支持和线下辅助需求明显 | 更需要中文客服、低门槛教程、线下/社群触达和合规替代 |
-
-同时，用户调研里的四类人群不建议单独拉出一章来讲，而是作为内容分层的前置信息使用：Family Supporter 解释家庭汇款和发薪日场景；Efficient Professional 解释为什么用户会比较汇率和手续费；Occasional Young Remitter 解释为什么微信收款和数字消费场景重要；Asset Strategist 解释为什么大额场景必须补安全、合规和限额说明。
+:::
 
 #### 现状2: 认知浅，定位弱  → 做什么
 
@@ -939,6 +1420,19 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
           continue;
         }
 
+        if (/^:::details\b/.test(trimmed)) {
+          flushAll();
+          const summary = trimmed.replace(/^:::details\s*/, '').trim() || '展开查看';
+          const detailLines = [];
+          i += 1;
+          while (i < lines.length && lines[i].trim() !== ':::') {
+            detailLines.push(lines[i]);
+            i += 1;
+          }
+          html.push(`<details class="collapsible-question"><summary>${renderInline(summary)}</summary><div class="collapsible-body">${renderMarkdown(detailLines.join('\n'))}</div></details>`);
+          continue;
+        }
+
         if (isTableStart(lines, i)) {
           flushAll();
           const tableLines = [lines[i], lines[i + 1]];
@@ -1200,6 +1694,284 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       });
     }
 
+    function enhancePersonas() {
+      function renderMediaHabits(text) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = text;
+        const plainText = tempDiv.textContent || tempDiv.innerText || '';
+        
+        const parts = plainText.split(/[；;]/);
+        const desc = parts[0] ? parts[0].trim() : '';
+        const listText = parts[1] ? parts[1].trim() : '';
+        
+        let html = `<div class="media-habit-desc">${desc}</div>`;
+        
+        if (listText) {
+          const platforms = listText.split(/[、,，]/).map(p => p.trim()).filter(Boolean);
+          
+          let badgesHtml = '<div class="media-badges">';
+          platforms.forEach(p => {
+            let svg = '';
+            const cleanName = p.toLowerCase();
+            
+            if (cleanName.includes('wechat') || cleanName.includes('微信')) {
+              svg = `<svg viewBox="0 0 24 24" class="svg-icon svg-wechat"><path fill="#07C160" d="M8.5 2C4.36 2 1 4.8 1 8.25c0 1.93 1.07 3.64 2.76 4.7l-.7 2.05 2.27-1.14c.73.23 1.5.39 2.3.39a8.1 8.1 0 0 0 1.34-.11C8.42 13 9.77 11.8 11 10.74c1.17-1 2.5-1.49 4-1.49.2 0 .4 0 .6.02C15.25 5.5 12.25 2 8.5 2zm-2.62 4.38c.48 0 .88.4.88.87a.88.88 0 1 1-1.76 0c0-.48.4-.87.88-.87zm5.24 0c.49 0 .88.4.88.87a.88.88 0 1 1-1.76 0c0-.48.4-.87.88-.87zm7.38 4.37c-3.1 0-5.62 2.1-5.62 4.7 0 1.45.8 2.73 2.07 3.52l-.52 1.54 1.7-.85c.55.17 1.12.3 1.72.3 3.1 0 5.62-2.1 5.62-4.7s-2.52-4.7-5.62-4.7zm-2.07 3.28c.36 0 .66.3.66.66a.66.66 0 1 1-1.32 0c0-.37.3-.66.66-.66zm3.94 0c.36 0 .66.3.66.66a.66.66 0 1 1-1.32 0c0-.37.3-.66.66-.66z"/></svg>`;
+            } else if (cleanName.includes('xiaohongshu') || cleanName.includes('小红书') || cleanName.includes('xhs')) {
+              svg = `<svg viewBox="0 0 24 24" class="svg-icon svg-red"><circle cx="12" cy="12" r="10" fill="#FF2442"/><path d="M9 7h3.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5H11v3H9V7zm2 2v2h1.5c.28 0 .5-.22.5-.5V9.5c0-.28-.22-.5-.5-.5H11z" fill="#FFFFFF"/><path d="M12.5 12l2.5 3h-2.5l-2-3" fill="#FFFFFF"/></svg>`;
+            } else if (cleanName.includes('youtube')) {
+              svg = `<svg viewBox="0 0 24 24" class="svg-icon svg-youtube"><path fill="#FF0000" d="M23.5 6.2c-.3-1.1-1.1-2-2.2-2.3C19.3 3.5 12 3.5 12 3.5s-7.3 0-9.3.4C1.6 4.2.8 5 .5 6.2.1 8.2.1 12.3.1 12.3s0 4.1.4 6.1c.3 1.1 1.1 2 2.2 2.3 2 .4 9.3.4 9.3.4s7.3 0 9.3-.4c1.1-.3 1.9-1.2 2.2-2.3.4-2 .4-6.1.4-6.1s0-4.1-.4-6.1z"/><path fill="#FFFFFF" d="M9.5 15.5l6.3-3.7-6.3-3.7z"/></svg>`;
+            } else if (cleanName.includes('kuaishou') || cleanName.includes('快手')) {
+              svg = `<svg viewBox="0 0 24 24" class="svg-icon svg-kuaishou"><circle cx="12" cy="12" r="10" fill="#FF8C00"/><path d="M16 9h-2V7.5C14 6.67 13.33 6 12.5 6h-5C6.67 6 6 6.67 6 7.5v6c0 .83.67 1.5 1.5 1.5h5c.83 0 1.5-.67 1.5-1.5V12h2l2 2V8l-2 1z" fill="#FFFFFF"/></svg>`;
+            } else if (cleanName.includes('douyin') || cleanName.includes('抖音') || cleanName.includes('tiktok')) {
+              svg = `<svg viewBox="0 0 24 24" class="svg-icon svg-douyin"><path fill="#1C0C21" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path fill="#00f2fe" d="M16 8.5a3.5 3.5 0 0 1-2.5-1.2v6.2a3.5 3.5 0 1 1-3.5-3.5h.5V12h-.5a1.5 1.5 0 1 0 1.5 1.5V6h2.5c.34.8 1.05 1.43 1.9 1.7l.6.1v.7z"/><path fill="#fe2c55" d="M15.5 8.5a3.5 3.5 0 0 1-2.5-1.2v6.2a3.5 3.5 0 1 1-3.5-3.5h.5V12h-.5a1.5 1.5 0 1 0 1.5 1.5V6.5h2.5c.34.8 1.05 1.43 1.9 1.7l.6.1v.2z"/><path fill="#FFFFFF" d="M15.75 8.5a3.5 3.5 0 0 1-2.5-1.2v6.2a3.5 3.5 0 1 1-3.5-3.5h.5V12h-.5a1.5 1.5 0 1 0 1.5 1.5V6.25h2.5c.34.8 1.05 1.43 1.9 1.7l.6.1v.45z"/></svg>`;
+            } else if (cleanName.includes('媒体') || cleanName.includes('media') || cleanName.includes('新闻') || cleanName.includes('news')) {
+              svg = `<svg viewBox="0 0 24 24" class="svg-icon svg-news"><path fill="#0284c7" d="M20 5H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-1 12H5V7h14v10zm-11-8h8v2H8zm0 4h8v2H8z"/></svg>`;
+            }
+            badgesHtml += `<span class="media-badge">${svg}${p}</span>`;
+          });
+          badgesHtml += '</div>';
+          html += badgesHtml;
+        }
+        
+        return html;
+      }
+
+      function renderAmountVisual(text, id) {
+        const parts = text.split(/[；;]/);
+        const desc = parts[0] ? parts[0].trim() : '';
+        let amount = parts[1] ? parts[1].trim() : '';
+        amount = amount.replace(/Top：|Top:/g, '').trim();
+        
+        let width = '40%';
+        if (id === 'young') width = '25%';
+        if (id === 'investor') width = '90%';
+        
+        return `
+          <div class="amount-visual">
+            <span class="amount-number">${amount}</span>
+            <span class="amount-desc">${desc}</span>
+            <div class="amount-scale-track">
+              <div class="amount-scale-bar" style="width: ${width}"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderFrequencyVisual(text, id) {
+        const parts = text.split(/[；;]/);
+        const desc = parts[0] ? parts[0].trim() : '';
+        const freqText = parts[1] ? parts[1].trim() : '';
+        
+        let activeDots = 4;
+        if (id === 'investor') activeDots = 2;
+        if (id === 'young') activeDots = 1;
+        
+        let dotsHtml = '<div class="frequency-dots">';
+        for (let i = 1; i <= 4; i++) {
+          const activeClass = i <= activeDots ? 'active' : '';
+          dotsHtml += `<span class="freq-dot ${activeClass}"></span>`;
+        }
+        dotsHtml += '</div>';
+        
+        return `
+          <div class="frequency-visual">
+            <span class="frequency-text">${freqText}</span>
+            <span class="frequency-desc">${desc}</span>
+            ${dotsHtml}
+          </div>
+        `;
+      }
+
+      const wraps = [...content.querySelectorAll('.table-wrap')];
+      let targetWrap = null;
+      let targetTable = null;
+      for (const wrap of wraps) {
+        const table = wrap.querySelector('table');
+        if (!table) continue;
+        const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+        if (headers.includes('家庭支持者') && headers.includes('高效专业人士')) {
+          targetWrap = wrap;
+          targetTable = table;
+          break;
+        }
+      }
+      if (!targetWrap || !targetTable) return;
+      
+      const headers = [...targetTable.querySelectorAll('th')].map(th => th.textContent.trim());
+      const rows = [...targetTable.querySelectorAll('tbody tr')];
+      
+      const personas = [];
+      for (let col = 1; col < headers.length; col++) {
+        personas.push({
+          name: headers[col],
+          id: ['family', 'professional', 'young', 'investor'][col - 1],
+          avatar: `./images/avatar_${['family', 'professional', 'young', 'investor'][col - 1]}.png`,
+          attributes: {}
+        });
+      }
+      
+      rows.forEach(row => {
+        const cells = [...row.querySelectorAll('td')];
+        if (cells.length < headers.length) return;
+        const dimensionName = cells[0].textContent.trim().replace(/\*\*| /g, '');
+        for (let col = 1; col < cells.length; col++) {
+          personas[col - 1].attributes[dimensionName] = cells[col].innerHTML.trim();
+        }
+      });
+      
+      const viewWrapper = document.createElement('div');
+      viewWrapper.className = 'persona-view-wrapper show-cards';
+      
+      const headerDiv = document.createElement('div');
+      headerDiv.className = 'persona-view-header';
+      headerDiv.innerHTML = `
+        <div class="persona-view-title">核心用户四类画像看板</div>
+        <div class="view-switch-control">
+          <button class="switch-btn active" data-view="cards">图卡视图</button>
+          <button class="switch-btn" data-view="table">表格视图</button>
+          <span class="switch-slider"></span>
+        </div>
+      `;
+      viewWrapper.appendChild(headerDiv);
+      
+      const cardsView = document.createElement('div');
+      cardsView.className = 'persona-cards-view';
+      
+      const grid = document.createElement('div');
+      grid.className = 'persona-cards-grid';
+      
+      personas.forEach(p => {
+        const card = document.createElement('div');
+        card.className = `persona-card p-${p.id}`;
+        
+        const purpose = p.attributes['汇款目的'] || p.attributes['目的'] || '';
+        const needs = p.attributes['核心需求'] || p.attributes['需求'] || '';
+        const painpoints = p.attributes['主要痛点'] || p.attributes['痛点'] || '';
+        const amount = renderAmountVisual(p.attributes['单笔金额'] || p.attributes['金额'] || '', p.id);
+        const frequency = renderFrequencyVisual(p.attributes['交易模式'] || p.attributes['频率'] || '', p.id);
+        const media = renderMediaHabits(p.attributes['媒体习惯'] || p.attributes['媒体'] || '');
+        
+        const shareText = p.attributes['人群占比'] || '';
+        const pctMatch = shareText.match(/(\d+(?:\.\d+)?)/);
+        const pctValue = pctMatch ? parseFloat(pctMatch[1]) : 0;
+        const displayPct = Math.round(pctValue);
+        
+        const ringSvg = `
+          <svg class="persona-card-share-ring" viewBox="0 0 36 36">
+            <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path class="ring-active" stroke-dasharray="${pctValue}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <text x="18" y="20.35" class="ring-text">${displayPct}%</text>
+          </svg>
+        `;
+        
+        const occupationStr = p.attributes['典型职业'] || '';
+        const rawTags = occupationStr.split(/[、,，；;]/).map(t => t.trim()).filter(Boolean);
+        const tagsHtml = rawTags.map((tag, i) => `<span class="occupation-tag tag-${i}">${tag}</span>`).join('');
+        
+        card.innerHTML = `
+          <div class="persona-card-header">
+            ${ringSvg}
+            <div class="avatar-wrapper">
+              <img class="persona-card-avatar" src="${p.avatar}" alt="${p.name}">
+              ${tagsHtml}
+            </div>
+            <h3 class="persona-card-title">${p.name}</h3>
+            <span class="persona-card-tagline">${p.attributes['典型标签'] || ''}</span>
+          </div>
+          <div class="persona-card-body">
+            <div class="persona-info-row">
+              <span class="persona-info-label">汇款目的</span>
+              <span class="persona-info-value">${purpose}</span>
+            </div>
+            <div class="persona-info-row">
+              <span class="persona-info-label">核心需求</span>
+              <span class="persona-info-value">${needs}</span>
+            </div>
+            <div class="persona-info-row">
+              <span class="persona-info-label">主要痛点</span>
+              <span class="persona-info-value">${painpoints}</span>
+            </div>
+            <div class="persona-info-row">
+              <span class="persona-info-label">单笔金额</span>
+              <span class="persona-info-value">${amount}</span>
+            </div>
+            <div class="persona-info-row">
+              <span class="persona-info-label">交易频率</span>
+              <span class="persona-info-value">${frequency}</span>
+            </div>
+            <div class="persona-info-row">
+              <span class="persona-info-label">媒体习惯</span>
+              <span class="persona-info-value">${media}</span>
+            </div>
+            
+            <details class="persona-card-details">
+              <summary>查看完整画像</summary>
+              <div class="persona-details-content">
+                <div class="persona-detail-row">
+                  <span>核心角色</span>
+                  <span>${p.attributes['核心角色'] || ''}</span>
+                </div>
+                <div class="persona-detail-row">
+                  <span>典型年龄</span>
+                  <span>${p.attributes['典型年龄'] || ''}</span>
+                </div>
+                <div class="persona-detail-row">
+                  <span>典型职业</span>
+                  <span>${p.attributes['典型职业'] || ''}</span>
+                </div>
+                <div class="persona-detail-row">
+                  <span>核心需求</span>
+                  <span>${p.attributes['核心需求'] || ''}</span>
+                </div>
+                <div class="persona-detail-row">
+                  <span>主要痛点</span>
+                  <span>${p.attributes['主要痛点'] || ''}</span>
+                </div>
+                <div class="persona-detail-row">
+                  <span>常用平台</span>
+                  <span>${p.attributes['常用平台'] || ''}</span>
+                </div>
+                <div class="persona-detail-row">
+                  <span>转化驱动</span>
+                  <span>${p.attributes['转化驱动'] || ''}</span>
+                </div>
+              </div>
+            </details>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      cardsView.appendChild(grid);
+      viewWrapper.appendChild(cardsView);
+      
+      const tableView = document.createElement('div');
+      tableView.className = 'persona-table-view';
+      
+      targetWrap.parentNode.insertBefore(viewWrapper, targetWrap);
+      tableView.appendChild(targetWrap);
+      viewWrapper.appendChild(tableView);
+      
+      const switchControl = headerDiv.querySelector('.view-switch-control');
+      const btns = headerDiv.querySelectorAll('.switch-btn');
+      
+      switchControl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.switch-btn');
+        if (!btn || btn.classList.contains('active')) return;
+        
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const view = btn.dataset.view;
+        if (view === 'table') {
+          viewWrapper.classList.remove('show-cards');
+          viewWrapper.classList.add('show-table');
+        } else {
+          viewWrapper.classList.remove('show-table');
+          viewWrapper.classList.add('show-cards');
+        }
+      });
+    }
+
     function clusterImages(root) {
       const children = [...root.children];
       let cluster = [];
@@ -1224,6 +1996,7 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
     content.innerHTML = renderMarkdown(source);
     wrapChapters();
     enhanceTables();
+    enhancePersonas();
     [...content.querySelectorAll('.chapter-card')].forEach(clusterImages);
 
     const headings = [...content.querySelectorAll('h2, h3, h4')];
