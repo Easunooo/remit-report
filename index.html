@@ -1064,19 +1064,27 @@
       }
     }
 
-    /* KFS PPT Interactive Component Styles - Flat & Minimal */
-    .kfs-ppt-container {
-      background: #ffffff;
-      border: 1px solid rgba(39, 214, 111, 0.15);
-      border-radius: 24px;
-      padding: 32px;
-      margin: 36px 0;
-      box-shadow: none;
+    /* ==========================================================================
+       KFS PPT Interactive Component Redesign (Section 3.1)
+       ========================================================================== */
+    .kfs-view-wrapper {
+      margin-top: 36px;
+      margin-bottom: 30px;
     }
-    .kfs-ppt-header {
-      margin-bottom: 28px;
+    .kfs-view-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 16px;
     }
-    .kfs-ppt-title {
+    .kfs-view-title-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .kfs-view-title {
       font-size: 20px;
       font-weight: 850;
       color: #173a28;
@@ -1085,7 +1093,7 @@
       gap: 10px;
       letter-spacing: -0.02em;
     }
-    .kfs-ppt-title::before {
+    .kfs-view-title::before {
       content: "";
       display: inline-block;
       width: 5px;
@@ -1093,12 +1101,38 @@
       border-radius: 99px;
       background: var(--green);
     }
-    .kfs-ppt-subtitle {
+    .kfs-view-subtitle {
       font-size: 13.5px;
       color: var(--muted);
-      margin-top: 5px;
       font-weight: 550;
       padding-left: 15px;
+    }
+    .kfs-view-actions {
+      display: flex;
+      align-items: center;
+    }
+    .kfs-view-wrapper.show-ppt .kfs-ppt-view {
+      display: block;
+    }
+    .kfs-view-wrapper.show-ppt .kfs-table-view {
+      display: none;
+    }
+    .kfs-view-wrapper.show-table .kfs-ppt-view {
+      display: none;
+    }
+    .kfs-view-wrapper.show-table .kfs-table-view {
+      display: block;
+    }
+    .kfs-view-wrapper.show-table .switch-slider {
+      transform: translateX(100%);
+    }
+
+    .kfs-ppt-container {
+      background: #ffffff;
+      border: 1px solid rgba(39, 214, 111, 0.15);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
     }
     .kfs-ppt-content {
       display: grid;
@@ -1126,21 +1160,30 @@
       overflow: visible;
     }
     
-    /* Pyramid Slices - Flat Minimal Style */
+    /* Pyramid Slices */
     .pyramid-group {
       cursor: pointer;
       opacity: 0.45;
-      transition: opacity 0.2s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .pyramid-group:hover {
-      opacity: 0.75;
+      opacity: 0.8;
     }
     .pyramid-group.active {
       opacity: 1;
     }
+    .pyramid-group.group-k.active {
+      filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.35));
+    }
+    .pyramid-group.group-f.active {
+      filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.35));
+    }
+    .pyramid-group.group-s.active {
+      filter: drop-shadow(0 4px 12px rgba(13, 148, 136, 0.35));
+    }
     .pyramid-slice {
       stroke: #ffffff;
-      stroke-width: 2px;
+      stroke-width: 3px;
     }
     .pyramid-text {
       font-family: inherit;
@@ -1149,16 +1192,17 @@
       fill: #ffffff;
       pointer-events: none;
       user-select: none;
-      transition: font-size 0.2s ease;
+      transition: all 0.3s ease;
     }
     .pyramid-group.active .pyramid-text {
-      font-size: 30px;
+      font-size: 32px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
     
     .pyramid-help-text {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--muted);
-      margin-top: 12px;
+      margin-top: 16px;
       font-weight: 700;
       text-align: center;
     }
@@ -1166,25 +1210,34 @@
     /* Details Column & Slides */
     .kfs-details-column {
       position: relative;
-      min-height: 320px;
     }
     .kfs-slide {
       display: none;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(15px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
     .kfs-slide.active {
-      display: block;
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      gap: 32px;
       opacity: 1;
       transform: translateY(0);
+      align-items: center;
     }
     
+    /* Slide Left Text Details */
+    .slide-info-pane {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     .slide-badge {
       display: inline-block;
-      padding: 3px 10px;
+      align-self: flex-start;
+      padding: 4px 12px;
       border-radius: 99px;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 850;
       margin-bottom: 12px;
     }
@@ -1196,10 +1249,27 @@
       font-size: 20px;
       font-weight: 900;
       color: #0f172a;
-      margin: 0 0 16px;
+      margin: 0 0 12px;
       letter-spacing: -0.02em;
     }
     
+    .slide-channels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .channel-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+    .k-tag { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; }
+    .f-tag { background: #eef2ff; color: #4338ca; border: 1px solid #e0e7ff; }
+    .s-tag { background: #f0fdfa; color: #0f766e; border: 1px solid #ccfbf1; }
+
     .slide-meta-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1214,7 +1284,7 @@
     }
     .meta-label {
       display: block;
-      font-size: 10.5px;
+      font-size: 11px;
       color: var(--muted);
       font-weight: 850;
       text-transform: uppercase;
@@ -1228,7 +1298,7 @@
     }
     
     .slide-matrix-title {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 850;
       color: #475569;
       margin-bottom: 12px;
@@ -1253,21 +1323,37 @@
     .slide-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 14px;
+      padding: 16px;
       position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .slide-card:hover {
+      background: #ffffff;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+    }
+    .card-num {
+      position: absolute;
+      right: 12px;
+      bottom: -6px;
+      font-size: 40px;
+      font-weight: 900;
+      color: rgba(226, 232, 240, 0.5);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
     }
     
-    /* PPT Flat Accent Borders */
-    .kfs-slide[data-slide="0"] .slide-card { border-left: 3px solid #3b82f6; }
-    .kfs-slide[data-slide="1"] .slide-card { border-left: 3px solid #6366f1; }
-    .kfs-slide[data-slide="2"] .slide-card { border-left: 3px solid #0d9488; }
+    .kfs-slide[data-slide="0"] .slide-card { border-top: 3px solid #3b82f6; }
+    .kfs-slide[data-slide="1"] .slide-card { border-top: 3px solid #6366f1; }
+    .kfs-slide[data-slide="2"] .slide-card { border-top: 3px solid #0d9488; }
     
     .card-title {
       font-size: 13.5px;
       font-weight: 855;
       color: #1e293b;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .card-desc {
       font-size: 12px;
@@ -1276,21 +1362,103 @@
       margin: 0;
     }
     
+    /* Phone Mockup Column */
+    .slide-phone-pane {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .phone-mockup {
+      width: 240px;
+      height: 390px;
+      background: #090d16;
+      border: 7px solid #1e293b;
+      border-radius: 28px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12), 0 3px 8px rgba(0, 0, 0, 0.06);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .phone-mockup::before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 64px;
+      height: 11px;
+      background: #000000;
+      border-radius: 99px;
+      z-index: 10;
+    }
+    .phone-screen {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #f8fafc;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+    .phone-screen-carousel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .phone-slide-img {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f172a;
+      cursor: pointer;
+    }
+    .phone-slide-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .phone-indicators-container {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+      margin-bottom: 2px;
+      height: 6px;
+    }
+    .phone-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .phone-dot.active {
+      background: var(--green);
+      transform: scale(1.2);
+    }
+
     /* PPT Navigation Controls */
     .kfs-ppt-controls {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 16px;
-      margin-top: 24px;
+      margin-top: 28px;
       padding-top: 16px;
       border-top: 1px solid #f1f5f9;
     }
     .ppt-control-btn {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: grid;
       place-items: center;
@@ -1309,8 +1477,8 @@
       gap: 8px;
     }
     .indicator-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #cbd5e1;
       cursor: pointer;
@@ -1323,9 +1491,9 @@
     .ppt-play-btn {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 99px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 850;
       color: #64748b;
       cursor: pointer;
@@ -1351,26 +1519,88 @@
     @media (max-width: 980px) {
       .kfs-ppt-content {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 36px;
       }
       .kfs-pyramid-column {
         max-width: 260px;
         margin: 0 auto;
       }
-      .kfs-ppt-container {
-        padding: 24px 18px;
+    }
+    @media (max-width: 820px) {
+      .kfs-slide.active {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .slide-phone-pane {
+        margin-top: 12px;
       }
     }
     @media (max-width: 580px) {
       .slide-meta-grid, .slide-cards-grid {
         grid-template-columns: 1fr;
       }
-      .kfs-details-column {
-        min-height: 420px;
-      }
       .kfs-ppt-controls {
         flex-wrap: wrap;
       }
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 80%;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+    .lightbox-modal.active .lightbox-content {
+      transform: scale(1);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lightbox-close:hover {
+      background: rgba(255,255,255,0.2);
+      transform: rotate(90deg);
+    }
+    .lightbox-caption {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      margin-top: 16px;
+      font-weight: 600;
+      text-align: center;
     }
   </style>
 </head>
@@ -2518,14 +2748,14 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       flush();
     }
 
-    function enhanceKfsPyramid() {
+function enhanceKfsPyramid() {
       const wraps = [...content.querySelectorAll('.table-wrap')];
       let targetWrap = null;
       for (const wrap of wraps) {
         const table = wrap.querySelector('table');
         if (!table) continue;
         const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
-        if (headers.includes('KFS核心思路')) {
+        if (headers.includes('模块') && table.textContent.includes('温哥华留学生吃什么')) {
           targetWrap = wrap;
           break;
         }
@@ -2534,22 +2764,16 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
 
       const pptHTML = `
         <div class="kfs-ppt-container">
-          <div class="kfs-ppt-header">
-            <div class="kfs-ppt-title">KFS 核心打法思路总览</div>
-            <div class="kfs-ppt-subtitle">KOL/KOC (种草) + Feeds (放大) + Search (收口) 整合链路</div>
-          </div>
-          
           <div class="kfs-ppt-content">
             <!-- Left Column: The Interactive Funnel -->
             <div class="kfs-pyramid-column">
               <div class="kfs-pyramid">
                 <svg class="pyramid-svg" viewBox="0 0 300 260" width="100%" height="100%">
-                  <!-- Flat design: No shadows, no gradients, no filters -->
                   <g>
-                    <!-- Search Layer (Top - Narrow) -->
-                    <g class="pyramid-group group-s" data-index="2">
-                      <polygon class="pyramid-slice slice-s" points="150,4 198,84 102,84" fill="#0d9488" />
-                      <text class="pyramid-text text-s" x="150" y="58" text-anchor="middle">S</text>
+                    <!-- KOL Layer (Top - Narrow) -->
+                    <g class="pyramid-group group-k active" data-index="0">
+                      <polygon class="pyramid-slice slice-k" points="150,4 198,84 102,84" fill="#3b82f6" />
+                      <text class="pyramid-text text-k" x="150" y="58" text-anchor="middle">K</text>
                     </g>
                     
                     <!-- Feeds Layer (Middle) -->
@@ -2558,111 +2782,186 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
                       <text class="pyramid-text text-f" x="150" y="138" text-anchor="middle">F</text>
                     </g>
 
-                    <!-- KOL Layer (Bottom - Wide) -->
-                    <g class="pyramid-group group-k active" data-index="0">
-                      <polygon class="pyramid-slice slice-k" points="48,177 252,177 297,256 3,256" fill="#3b82f6" />
-                      <text class="pyramid-text text-k" x="150" y="222" text-anchor="middle">K</text>
+                    <!-- Search Layer (Bottom - Wide) -->
+                    <g class="pyramid-group group-s" data-index="2">
+                      <polygon class="pyramid-slice slice-s" points="48,177 252,177 297,256 3,256" fill="#0d9488" />
+                      <text class="pyramid-text text-s" x="150" y="222" text-anchor="middle">S</text>
                     </g>
                   </g>
                 </svg>
               </div>
-              
-              <!-- Interactive Tips -->
-              <div class="pyramid-help-text">点击金字塔层级可切换查看打法详情</div>
+              <div class="pyramid-help-text">点击金字塔层级可切换打法</div>
             </div>
             
-            <!-- Right Column: PPT Slides Details -->
+            <!-- Right Column: Slide Panel -->
             <div class="kfs-details-column">
               <!-- Slide 0: KOL -->
               <div class="kfs-slide active" data-slide="0">
-                <div class="slide-badge badge-k">K · KOL/KOC 种草</div>
-                <h3 class="slide-title">场景触达建立信任</h3>
-                
-                <div class="slide-meta-grid">
-                  <div class="meta-item">
-                    <span class="meta-label">核心作用</span>
-                    <span class="meta-val">建立场景认知与用户可信度</span>
+                <div class="slide-info-pane">
+                  <div class="slide-badge badge-k">K · KOL/KOC 种草</div>
+                  <h3 class="slide-title">场景触达建立信任</h3>
+                  
+                  <div class="slide-channels">
+                    <span class="channel-tag k-tag">#温哥华留学生吃什么</span>
+                    <span class="channel-tag k-tag">#多伦多打工人午餐</span>
+                    <span class="channel-tag k-tag">#纽约中餐外卖推荐</span>
                   </div>
-                  <div class="meta-item">
-                    <span class="meta-label">覆盖人群</span>
-                    <span class="meta-val">潜在人群、机会人群</span>
+
+                  <div class="slide-meta-grid">
+                    <div class="meta-item">
+                      <span class="meta-label">核心作用</span>
+                      <span class="meta-val">建立本地场景认知与用户可信度</span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-label">覆盖人群</span>
+                      <span class="meta-val">潜在人群、兴趣人群及机会人群</span>
+                    </div>
+                  </div>
+                  
+                  <div class="slide-matrix-title">核心打法</div>
+                  <div class="slide-cards-grid">
+                    <div class="slide-card">
+                      <span class="card-num">01</span>
+                      <div class="card-title">头尾博主合理搭配</div>
+                      <p class="card-desc">头部博主做科普背书讲透定位；尾部达人/KOC分享吃喝玩乐体验，铺设真实口碑。</p>
+                    </div>
+                    <div class="slide-card">
+                      <span class="card-num">02</span>
+                      <div class="card-title">跨界联名破圈拓客</div>
+                      <p class="card-desc">与蜜雪冰城、小红书海外官方等IP深度联名合作，推出线上权益与线下趣味活动。</p>
+                    </div>
                   </div>
                 </div>
                 
-                <div class="slide-matrix-title">核心策略</div>
-                <div class="slide-cards-grid">
-                  <div class="slide-card">
-                    <div class="card-title">头尾合理搭配</div>
-                    <p class="card-desc">头部博主科普背书，讲透定位；尾部达人真实分享，铺设口碑。</p>
+                <div class="slide-phone-pane">
+                  <div class="phone-mockup">
+                    <div class="phone-screen">
+                      <div class="phone-screen-carousel" data-images="4">
+                        <div class="phone-slide-img"><img src="https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45037803" alt="KOL种草-留学生外卖场景"></div>
+                        <div class="phone-slide-img"><img src="https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45037816" alt="KOL种草-当地口碑分享"></div>
+                        <div class="phone-slide-img"><img src="https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45091493" alt="品牌破圈-蜜雪冰城联名合作"></div>
+                        <div class="phone-slide-img"><img src="https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45091494" alt="品牌破圈-联名线下活动"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="slide-card">
-                    <div class="card-title">动态组合矩阵</div>
-                    <p class="card-desc">新品期侧重头尾建立信任；成长期加入腰部扩大声量。</p>
+                  <div class="phone-indicators-container">
+                    <span class="phone-dot active" data-img-idx="0"></span>
+                    <span class="phone-dot" data-img-idx="1"></span>
+                    <span class="phone-dot" data-img-idx="2"></span>
+                    <span class="phone-dot" data-img-idx="3"></span>
                   </div>
                 </div>
               </div>
               
               <!-- Slide 1: Feeds -->
               <div class="kfs-slide" data-slide="1">
-                <div class="slide-badge badge-f">F · Feeds 流量放大</div>
-                <h3 class="slide-title">信息流定向放量加热</h3>
-                
-                <div class="slide-meta-grid">
-                  <div class="meta-item">
-                    <span class="meta-label">核心作用</span>
-                    <span class="meta-val">商业放量，快速放大验证爆款</span>
+                <div class="slide-info-pane">
+                  <div class="slide-badge badge-f">F · Feeds 流量放大</div>
+                  <h3 class="slide-title">信息流定向放量加热</h3>
+                  
+                  <div class="slide-channels">
+                    <span class="channel-tag f-tag">#温哥华美食</span>
+                    <span class="channel-tag f-tag">#留学生生活</span>
+                    <span class="channel-tag f-tag">#海外外卖省钱</span>
                   </div>
-                  <div class="meta-item">
-                    <span class="meta-label">覆盖人群</span>
-                    <span class="meta-val">相似人群、兴趣人群</span>
+
+                  <div class="slide-meta-grid">
+                    <div class="meta-item">
+                      <span class="meta-label">核心作用</span>
+                      <span class="meta-val">商业放量加持，快速跑通验证爆款</span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-label">覆盖人群</span>
+                      <span class="meta-val">相似人群、同城兴趣与潜在人群</span>
+                    </div>
+                  </div>
+                  
+                  <div class="slide-matrix-title">核心打法</div>
+                  <div class="slide-cards-grid">
+                    <div class="slide-card">
+                      <span class="card-num">01</span>
+                      <div class="card-title">精准多维定向投流</div>
+                      <p class="card-desc">针对“温哥华”“留学生”“中餐外卖”等标签定向投放，结合日常及节日福利卡位。</p>
+                    </div>
+                    <div class="slide-card">
+                      <span class="card-num">02</span>
+                      <div class="card-title">爆款内容复制放大</div>
+                      <p class="card-desc">筛选自然流量中高互动（赞、藏）的笔记，进行投流二次加热，长效导流主页。</p>
+                    </div>
                   </div>
                 </div>
                 
-                <div class="slide-matrix-title">核心策略</div>
-                <div class="slide-cards-grid">
-                  <div class="slide-card">
-                    <div class="card-title">多维场景投放</div>
-                    <p class="card-desc">围绕日常、节日发红包、交学费等真实场景，结合功能长效投放。</p>
+                <div class="slide-phone-pane">
+                  <div class="phone-mockup">
+                    <div class="phone-screen">
+                      <div class="phone-screen-carousel" data-images="1">
+                        <div class="phone-slide-img"><img src="https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45091039" alt="Feeds信息流放大-爆款加热定向获客"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="slide-card">
-                    <div class="card-title">数据驱动加热</div>
-                    <p class="card-desc">筛选高互动（点赞/收藏）爆款笔记，进行定向算法放大。</p>
+                  <div class="phone-indicators-container" style="display:none;">
+                    <span class="phone-dot active" data-img-idx="0"></span>
                   </div>
                 </div>
               </div>
               
               <!-- Slide 2: Search -->
               <div class="kfs-slide" data-slide="2">
-                <div class="slide-badge badge-s">S · Search 搜索拦截</div>
-                <h3 class="slide-title">精准卡位承接转化</h3>
-                
-                <div class="slide-meta-grid">
-                  <div class="meta-item">
-                    <span class="meta-label">核心作用</span>
-                    <span class="meta-val">拦截主动搜索，达成闭环收口</span>
+                <div class="slide-info-pane">
+                  <div class="slide-badge badge-s">S · Search 搜索拦截</div>
+                  <h3 class="slide-title">精准卡位承接转化</h3>
+                  
+                  <div class="slide-channels">
+                    <span class="channel-tag s-tag">#温哥华中餐外卖</span>
+                    <span class="channel-tag s-tag">#多伦多奶茶外卖</span>
+                    <span class="channel-tag s-tag">#纽约饭团优惠码</span>
                   </div>
-                  <div class="meta-item">
-                    <span class="meta-label">覆盖人群</span>
-                    <span class="meta-val">高意向人群、决策边缘用户</span>
+
+                  <div class="slide-meta-grid">
+                    <div class="meta-item">
+                      <span class="meta-label">核心作用</span>
+                      <span class="meta-val">拦截高意向主动搜索，转化收口</span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-label">覆盖人群</span>
+                      <span class="meta-val">高意图、决策边缘的刚需外卖用户</span>
+                    </div>
+                  </div>
+                  
+                  <div class="slide-matrix-title">核心打法</div>
+                  <div class="slide-cards-grid">
+                    <div class="slide-card">
+                      <span class="card-num">01</span>
+                      <div class="card-title">核心词包精细卡点</div>
+                      <p class="card-desc">锁定“城市词 + 品类词 + 优惠词”（如饭团优惠码、洛杉矶中餐），首图或标题直截了当。</p>
+                    </div>
+                    <div class="slide-card">
+                      <span class="card-num">02</span>
+                      <div class="card-title">高匹配搜索内容承接</div>
+                      <p class="card-desc">用外卖省钱教程或攻略答疑，减少用户决策焦虑，在评论区和落地页高效引流。</p>
+                    </div>
                   </div>
                 </div>
                 
-                <div class="slide-matrix-title">核心策略</div>
-                <div class="slide-cards-grid">
-                  <div class="slide-card">
-                    <div class="card-title">布局高频词包</div>
-                    <p class="card-desc">卡位品类词（美国汇款）、费用词、时效词及收款词（微信收款）。</p>
+                <div class="slide-phone-pane">
+                  <div class="phone-mockup">
+                    <div class="phone-screen">
+                      <div class="phone-screen-carousel" data-images="2">
+                        <div class="phone-slide-img"><img src="https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45037909" alt="Search搜索拦截-高意图词包卡位"></div>
+                        <div class="phone-slide-img"><img src="https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45090510" alt="Search搜索拦截-问答内容与评论承接"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="slide-card">
-                    <div class="card-title">搜索直达转化</div>
-                    <p class="card-desc">用教程/问答承接流量，直引小程序，解除到账操作焦虑。</p>
+                  <div class="phone-indicators-container">
+                    <span class="phone-dot active" data-img-idx="0"></span>
+                    <span class="phone-dot" data-img-idx="1"></span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           
-          <!-- PPT Navigation Controller -->
+          <!-- PPT Controls -->
           <div class="kfs-ppt-controls">
             <button class="ppt-control-btn btn-prev" aria-label="上一页">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -2685,12 +2984,60 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         </div>
       `;
 
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = pptHTML;
-      const pptNode = tempDiv.firstElementChild;
+      const viewWrapper = document.createElement('div');
+      viewWrapper.className = 'kfs-view-wrapper show-ppt';
       
-      targetWrap.parentNode.replaceChild(pptNode, targetWrap);
+      const headerDiv = document.createElement('div');
+      headerDiv.className = 'kfs-view-header';
+      headerDiv.innerHTML = `
+        <div class="kfs-view-title-container">
+          <div class="kfs-view-title">饭团 KFS 核心打法案例</div>
+          <div class="kfs-view-subtitle">小红书 KFS 整合营销链路实操拆解</div>
+        </div>
+        <div class="kfs-view-actions">
+          <div class="view-switch-control">
+            <button class="switch-btn active" data-view="ppt">PPT 交互视图</button>
+            <button class="switch-btn" data-view="table">原始表格视图</button>
+            <span class="switch-slider"></span>
+          </div>
+        </div>
+      `;
+      viewWrapper.appendChild(headerDiv);
+      
+      const pptView = document.createElement('div');
+      pptView.className = 'kfs-ppt-view';
+      pptView.innerHTML = pptHTML;
+      viewWrapper.appendChild(pptView);
+      
+      const tableView = document.createElement('div');
+      tableView.className = 'kfs-table-view';
+      
+      targetWrap.parentNode.insertBefore(viewWrapper, targetWrap);
+      tableView.appendChild(targetWrap);
+      viewWrapper.appendChild(tableView);
 
+      // Tab Switch Logic
+      const switchControl = headerDiv.querySelector('.view-switch-control');
+      const switchBtns = headerDiv.querySelectorAll('.switch-btn');
+      switchControl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.switch-btn');
+        if (!btn || btn.classList.contains('active')) return;
+        
+        switchBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const view = btn.dataset.view;
+        if (view === 'table') {
+          viewWrapper.classList.remove('show-ppt');
+          viewWrapper.classList.add('show-table');
+        } else {
+          viewWrapper.classList.remove('show-table');
+          viewWrapper.classList.add('show-ppt');
+        }
+      });
+
+      // Slide navigation elements
+      const pptNode = pptView.querySelector('.kfs-ppt-container');
       const groups = pptNode.querySelectorAll('.pyramid-group');
       const slides = pptNode.querySelectorAll('.kfs-slide');
       const dots = pptNode.querySelectorAll('.indicator-dot');
@@ -2704,22 +3051,54 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       let currentIndex = 0;
       let playInterval = null;
       
+      // Carousel state per slide
+      const carouselIndices = { 0: 0, 1: 0, 2: 0 };
+      
+      function showCarouselImage(slideIndex, imgIdx) {
+        const slide = pptNode.querySelector(`.kfs-slide[data-slide="${slideIndex}"]`);
+        if (!slide) return;
+        const carousel = slide.querySelector('.phone-screen-carousel');
+        if (!carousel) return;
+        
+        carouselIndices[slideIndex] = imgIdx;
+        carousel.style.transform = `translateX(-${imgIdx * 100}%)`;
+        
+        const phoneDots = slide.querySelectorAll('.phone-dot');
+        phoneDots.forEach(dot => {
+          const idx = parseInt(dot.dataset.imgIdx);
+          dot.classList.toggle('active', idx === imgIdx);
+        });
+      }
+      
+      slides.forEach(slide => {
+        const slideIdx = parseInt(slide.dataset.slide);
+        const phoneDots = slide.querySelectorAll('.phone-dot');
+        phoneDots.forEach(dot => {
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            stopAutoPlay();
+            const imgIdx = parseInt(dot.dataset.imgIdx);
+            showCarouselImage(slideIdx, imgIdx);
+          });
+        });
+      });
+      
       function showSlide(index) {
         currentIndex = (index + 3) % 3;
         
-        // Update slices
         groups.forEach(group => {
           const idx = parseInt(group.dataset.index);
           group.classList.toggle('active', idx === currentIndex);
         });
         
-        // Update slides
         slides.forEach(slide => {
           const idx = parseInt(slide.dataset.slide);
           slide.classList.toggle('active', idx === currentIndex);
+          if (idx === currentIndex) {
+            showCarouselImage(idx, 0);
+          }
         });
         
-        // Update dots
         dots.forEach(dot => {
           const idx = parseInt(dot.dataset.index);
           dot.classList.toggle('active', idx === currentIndex);
@@ -2747,14 +3126,13 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
       
       function startAutoPlay() {
         stopAutoPlay();
-        playInterval = setInterval(nextSlide, 4000);
+        playInterval = setInterval(nextSlide, 5000);
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
         playText.textContent = '暂停播放';
         playBtn.classList.add('playing');
       }
       
-      // Event listeners for groups
       groups.forEach(group => {
         group.addEventListener('click', () => {
           stopAutoPlay();
@@ -2763,7 +3141,6 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         });
       });
       
-      // Event listeners for dots
       dots.forEach(dot => {
         dot.addEventListener('click', () => {
           stopAutoPlay();
@@ -2772,7 +3149,6 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         });
       });
       
-      // Arrows
       prevBtn.addEventListener('click', () => {
         stopAutoPlay();
         prevSlide();
@@ -2782,12 +3158,70 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
         nextSlide();
       });
       
-      // Play/Pause
       playBtn.addEventListener('click', () => {
         if (playInterval) {
           stopAutoPlay();
         } else {
           startAutoPlay();
+        }
+      });
+    }
+
+    function initLightbox() {
+      const modal = document.createElement('div');
+      modal.className = 'lightbox-modal';
+      modal.innerHTML = `
+        <span class="lightbox-close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </span>
+        <img class="lightbox-content" src="" alt="preview">
+        <div class="lightbox-caption"></div>
+      `;
+      document.body.appendChild(modal);
+
+      const modalImg = modal.querySelector('.lightbox-content');
+      const caption = modal.querySelector('.lightbox-caption');
+      const closeBtn = modal.querySelector('.lightbox-close');
+
+      document.addEventListener('click', (e) => {
+        const img = e.target.closest('#content img, .phone-screen img, .kfs-table-view img');
+        if (!img) return;
+        if (img.naturalWidth === 0) return;
+
+        modalImg.src = img.src;
+        let captionText = img.getAttribute('alt') || '';
+        if (captionText) {
+          caption.textContent = captionText;
+          caption.style.display = 'block';
+        } else {
+          caption.style.display = 'none';
+        }
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      const closeModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          modalImg.src = '';
+        }, 300);
+      };
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target === closeBtn) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
         }
       });
     }
@@ -2798,6 +3232,7 @@ Futu 不是单纯投开户广告，而是通过 KOL 测评、教学内容、产�
     enhancePersonas();
     enhanceKfsPyramid();
     [...content.querySelectorAll('.chapter-card')].forEach(clusterImages);
+    initLightbox();
 
     const headings = [...content.querySelectorAll('h2, h3, h4')];
     toc.innerHTML = headings.map(h => `<a class="${h.tagName.toLowerCase()}" href="#${h.id}">${h.textContent}</a>`).join('');
