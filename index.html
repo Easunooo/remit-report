@@ -2720,6 +2720,88 @@
     .matrix-compare-row.is-hot .matrix-more-hint {
       color: #7b8c9c;
     }
+    .matrix-compare-grid {
+      display: grid;
+      gap: 0;
+      overflow-x: auto;
+      border: 1px solid #e6edf5;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+    .matrix-grid-row {
+      display: grid;
+      grid-template-columns: 132px repeat(4, minmax(210px, 1fr));
+      min-width: 980px;
+      border-bottom: 1px solid #e6edf5;
+    }
+    .matrix-grid-row:last-child { border-bottom: 0; }
+    .matrix-row-label {
+      display: flex;
+      align-items: flex-start;
+      padding: 14px 12px;
+      background: #f8fbff;
+      color: #0f2850;
+      font-size: 12px;
+      font-weight: 950;
+      line-height: 1.35;
+      border-right: 1px solid #e6edf5;
+    }
+    .matrix-grid-cell {
+      min-width: 0;
+      padding: 14px 12px;
+      border-right: 1px solid #eef3f9;
+      color: #263c55;
+      font-size: 12.5px;
+      font-weight: 760;
+      line-height: 1.48;
+    }
+    .matrix-grid-cell:last-child { border-right: 0; }
+    .matrix-account-cell {
+      display: grid;
+      gap: 10px;
+      background: #f3f8ff;
+    }
+    .matrix-account-cell .matrix-brand-name { font-size: 18px; }
+    .matrix-account-cell .matrix-card-shots figure {
+      flex-basis: 110px;
+      width: 110px;
+    }
+    .matrix-account-cell .matrix-card-shots img {
+      width: 110px;
+      height: 146px;
+      max-width: 110px;
+      max-height: 146px;
+    }
+    .matrix-follower-cell {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+    }
+    .matrix-follower-value {
+      color: #0f2850;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+    .matrix-follower-bar {
+      width: 100%;
+      height: 8px;
+      border-radius: 99px;
+      background: #e8f2ff;
+      overflow: hidden;
+    }
+    .matrix-follower-bar span {
+      display: block;
+      width: var(--p);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+    .matrix-grid-row.is-hot-row .matrix-grid-cell { background: #f8fbff; }
+    .matrix-grid-row.is-type-row .matrix-grid-cell {
+      color: #30465d;
+      font-weight: 760;
+    }
     @media (max-width: 1180px) {
       .matrix-brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
@@ -3271,21 +3353,6 @@
       font-weight: 720;
       line-height: 1.5;
     }
-    .section5-source-details {
-      margin-top: 16px;
-      border: 1px dashed #d3dfec;
-      background: rgba(255, 255, 255, .7);
-    }
-    .section5-source-details > summary {
-      padding: 10px 12px;
-      color: var(--blue-deep);
-      font-size: 12.5px;
-      font-weight: 900;
-      cursor: pointer;
-    }
-    .section5-source-details .table-wrap {
-      margin: 0;
-    }
     .section5-kfs-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3627,11 +3694,103 @@
       font-weight: 720;
       line-height: 1.52;
     }
+    .section5-priority-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .section5-priority-card {
+      --priority-color: #0052d9;
+      --priority-soft: rgba(0, 82, 217, .08);
+      display: grid;
+      grid-template-columns: 96px 154px minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 14px;
+      align-items: stretch;
+      padding: 15px;
+      border: 1px solid rgba(0, 82, 217, .14);
+      border-left: 6px solid var(--priority-color);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(15, 35, 55, .035);
+    }
+    .section5-priority-rank {
+      display: grid;
+      align-content: center;
+      justify-items: start;
+      gap: 6px;
+    }
+    .section5-priority-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 52px;
+      padding: 7px 10px;
+      border-radius: 12px;
+      background: var(--priority-color);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: .02em;
+    }
+    .section5-priority-name {
+      color: #10243c;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    .section5-priority-share {
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 11px 12px;
+      border-radius: 11px;
+      background: var(--priority-soft);
+    }
+    .section5-priority-percent {
+      color: var(--priority-color);
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 1;
+    }
+    .section5-priority-meter {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(15, 35, 55, .08);
+    }
+    .section5-priority-meter span {
+      display: block;
+      width: var(--priority-width);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--priority-color);
+    }
+    .section5-priority-block {
+      min-width: 0;
+      display: grid;
+      align-content: start;
+      gap: 5px;
+      padding-top: 2px;
+    }
+    .section5-priority-label {
+      color: #7a8ba0;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .04em;
+    }
+    .section5-priority-text {
+      color: #273c54;
+      font-size: 12.8px;
+      font-weight: 730;
+      line-height: 1.52;
+    }
     @media (max-width: 980px) {
       .section5-platform-grid,
       .section5-package-grid,
       .section5-journey-grid,
       .section5-kfs-grid {
+        grid-template-columns: 1fr;
+      }
+      .section5-priority-card {
         grid-template-columns: 1fr;
       }
       .section5-journey-card::before,
@@ -4171,16 +4330,7 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 
 执行顺序也按 K / S / F 展开：先用 KOL / KOC 跑出每个内容包的样本，再把高互动内容拆成搜索词包，最后只放大收藏、评论、私信表现明确的内容。
 
-:::details 补充：用户画像、素材参考与关键词拆分
-
-用户画像拆分保留为执行参考，用于确认达人选择、内容口吻和承接动作。
-
-| **用户画像** | **核心决策问题** | **更适合的平台** | **更适合的内容形式** | **投流表达重点** |
-| - | - | - | - | - |
-| **蓝领 / Family Supporter** | 工资怎么安全汇给父母？家人会不会收？ | 快手、抖音、视频号、本地社群 | 口播短视频、全流程教学、发薪日提醒 | 低门槛、中文帮助、到账确定、家人好操作 |
-| **白领 / Efficient Professional** | 哪个平台更便宜、更快、更透明？ | 小红书、Google SEO、YouTube / B站 | 平台对比笔记、费用拆解、短视频 FAQ、长视频测评 | 汇率、手续费、到账时间、流程透明 |
-| **年轻用户 / Occasional Young Remitter** | 怎么给微信、国内 App、红包、网购快速用钱？ | 小红书、抖音、视频号 | 图文攻略、截图教程、30 秒短视频 | 微信收款、即时到账、小额高频、到账即用 |
-| **中产资产型 / Asset Strategist** | 大额汇款安全吗？限额、合规、异常怎么处理？ | 小红书、YouTube / B站、财经 KOL、Web SEO | 长图文、深度测评、财经科普、FAQ 长页 | 安全、合规、高限额、风控透明、异常处理 |
+:::details 补充：素材参考与关键词拆分
 
 现有案例图可以作为两类投流素材参考：一类是**品牌解释型内容**，适合财经 / 长视频 KOL 用来讲清“钱如何跨境流动”和微汇款角色；另一类是**地区教程型内容**，适合小红书、抖音、快手、视频号用当地达人讲清具体国家的操作步骤。
 
@@ -4216,16 +4366,13 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
 
 :::details 补充：内容教育如何承接前面的入口建设
 
-这一部分对应第 4 章的第二个判断：内容主题决定比较效率。微汇款的教育内容优先围绕用户最常比较的四类问题组织。
+内容教育不再单独扩展主题表，只补充“谁来讲”的分工：
 
-| **高意图主题** | **用户要确认什么** | **微汇款应该讲什么** | **适合承接形式** |
-| - | - | - | - |
-| 汇率 | 现在汇划不划算，能多到多少 | 实时汇率、到手金额试算、汇率提醒、常见币种波动解释 | 搜索页、短视频、图文笔记 |
-| 本地政策 / 规则 | 当地变化会不会影响汇款安排 | 报税季、签证、节假日到账规则、工资卡和本地账户相关说明 | 攻略图文、FAQ、城市 / 国家专题内容 |
-| 操作教程 | 我怎么汇，家人怎么收 | 微信收款步骤、银行卡 / 支付宝收款路径、身份验证和常见报错处理 | 截图教程、录屏视频、评论区答疑 |
-| 安全风险 | 钱是否安全，出了问题谁负责 | 合作机构关系、监管与风控机制、异常处理、到账失败与客服协助 | 品牌解释页、KOL 深度测评、FAQ 长页 |
-
-四类主题讲清之后，还要把“谁来讲”一起设计清楚。官方账号负责稳定输出规则和标准答案，达人 / KOC 负责演示真实操作过程，搜索页和落地页负责承接高意图问题与转化动作。
+| **承接主体** | **负责内容** | **转化动作** |
+| - | - | - |
+| 官方账号 | 稳定输出规则、路径和标准答案 | FAQ、评论区置顶、私信关键词 |
+| 达人 / KOC | 演示真实操作、到账结果和使用场景 | 截图教程、录屏视频、亲测笔记 |
+| 搜索页 / 落地页 | 承接费用、到账、收款、异常处理等高意图问题 | 试算入口、客服咨询、长页说明 |
 :::
 
 ### 5.3 场景补强：和本地生活平台联合获客
@@ -4248,6 +4395,17 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
 | **发薪日** | 固定给国内父母或家人汇钱 | **发薪日前推送提醒**、**复汇入口** |
 | **节日节点** | 春节、中秋等家庭转账需求 | **推出亲情主题活动，强调微信亲人社交 x 汇款的属性，形成汇款业务的“支付红包效应”**<br/><br/>示例：<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45121587) |
 | **亲友推荐** | 海外华人圈层信任强 | **重启裂变推荐奖励，作为长期激励。引导用户推荐同事和亲友使用，做投流增长期配合，加速用户增长冲量。**<br/><br/>![Clipboard_Screenshot_1779366768.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45121542) |
+
+### 5.5 优先级收尾：资源先打主链路
+
+第五章最后收束成四个优先级。内容资源先投向能同时解决“看见、搜索、信任”的动作，再补充外围场景和复汇运营。
+
+| **优先级** | **内容资源占比** | **主动作** | **优先原因** | **对应模块** |
+| - | - | - | - | - |
+| **P0 核心主战场** | **45%** | 小红书官方号 / 地区矩阵 + KOC 打样 + Search 词包 | 同时覆盖搜索、教育、收藏、私信，是最直接的内容获客阵地 | 5.2 小红书主账号；费用比较包 / 微信到账包 |
+| **P1 场景突破** | **30%** | 韩国 / 日本务工场景的快手、抖音、视频号达人教程 | 用户问题具体，教程信任强，适合从发薪寄家切入首汇 | 5.2 平台打法；发薪寄家包 |
+| **P2 信任背书** | **15%** | YouTube / B站 / 财经 KOL 长内容 + 安全合规 FAQ | 解决大额、安全、合规疑虑，提升品牌解释能力 | 5.2 安全合规包 |
+| **P3 外围补强** | **10%** | 饭团 / Weee! / 本地生活平台联合权益 + 老客复汇提醒 | 扩大场景曝光，承接节日、发薪日和亲友推荐 | 5.3 场景补强；5.4 运营承接 |
 
 </script>
 
@@ -6130,42 +6288,46 @@ function enhanceKfsPyramid() {
 
       const panelsHTML = platforms.map((platform, platformIndex) => {
         const summary = platformSummary[platform.name] || { role: '平台观察', signal: '账号矩阵与内容主题存在差异', action: '按平台用户结构配置内容与讲述者' };
-        const brandCards = platform.brands.map(brand => {
-          const fans = getField(brand, ['关注']) || '-';
-          const target = getField(brand, ['目标用户']) || '-';
-          const coverage = getField(brand, ['覆盖情况', '覆盖用户']) || '-';
-          const accountContent = getField(brand, ['账号内容']) || '-';
-          const hotContent = getField(brand, ['热帖内容']) || '无';
-          const tags = getField(brand, ['热点标签']) || '-';
-          const page = getField(brand, ['页面']);
+        const brandItems = platform.brands.map(brand => ({
+          name: brand.name,
+          key: brand.key,
+          fans: getField(brand, ['关注']) || '-',
+          target: getField(brand, ['目标用户']) || '-',
+          coverage: getField(brand, ['覆盖情况', '覆盖用户']) || '-',
+          accountContent: getField(brand, ['账号内容']) || '-',
+          hotContent: getField(brand, ['热帖内容']) || '无',
+          tags: getField(brand, ['热点标签']) || '-',
+          page: getField(brand, ['页面'])
+        }));
+        const maxFollowers = Math.max(...brandItems.map(item => parseFollowers(item.fans)), 1);
 
+        const renderGridRow = (label, cells, rowClass = '') => `
+          <div class="matrix-grid-row ${rowClass}">
+            <div class="matrix-row-label">${label}</div>
+            ${cells.map(cell => `<div class="matrix-grid-cell">${cell}</div>`).join('')}
+          </div>
+        `;
+
+        const accountRow = renderGridRow('账号', brandItems.map(item => `
+          <div class="matrix-account-cell">
+            <div class="matrix-brand-name">${escapeHTML(item.name)}</div>
+            ${renderThumbs(item.page)}
+          </div>
+        `));
+        const followerRow = renderGridRow('关注规模', brandItems.map(item => {
+          const value = parseFollowers(item.fans);
+          const width = Math.max(5, Math.round(value / maxFollowers * 100));
           return `
-            <article class="matrix-brand-card ${brand.key}">
-              <div class="matrix-brand-card-header">
-                <div class="matrix-card-topline">
-                  <div class="matrix-brand-name">${escapeHTML(brand.name)}</div>
-                  <div class="matrix-fan-badge">关注：${truncatePlain(toText(fans), 24)}</div>
-                </div>
-                ${renderThumbs(page)}
-              </div>
-              <div class="matrix-brand-card-body">
-                ${renderAudienceFlow(target, coverage)}
-                <div class="matrix-compare-row">
-                  <span class="matrix-compare-label">内容方向</span>
-                  <div class="matrix-compare-value">${renderCompactList(accountContent, 4, 120)}</div>
-                </div>
-                <div class="matrix-compare-row is-hot">
-                  <span class="matrix-compare-label">Top 热帖</span>
-                  <div class="matrix-compare-value">${renderFullList(hotContent)}</div>
-                </div>
-                <div class="matrix-compare-row">
-                  <span class="matrix-compare-label">热帖内容类型</span>
-                  <div class="matrix-compare-value">${renderTypeText(tags)}</div>
-                </div>
-              </div>
-            </article>
+            <div class="matrix-follower-cell">
+              <div class="matrix-follower-value">${escapeHTML(toText(item.fans) || '-')}</div>
+              <div class="matrix-follower-bar" aria-hidden="true"><span style="--p:${width}%"></span></div>
+            </div>
           `;
-        }).join('');
+        }));
+        const audienceRow = renderGridRow('定位 → 覆盖', brandItems.map(item => renderAudienceFlow(item.target, item.coverage)));
+        const contentRow = renderGridRow('内容方向', brandItems.map(item => renderCompactList(item.accountContent, 4, 120)));
+        const hotRow = renderGridRow('Top 热帖', brandItems.map(item => renderFullList(item.hotContent)), 'is-hot-row');
+        const typeRow = renderGridRow('热帖内容类型', brandItems.map(item => renderTypeText(item.tags)), 'is-type-row');
 
         return `
           <section class="matrix-platform-panel" data-platform="${platform.key}"${platformIndex === 0 ? '' : ' hidden'}>
@@ -6183,7 +6345,14 @@ function enhanceKfsPyramid() {
                 <div class="matrix-summary-value">${summary.action}</div>
               </div>
             </div>
-            <div class="matrix-brand-grid">${brandCards}</div>
+            <div class="matrix-compare-grid">
+              ${accountRow}
+              ${followerRow}
+              ${audienceRow}
+              ${contentRow}
+              ${hotRow}
+              ${typeRow}
+            </div>
           </section>
         `;
       }).join('');
@@ -6427,6 +6596,11 @@ function enhanceKfsPyramid() {
 
       function platformSvg(name) {
         const clean = name.toLowerCase();
+        const aliases = clean.includes('视频号') ? ['微信'] : clean.includes('youtube') || clean.includes('b站') || clean.includes('播客') ? ['YouTube'] : [name];
+        const sourceBadge = [...content.querySelectorAll('.media-badge')]
+          .find(badge => aliases.some(alias => badge.textContent.includes(alias)));
+        const sourceSvg = sourceBadge?.querySelector('svg');
+        if (sourceSvg) return sourceSvg.cloneNode(true).outerHTML;
         if (clean.includes('小红书')) {
           return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#FF2442"></rect><path d="M6.5 7.6h11v2.1h-4.2v1.7h3.7v2h-3.7v3h4.7v2.1H6v-2.1h4.8v-3H7.1v-2h3.7V9.7H6.5V7.6z" fill="#fff"></path></svg>';
         }
@@ -6526,17 +6700,13 @@ function enhanceKfsPyramid() {
           <div class="section5-visual-header">
             <div>
               <h4 class="section5-visual-title">KFS 投入顺序：K 建心智、S 接需求、F 后放量</h4>
-              <p class="section5-visual-subtitle">把原表格拆成三张任务卡，先看每段在链路里承担什么角色。</p>
+              <p class="section5-visual-subtitle">三张任务卡对应三段角色，先看每段在链路里承担什么。</p>
             </div>
           </div>
           <div class="section5-kfs-grid">${cards}</div>
         `;
-        const details = document.createElement('details');
-        details.className = 'section5-source-details';
-        details.innerHTML = '<summary>查看原始 KFS 表格</summary>';
         targetWrap.parentNode.insertBefore(wrapper, targetWrap);
-        details.appendChild(targetWrap);
-        wrapper.appendChild(details);
+        targetWrap.remove();
       }
 
       function enhanceJourneyMap() {
@@ -6658,12 +6828,8 @@ function enhanceKfsPyramid() {
           </div>
           <div class="section5-platform-grid">${cards}</div>
         `;
-        const details = document.createElement('details');
-        details.className = 'section5-source-details';
-        details.innerHTML = '<summary>查看完整平台投流表格</summary>';
         targetWrap.parentNode.insertBefore(wrapper, targetWrap);
-        details.appendChild(targetWrap);
-        wrapper.appendChild(details);
+        targetWrap.remove();
       }
 
       function enhanceContentPackageTable() {
@@ -6724,18 +6890,75 @@ function enhanceKfsPyramid() {
           </div>
           <div class="section5-package-grid">${cards}</div>
         `;
-        const details = document.createElement('details');
-        details.className = 'section5-source-details';
-        details.innerHTML = '<summary>查看内容包执行表</summary>';
         targetWrap.parentNode.insertBefore(wrapper, targetWrap);
-        details.appendChild(targetWrap);
-        wrapper.appendChild(details);
+        targetWrap.remove();
+      }
+
+      function enhancePriorityTable() {
+        const targetWrap = wraps.find(wrap => {
+          const table = wrap.querySelector('table');
+          if (!table || wrap.closest('.section5-visual-wrapper')) return false;
+          const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+          return headers.includes('优先级') && headers.includes('内容资源占比') && headers.includes('主动作') && headers.includes('优先原因');
+        });
+        if (!targetWrap) return;
+        const rows = [...targetWrap.querySelectorAll('tbody tr')];
+        const accents = [
+          { color: '#0052d9', soft: 'rgba(0, 82, 217, .08)' },
+          { color: '#ff2442', soft: 'rgba(255, 36, 66, .08)' },
+          { color: '#8b5cf6', soft: 'rgba(139, 92, 246, .08)' },
+          { color: '#09bb07', soft: 'rgba(9, 187, 7, .08)' }
+        ];
+        const cards = rows.map((row, index) => {
+          const cells = row.cells;
+          const style = accents[index] || accents[0];
+          const priorityText = textFromHTML(cells[0]?.innerHTML || '');
+          const rank = priorityText.match(/^P\d/)?.[0] || `P${index}`;
+          const name = priorityText.replace(rank, '').trim();
+          const share = textFromHTML(cells[1]?.innerHTML || '');
+          const pct = Math.max(0, Math.min(100, parseFloat(share.replace(/[^\d.]/g, '')) || 0));
+          return `
+            <article class="section5-priority-card" style="--priority-color:${style.color};--priority-soft:${style.soft};--priority-width:${pct}%">
+              <div class="section5-priority-rank">
+                <span class="section5-priority-pill">${escapeHTML(rank)}</span>
+                <span class="section5-priority-name">${escapeHTML(name)}</span>
+              </div>
+              <div class="section5-priority-share">
+                <div class="section5-priority-percent">${escapeHTML(share)}</div>
+                <div class="section5-priority-meter"><span></span></div>
+              </div>
+              <div class="section5-priority-block">
+                <span class="section5-priority-label">主动作</span>
+                <div class="section5-priority-text">${cells[2]?.innerHTML || ''}</div>
+              </div>
+              <div class="section5-priority-block">
+                <span class="section5-priority-label">优先原因 / 对应模块</span>
+                <div class="section5-priority-text">${cells[3]?.innerHTML || ''}<br>${cells[4]?.innerHTML || ''}</div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'section5-visual-wrapper section5-priority-wrapper';
+        wrapper.innerHTML = `
+          <div class="section5-visual-header">
+            <div>
+              <h4 class="section5-visual-title">优先级收尾：P0 打透主入口，P3 再做外围补强</h4>
+              <p class="section5-visual-subtitle">内容资源先投主链路，再投入场景突破、信任背书和复汇运营。</p>
+            </div>
+          </div>
+          <div class="section5-priority-grid">${cards}</div>
+        `;
+        targetWrap.parentNode.insertBefore(wrapper, targetWrap);
+        targetWrap.remove();
       }
 
       enhanceJourneyMap();
       enhanceKfsTable();
       enhancePlatformTable();
       enhanceContentPackageTable();
+      enhancePriorityTable();
     }
 
     function initLightbox() {
