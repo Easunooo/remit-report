@@ -233,6 +233,8 @@
       color: var(--blue-deep);
     }
     .collapsible-question[open] summary::after { content: "−"; }
+    .collapsible-question.has-matrix-view,
+    .collapsible-question.has-creator-search-view { overflow: visible; }
     .collapsible-body {
       padding: 0 22px 22px;
       border-top: 1px solid rgba(0, 82, 217, .16);
@@ -386,7 +388,9 @@
       background: #f1f6fc;
     }
     figure.is-missing { display: none; }
-    .chapter-card > .persona-view-wrapper {
+    .chapter-card > .persona-view-wrapper,
+    .chapter-card > .matrix-view-wrapper,
+    .collapsible-body > .matrix-view-wrapper {
       width: min(calc(100vw - 64px), var(--table-max-width));
       max-width: none;
       margin-left: 50%;
@@ -399,7 +403,9 @@
       margin-left: 50%;
       transform: translateX(-50%);
     }
-    .chapter-card > .persona-view-wrapper { margin-top: 34px; margin-bottom: 30px; }
+    .chapter-card > .persona-view-wrapper,
+    .chapter-card > .matrix-view-wrapper,
+    .collapsible-body > .matrix-view-wrapper { margin-top: 34px; margin-bottom: 30px; }
     .chapter-card > figure img { width: auto; max-width: 100%; margin: 0 auto; }
     .chapter-card > .image-cluster figure { transform: none; }
     .chapter-card > .image-cluster img { width: 100%; max-width: 100%; }
@@ -535,6 +541,8 @@
       h3 { padding: 0; font-size: 19px; }
       h4 { font-size: 17.5px; }
       .chapter-card > .persona-view-wrapper,
+      .chapter-card > .matrix-view-wrapper,
+      .collapsible-body > .matrix-view-wrapper,
       .chapter-card > figure,
       .chapter-card > .image-cluster { width: calc(100vw - 36px); }
       .table-wrap { border-radius: 4px; }
@@ -1575,7 +1583,6 @@
       transition: transform 0.3s ease;
     }
     .kfs-image-card:hover {
-      transform: translateY(-4px);
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
       border-color: var(--blue);
     }
@@ -2372,6 +2379,1283 @@
         display: none;
       }
     }
+
+    /* Platform matrix evidence interactive view */
+    .matrix-view-wrapper {
+      margin: 28px 0 8px;
+      padding: 24px;
+      border: 1px solid rgba(0, 82, 217, .12);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 8px 26px rgba(32, 39, 43, .04);
+    }
+    .matrix-view-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eef3f9;
+    }
+    .matrix-view-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #103254;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+    }
+    .matrix-view-title::before {
+      content: "";
+      width: 5px;
+      height: 20px;
+      border-radius: 99px;
+      background: var(--blue);
+    }
+    .matrix-view-subtitle {
+      margin-top: 4px;
+      padding-left: 15px;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+    .matrix-view-wrapper.show-cards .matrix-cards-view,
+    .matrix-view-wrapper.show-table .matrix-table-view { display: block; }
+    .matrix-view-wrapper.show-cards .matrix-table-view,
+    .matrix-view-wrapper.show-table .matrix-cards-view { display: none; }
+    .matrix-view-wrapper.show-table .switch-slider { transform: translateX(100%); }
+    .matrix-view-wrapper .table-wrap {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      transform: none !important;
+    }
+    .matrix-evidence-note {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0, 82, 217, .14);
+      border-radius: 10px;
+      background: #f8fbff;
+      color: #25405e;
+      font-size: 13.5px;
+      font-weight: 750;
+      line-height: 1.55;
+    }
+    .matrix-evidence-pill {
+      border-radius: 99px;
+      background: var(--blue);
+      color: #fff;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .matrix-platform-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .matrix-platform-tab {
+      border: 1px solid #dbe6f3;
+      border-radius: 99px;
+      background: #f8fbff;
+      color: #4d6174;
+      cursor: pointer;
+      padding: 7px 13px;
+      font-size: 12.5px;
+      font-weight: 850;
+      transition: all .18s ease;
+    }
+    .matrix-platform-tab:hover,
+    .matrix-platform-tab.active {
+      border-color: rgba(0, 82, 217, .36);
+      background: var(--blue-soft);
+      color: var(--blue-deep);
+    }
+    .matrix-platform-panel[hidden] { display: none !important; }
+    .matrix-platform-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .matrix-summary-card {
+      border: 1px solid #edf2f7;
+      border-radius: 10px;
+      background: #f8fbff;
+      padding: 12px 14px;
+    }
+    .matrix-summary-label {
+      display: block;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      margin-bottom: 5px;
+    }
+    .matrix-summary-value {
+      color: #12304f;
+      font-size: 14px;
+      font-weight: 880;
+      line-height: 1.45;
+    }
+    .matrix-brand-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+    .matrix-brand-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgba(0, 82, 217, .14);
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(32, 39, 43, .035);
+    }
+    .matrix-brand-card-header {
+      display: grid;
+      gap: 9px;
+      padding: 14px 14px 13px;
+      background: #f3f8ff;
+      border-bottom: 1px solid #e6edf5;
+    }
+    .matrix-brand-name {
+      color: #0f2850;
+      font-size: 17px;
+      font-weight: 900;
+      text-transform: capitalize;
+    }
+    .matrix-card-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .matrix-fan-badge {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 99px;
+      background: rgba(0, 82, 217, .10);
+      color: var(--blue-deep);
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+    .matrix-brand-card-body {
+      display: grid;
+      gap: 0;
+      padding: 0 14px 12px;
+    }
+    .matrix-compare-row {
+      display: grid;
+      gap: 5px;
+      padding: 11px 0;
+      border-bottom: 1px solid #eef3f9;
+    }
+    .matrix-compare-row:last-child { border-bottom: 0; }
+    .matrix-audience-flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+      gap: 8px;
+      align-items: stretch;
+      padding: 12px 0;
+      border-bottom: 1px solid #eef3f9;
+    }
+    .matrix-audience-box {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+    .matrix-audience-box.is-result {
+      background: #f8fbff;
+    }
+    .matrix-audience-label {
+      color: #64748b;
+      font-size: 10.5px;
+      font-weight: 950;
+      letter-spacing: .04em;
+    }
+    .matrix-audience-text {
+      color: #263c55;
+      font-size: 12.2px;
+      font-weight: 780;
+      line-height: 1.42;
+    }
+    .matrix-audience-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--blue-deep);
+      font-size: 18px;
+      font-weight: 950;
+    }
+    .matrix-coverage-tone {
+      width: fit-content;
+      border-radius: 99px;
+      padding: 3px 8px;
+      font-size: 10.5px;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+    .matrix-coverage-tone.is-strong { background: rgba(22, 163, 74, .10); color: #15803d; }
+    .matrix-coverage-tone.is-medium { background: rgba(245, 158, 11, .13); color: #a16207; }
+    .matrix-coverage-tone.is-weak { background: rgba(239, 68, 68, .10); color: #b91c1c; }
+    .matrix-card-shots {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-top: 2px;
+      scrollbar-width: thin;
+    }
+    .matrix-card-shots figure {
+      flex: 0 0 92px;
+      width: 92px;
+      margin: 0;
+      transform: none;
+      background: transparent;
+      box-shadow: none;
+    }
+    .matrix-card-shots img {
+      width: 92px;
+      height: 122px;
+      max-width: 92px;
+      max-height: 122px;
+      object-fit: cover;
+      object-position: top center;
+      border: 1px solid #dbe6f3;
+      border-radius: 7px;
+      cursor: zoom-in;
+    }
+    .matrix-compare-row.is-hot {
+      margin: 0 -14px;
+      padding: 12px 14px;
+      background: #f8fbff;
+      border-top: 1px solid #e6edf5;
+      border-bottom: 1px solid #e6edf5;
+    }
+    .matrix-compare-label {
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+    .matrix-compare-value {
+      color: #263c55;
+      font-size: 12.5px;
+      font-weight: 760;
+      line-height: 1.48;
+    }
+    .matrix-compare-value.muted {
+      color: #52677e;
+      font-size: 12px;
+      font-weight: 720;
+    }
+    .matrix-compare-row.is-hot .matrix-compare-label {
+      color: var(--blue-deep);
+    }
+    .matrix-compare-row.is-hot .matrix-compare-value {
+      color: #263c55;
+    }
+    .matrix-compact-list {
+      display: grid;
+      gap: 6px;
+    }
+    .matrix-compact-item {
+      display: block;
+      padding-left: 10px;
+      border-left: 2px solid #dbe6f3;
+    }
+    .matrix-hot-list {
+      display: grid;
+      gap: 8px;
+    }
+    .matrix-hot-item {
+      display: grid;
+      gap: 4px;
+      padding: 9px 10px;
+      border: 1px solid #e6edf5;
+      border-radius: 7px;
+      background: #ffffff;
+    }
+    .matrix-hot-rank {
+      color: var(--blue-deep);
+      font-size: 11px;
+      font-weight: 950;
+    }
+    .matrix-hot-title {
+      color: #263c55;
+      font-size: 12.5px;
+      font-weight: 780;
+      line-height: 1.42;
+    }
+    .matrix-hot-metric {
+      width: fit-content;
+      border-radius: 99px;
+      background: rgba(0, 82, 217, .09);
+      color: var(--blue-deep);
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    .matrix-more-hint {
+      color: #7b8c9c;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .matrix-compare-row.is-hot .matrix-more-hint {
+      color: #7b8c9c;
+    }
+    @media (max-width: 1180px) {
+      .matrix-brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 980px) {
+      .matrix-platform-summary { grid-template-columns: 1fr; }
+      .matrix-evidence-note { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .matrix-view-wrapper { padding: 18px; }
+      .matrix-view-header { flex-direction: column; align-items: flex-start; }
+      .matrix-brand-grid { grid-template-columns: 1fr; }
+      .matrix-audience-flow { grid-template-columns: 1fr; }
+      .matrix-audience-arrow { transform: rotate(90deg); }
+    }
+
+    /* Creator search evidence interactive view */
+    .creator-search-view-wrapper {
+      margin: 28px 0 8px;
+      padding: 24px;
+      border: 1px solid rgba(0, 82, 217, .12);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 8px 26px rgba(32, 39, 43, .04);
+    }
+    .creator-search-view-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eef3f9;
+    }
+    .creator-search-view-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #103254;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -.02em;
+    }
+    .creator-search-view-title::before {
+      content: "";
+      width: 5px;
+      height: 20px;
+      border-radius: 99px;
+      background: var(--blue);
+    }
+    .creator-search-view-subtitle {
+      margin-top: 4px;
+      padding-left: 15px;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+    .creator-search-view-wrapper.show-cards .creator-search-cards-view,
+    .creator-search-view-wrapper.show-table .creator-search-table-view { display: block; }
+    .creator-search-view-wrapper.show-cards .creator-search-table-view,
+    .creator-search-view-wrapper.show-table .creator-search-cards-view { display: none; }
+    .creator-search-view-wrapper.show-table .switch-slider { transform: translateX(100%); }
+    .creator-search-view-wrapper .table-wrap {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      transform: none !important;
+    }
+    .creator-search-platform-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .creator-search-tab {
+      border: 1px solid #dbe6f3;
+      border-radius: 99px;
+      background: #f8fbff;
+      color: #4d6174;
+      cursor: pointer;
+      padding: 7px 13px;
+      font-size: 12.5px;
+      font-weight: 850;
+      transition: all .18s ease;
+    }
+    .creator-search-tab:hover,
+    .creator-search-tab.active {
+      border-color: rgba(0, 82, 217, .36);
+      background: var(--blue-soft);
+      color: var(--blue-deep);
+    }
+    .creator-search-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .creator-search-card {
+      overflow: hidden;
+      border: 1px solid #e6edf5;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(32, 39, 43, .035);
+    }
+    .creator-search-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, #f5faff, #eef6ff);
+      border-bottom: 1px solid #e6edf5;
+    }
+    .creator-search-platform-name {
+      color: #0f2850;
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .creator-search-badge {
+      flex-shrink: 0;
+      border-radius: 99px;
+      background: rgba(0, 82, 217, .10);
+      color: var(--blue-deep);
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .creator-search-card-body {
+      display: grid;
+      gap: 14px;
+      padding: 16px 18px 18px;
+    }
+    .creator-search-shot-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .creator-search-shot {
+      min-width: 0;
+      border: 1px solid #edf2f7;
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 10px;
+    }
+    .creator-search-shot-label,
+    .creator-search-field-label {
+      display: block;
+      margin-bottom: 7px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+    .creator-search-shot figure {
+      width: 100%;
+      margin: 0;
+      transform: none;
+      background: transparent;
+    }
+    .creator-search-shot img {
+      width: 100%;
+      max-width: 100%;
+      max-height: 220px;
+      border-radius: 6px;
+      object-fit: contain;
+      cursor: zoom-in;
+    }
+    .creator-search-hot-text {
+      margin-bottom: 8px;
+      color: #1f2f3f;
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+    .creator-search-field {
+      border: 1px solid #edf2f7;
+      border-radius: 8px;
+      background: #fbfdff;
+      padding: 12px 14px;
+    }
+    .creator-search-field-content {
+      color: #334155;
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+    .creator-search-conclusion {
+      border-color: rgba(0, 82, 217, .16);
+      background: linear-gradient(135deg, rgba(0, 82, 217, .06), rgba(232, 242, 255, .72));
+    }
+    .creator-search-conclusion .creator-search-field-content {
+      color: #1e3a5f;
+      font-weight: 760;
+    }
+    @media (max-width: 860px) {
+      .creator-search-view-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .creator-search-card-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 580px) {
+      .creator-search-view-wrapper { padding: 18px; }
+      .creator-search-shot-row { grid-template-columns: 1fr; }
+      .creator-search-view-wrapper .view-switch-control { align-self: flex-start; }
+    }
+
+    .creator-search-evidence-note {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0, 82, 217, .14);
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(0, 82, 217, .06), rgba(255, 255, 255, .9));
+      color: #25405e;
+      font-size: 13.5px;
+      font-weight: 750;
+      line-height: 1.55;
+    }
+    .creator-search-evidence-note strong {
+      color: var(--blue-deep);
+    }
+    .creator-search-evidence-pill {
+      border-radius: 99px;
+      background: var(--blue);
+      color: #fff;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .creator-search-card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(320px, 1fr));
+      gap: 14px;
+      min-width: 1360px;
+    }
+    .creator-search-cards-view {
+      overflow: visible;
+      padding: 0 2px 8px;
+    }
+    .creator-search-card[hidden] {
+      display: none !important;
+    }
+    .creator-search-card {
+      border-color: rgba(0, 82, 217, .16);
+      box-shadow: 0 10px 28px rgba(32, 39, 43, .055);
+    }
+    .creator-search-card-header {
+      padding: 18px 22px;
+      background: linear-gradient(135deg, #eaf4ff, #ffffff);
+    }
+    .creator-search-card-body {
+      grid-template-columns: minmax(340px, .92fr) minmax(360px, 1.08fr);
+      gap: 18px;
+      padding: 18px;
+    }
+    .creator-search-visual-column,
+    .creator-search-analysis-column {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+    .creator-search-shot-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .creator-search-shot {
+      padding: 14px;
+      background: #f8fbff;
+    }
+    .creator-search-shot.is-hot {
+      border-color: rgba(0, 82, 217, .22);
+      background: #ffffff;
+    }
+    .creator-search-shot-label,
+    .creator-search-field-label {
+      color: #52677e;
+      font-size: 11.5px;
+    }
+    .creator-search-shot img {
+      max-height: 260px;
+    }
+    .creator-search-hot-text {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 4px 9px;
+      border-radius: 99px;
+      background: rgba(0, 82, 217, .1);
+      color: var(--blue-deep);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .creator-search-hot-analysis {
+      border-color: rgba(0, 82, 217, .24);
+      background: linear-gradient(135deg, #0f2850, #17477a);
+    }
+    .creator-search-hot-analysis .creator-search-field-label,
+    .creator-search-hot-analysis .creator-search-field-content,
+    .creator-search-hot-analysis .creator-search-field-content strong {
+      color: #ffffff;
+    }
+    .creator-search-hot-analysis .creator-search-field-label {
+      opacity: .86;
+    }
+    .creator-search-hot-analysis .creator-search-field-content {
+      font-size: 15px;
+      font-weight: 820;
+      line-height: 1.65;
+    }
+    .creator-search-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .creator-search-chip {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #dbe6f3;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #30465d;
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+    .creator-search-insight-list {
+      display: grid;
+      gap: 8px;
+    }
+    .creator-search-insight-row {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 9px 10px;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, .62);
+    }
+    .creator-search-insight-key {
+      color: var(--blue-deep);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+    .creator-search-insight-value {
+      color: #263c55;
+      font-size: 13px;
+      font-weight: 760;
+      line-height: 1.5;
+    }
+    @media (max-width: 980px) {
+      .creator-search-card-body {
+        grid-template-columns: 1fr;
+      }
+      .creator-search-evidence-note {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 580px) {
+      .creator-search-insight-row {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+    }
+    /* Simplified flat view for creator search evidence */
+    .creator-search-view-wrapper {
+      width: min(calc(100vw - 56px), 1720px);
+      max-width: none;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      padding: 18px;
+      border-radius: 10px;
+      box-shadow: none;
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-gutter: stable;
+      scroll-padding-inline: 18px;
+    }
+    .creator-search-view-header {
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+    }
+    .creator-search-view-subtitle {
+      padding-left: 15px;
+      font-size: 13px;
+    }
+    .creator-search-platform-tabs {
+      margin-bottom: 12px;
+    }
+    .creator-search-flat-card {
+      border-radius: 8px;
+      box-shadow: none;
+    }
+    .creator-search-flat-card .creator-search-card-header {
+      padding: 12px;
+      background: #f7fbff;
+      border-bottom: 1px solid #e5edf7;
+    }
+    .creator-platform-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      padding: 4px 9px;
+      border: 1px solid #dbe6f3;
+      border-radius: 6px;
+      background: #ffffff;
+    }
+    .creator-platform-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+    }
+    .creator-platform-icon svg {
+      display: block;
+      width: 14px;
+      height: 14px;
+    }
+    .creator-search-flat-card .creator-search-platform-name {
+      font-size: 17px;
+    }
+    .creator-search-flat-card .creator-search-hot-text {
+      display: inline-flex;
+      margin: 0 0 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(0, 82, 217, .09);
+      color: var(--blue-deep);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+    .creator-search-flat-body {
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+    }
+    .creator-search-image-block {
+      min-width: 0;
+      padding: 9px 10px 10px;
+      border: 1px solid #edf3fa;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+    .creator-search-image-block.is-hot-sample {
+      border-color: #dce9f7;
+      background: #f9fcff;
+    }
+    .creator-search-image-block figure {
+      width: 100%;
+      margin: 0;
+      transform: none;
+      background: transparent;
+    }
+    .creator-search-image-block img {
+      width: 100%;
+      max-width: 100%;
+      max-height: 170px;
+      object-fit: contain;
+      border-radius: 6px;
+      cursor: zoom-in;
+    }
+    .creator-search-facts {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+    .creator-search-fact-section {
+      padding: 10px 11px;
+      border: 1px solid #e8f0f8;
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+    .creator-search-fact-section.is-hot-analysis {
+      border-color: rgba(0, 82, 217, .18);
+      background: #f4f9ff;
+    }
+    .creator-search-fact-label {
+      margin-bottom: 6px;
+      color: #0f2850;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+    .creator-search-fact-content {
+      display: grid;
+      gap: 5px;
+    }
+    .creator-search-fact-line {
+      color: #31465c;
+      font-size: 12.5px;
+      font-weight: 680;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .creator-search-fact-line + .creator-search-fact-line {
+      padding-top: 5px;
+      border-top: 1px dashed #dce8f4;
+    }
+    @media (max-width: 980px) {
+      .creator-search-view-wrapper {
+        width: calc(100vw - 24px);
+      }
+    }
+    @media (max-width: 580px) {
+      .creator-search-card-grid {
+        min-width: 1280px;
+      }
+    }
+
+    /* Section 5 visual playbook */
+    .section5-visual-wrapper {
+      margin: 24px 0 30px;
+      padding: 18px;
+      border: 1px solid #dfe9f4;
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at top left, rgba(0, 82, 217, 0.08), transparent 30%),
+        linear-gradient(180deg, #ffffff, #f8fbff);
+    }
+    .section5-visual-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e7eef7;
+    }
+    .section5-visual-title {
+      margin: 0 0 4px;
+      color: #10243c;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .section5-visual-subtitle {
+      margin: 0;
+      color: #5d7188;
+      font-size: 12.5px;
+      font-weight: 720;
+      line-height: 1.5;
+    }
+    .section5-source-details {
+      margin-top: 16px;
+      border: 1px dashed #d3dfec;
+      background: rgba(255, 255, 255, .7);
+    }
+    .section5-source-details > summary {
+      padding: 10px 12px;
+      color: var(--blue-deep);
+      font-size: 12.5px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .section5-source-details .table-wrap {
+      margin: 0;
+    }
+    .section5-kfs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .section5-journey-wrapper {
+      margin-top: 18px;
+      margin-bottom: 22px;
+    }
+    .section5-journey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      position: relative;
+    }
+    .section5-journey-card {
+      position: relative;
+      padding: 14px 13px;
+      border: 1px solid #dfe8f3;
+      border-radius: 11px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(15, 35, 55, .035);
+      min-height: 128px;
+    }
+    .section5-journey-card::after {
+      content: "";
+      position: absolute;
+      top: 36px;
+      right: -14px;
+      width: 18px;
+      height: 2px;
+      background: #c9d8e7;
+    }
+    .section5-journey-card::before {
+      content: "";
+      position: absolute;
+      top: 31px;
+      right: -15px;
+      width: 9px;
+      height: 9px;
+      border-top: 2px solid #c9d8e7;
+      border-right: 2px solid #c9d8e7;
+      transform: rotate(45deg);
+    }
+    .section5-journey-card:last-child::before,
+    .section5-journey-card:last-child::after {
+      display: none;
+    }
+    .section5-journey-step {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 10px;
+      border-radius: 9px;
+      background: var(--journey-soft);
+      color: var(--journey-color);
+      font-size: 13px;
+      font-weight: 950;
+    }
+    .section5-journey-title {
+      margin: 0 0 7px;
+      color: #10243c;
+      font-size: 14px;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+    .section5-journey-text {
+      margin: 0;
+      color: #3d536b;
+      font-size: 12.5px;
+      font-weight: 720;
+      line-height: 1.5;
+    }
+    .section5-kfs-card {
+      position: relative;
+      overflow: hidden;
+      padding: 15px;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      background: #ffffff;
+    }
+    .section5-kfs-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: var(--card-color);
+    }
+    .section5-kfs-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .section5-kfs-letter {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--card-soft);
+      color: var(--card-color);
+      font-size: 17px;
+      font-weight: 950;
+    }
+    .section5-kfs-name {
+      color: #13243a;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+    .section5-kfs-row {
+      display: grid;
+      grid-template-columns: 62px 1fr;
+      gap: 8px;
+      padding: 7px 0;
+      border-top: 1px solid #edf3f8;
+      color: #314960;
+      font-size: 12.5px;
+      font-weight: 720;
+      line-height: 1.45;
+    }
+    .section5-kfs-row span:first-child {
+      color: #8190a3;
+      font-weight: 900;
+    }
+    .section5-platform-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .section5-platform-card {
+      --platform-color: var(--blue);
+      --platform-soft: rgba(0, 82, 217, .08);
+      border: 1px solid #dfe8f3;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(15, 35, 55, .035);
+      overflow: hidden;
+    }
+    .section5-platform-card.is-primary {
+      grid-column: span 2;
+      border-color: rgba(0, 82, 217, .22);
+      box-shadow: 0 12px 30px rgba(0, 82, 217, .07);
+    }
+    .section5-platform-card[data-platform="xiaohongshu"] { --platform-color: #ff2442; --platform-soft: rgba(255, 36, 66, .08); }
+    .section5-platform-card[data-platform="douyin"] { --platform-color: #111827; --platform-soft: rgba(17, 24, 39, .07); }
+    .section5-platform-card[data-platform="kuaishou"] { --platform-color: #ff4a08; --platform-soft: rgba(255, 74, 8, .08); }
+    .section5-platform-card[data-platform="wechat"] { --platform-color: #09bb07; --platform-soft: rgba(9, 187, 7, .08); }
+    .section5-platform-card[data-platform="youtube"] { --platform-color: #e11d24; --platform-soft: rgba(225, 29, 36, .08); }
+    .section5-platform-head {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 15px 16px;
+      background: linear-gradient(135deg, var(--platform-soft), #ffffff);
+      border-bottom: 1px solid #eef3f8;
+    }
+    .section5-platform-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: inset 0 0 0 1px rgba(15, 35, 55, .08);
+    }
+    .section5-platform-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+    .section5-platform-title {
+      color: #10243c;
+      font-size: 16px;
+      font-weight: 950;
+      line-height: 1.2;
+    }
+    .section5-platform-role {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--platform-color);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .section5-platform-body {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 14px;
+      padding: 15px 16px 16px;
+    }
+    .section5-platform-card.is-primary .section5-platform-body {
+      grid-template-columns: .8fr 1.2fr;
+    }
+    .section5-platform-block {
+      min-width: 0;
+    }
+    .section5-platform-label {
+      display: block;
+      margin-bottom: 6px;
+      color: #7a8ba0;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .04em;
+    }
+    .section5-platform-text {
+      color: #273c54;
+      font-size: 12.8px;
+      font-weight: 720;
+      line-height: 1.55;
+    }
+    .section5-platform-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .section5-platform-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f3f7fb;
+      color: #2c435c;
+      font-size: 11.5px;
+      font-weight: 820;
+      line-height: 1.25;
+    }
+    .section5-platform-kfs {
+      display: grid;
+      gap: 7px;
+    }
+    .section5-platform-kfs-row {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
+      align-items: start;
+      color: #2c435c;
+      font-size: 12.5px;
+      font-weight: 720;
+      line-height: 1.5;
+    }
+    .section5-platform-kfs-row b {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      background: var(--platform-soft);
+      color: var(--platform-color);
+      font-size: 12px;
+      font-weight: 950;
+    }
+    .section5-package-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .section5-package-card {
+      position: relative;
+      overflow: hidden;
+      padding: 15px;
+      border: 1px solid var(--package-border);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(15, 35, 55, .035);
+    }
+    .section5-package-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: var(--package-color);
+    }
+    .section5-package-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .section5-package-index {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--package-soft);
+      color: var(--package-color);
+      font-size: 13px;
+      font-weight: 950;
+    }
+    .section5-package-name {
+      color: #10243c;
+      font-size: 15px;
+      font-weight: 950;
+      line-height: 1.25;
+    }
+    .section5-package-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .section5-package-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f3f7fb;
+      color: #2c435c;
+      font-size: 11.5px;
+      font-weight: 820;
+      line-height: 1.25;
+    }
+    .section5-package-flow {
+      display: grid;
+      gap: 8px;
+    }
+    .section5-package-block {
+      padding-top: 8px;
+      border-top: 1px solid #edf3f8;
+    }
+    .section5-package-label {
+      display: block;
+      margin-bottom: 4px;
+      color: #7a8ba0;
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .04em;
+    }
+    .section5-package-text {
+      color: #273c54;
+      font-size: 12.7px;
+      font-weight: 720;
+      line-height: 1.52;
+    }
+    @media (max-width: 980px) {
+      .section5-platform-grid,
+      .section5-package-grid,
+      .section5-journey-grid,
+      .section5-kfs-grid {
+        grid-template-columns: 1fr;
+      }
+      .section5-journey-card::before,
+      .section5-journey-card::after {
+        display: none;
+      }
+      .section5-platform-card.is-primary {
+        grid-column: span 1;
+      }
+      .section5-platform-body,
+      .section5-platform-card.is-primary .section5-platform-body {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 580px) {
+      .section5-visual-header,
+      .section5-platform-head {
+        grid-template-columns: 42px 1fr;
+      }
+      .section5-platform-role {
+        grid-column: 1 / -1;
+        justify-self: start;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2673,10 +3957,10 @@ Weee! 的内容营销主要通过用户的**1）族群** 和 **2）城市** 分�
 
 **Takeaway｜对微汇款的启发**
 
-**总结：Weee! 案例对微汇款的核心启发，是先把市场拆成不同运营单元，再决定内容、渠道和承接方式，而不是用一套表达覆盖所有国家。**
+**总结：Weee! 案例对微汇款的核心启发，是按“国家 × 人群（蓝领 / 白领）”做分层运营，并把这种分层具体体现在投流平台和内容思路上。**
 
-1. 美国、新加坡、澳洲、韩国至少要拆成四种内容模型：比价搜索、小额微信消费、大额安全教育、蓝领发薪回款。
-2. 分层要贯穿关键词、达人、落地页和权益设计。用户从哪个国家和场景入口进来，就看到对应的收款说明和转化动作。
+1. 同一个国家里，蓝领和白领的决策路径并不一样。蓝领更适合快手、抖音、视频号这类强情境和强教程平台，内容重点是发薪后怎么汇、家人怎么收、操作门槛低不低；白领更适合小红书、Google/SEO、YouTube 这类强比较和强信息平台，内容重点是费用、汇率、到账时间和安全性。
+2. 这种分层不能只停留在选题层面，还要同步落实到关键词、达人类型、落地页和转化动作。用户是从哪个国家、哪类人群入口进来的，就应该看到对应的平台表达和收款承接内容。
 
 
 ---
@@ -2820,34 +4104,43 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 
 样本结果呈现出三点共性：短视频适合完成情境触发与流程讲解；图文适合完成收藏与复查；视频号具备早期布局空间，微信收款相关内容仍需单独建设。
 
-### 本章结论
+### Takeaway｜对微汇款的启发
 
-本章证据指向同一结论：汇款内容营销需要围绕“平台选择、问题主题、信任来源”三项要素搭建内容体系。
+**总结：第 4 章对微汇款最核心的启发，是汇款内容营销不能只做曝光，而要围绕“平台入口、问题内容、信任来源”三项要素搭建完整决策链路。**
+
+1. 平台先分主次，再分市场和人群。务工型市场重短视频和达人讲解；搜索型市场重小红书、SEO 和 FAQ 承接。
+2. 内容不能泛讲“方便、安全、到账快”，而要围绕汇率、政策、教程、风险这些真实比较问题来组织，让品牌信息嵌在答案里。
+3. 信任建立不能只靠官方口径，还要用达人实操、到账结果、评论区答疑和系统化教程，把“能不能成功汇、家人会不会收、出了问题谁处理”讲透。
 
 把这三项翻译成执行动作，就是一条更清楚的决策链路：先进入用户常用平台，再用问题型内容帮助比较，再由官方账号、达人内容和真实到账结果完成信任确认，最后把兴趣导向搜索、咨询和首汇转化。
 
-因此，第 5 章将沿着同一条链路展开：先讲入口建设，再讲内容教育，再讲场景补强和转化承接，而不是把动作拆成彼此孤立的渠道清单。
+第 5 章沿着这条链路展开：先给出打法总览，再进入入口建设、场景补强和运营承接，避免动作散成渠道清单。
 
 ---
 
 ## 5. 微汇款内容营销打法：沿着用户决策链路搭建增长闭环
 
-第 5 章不是重新罗列渠道动作，而是把上一章的三项判断翻译成执行方案。核心顺序保持一致：用户先在哪个平台看到微汇款，再通过什么问题内容完成比较，再由谁建立信任，最后通过什么承接动作完成首汇和复汇。
+第 5 章承接上一章的三项判断，把渠道动作压成一条执行链路：平台触达、问题比较、信任确认、首汇复汇。
 
 > **平台入口** → **问题内容** → **信任建立** → **转化承接**
 
-据此，微汇款的执行方案收敛为四个模块：入口建设、内容教育、场景补强、运营承接。执行顺序建议为：优先补齐搜索承接与基础解释内容，再扩展达人投放和平台合作，随后补强复汇运营。
+### 5.1 打法总览：把用户从“看见场景”带到“敢首汇”
 
-| **决策环节** | **要解决的问题** | **对应打法** |
-| - | - | - |
-| 入口建设 | 用户会先在哪里看到微汇款？ | 小红书 K / S 优先、Google SEO / AI 搜索、KOL / KOC 内容 |
-| 内容教育 | 用户会围绕哪些问题继续比较？ | 汇率、政策、教程、风险四类内容，外加费用 / 到账 / 收款解释 |
-| 场景补强 | 如何在高频生活场景中重复触达？ | 饭团、熊猫外卖、Weee!、本地华人生活平台合作 |
-| 运营承接 | 如何把理解转成首汇、复汇和推荐？ | 试算入口、客服咨询、发薪日提醒、节日权益、亲友推荐 |
+第五章只抓一条主线：先用达人和场景内容建立心智，再用搜索词包承接比较，随后用教程和到账结果确认信任，最后把首汇接成复汇。
 
-### 5.1 入口建设：K / S 优先 + 主账号
+> **场景触发** → **搜索比较** → **教程验证** → **首汇复汇**
 
-这一部分对应第 4 章的第一个判断：平台决定用户入口。目标不是同时铺满所有平台，而是先按市场、人群和使用场景决定优先级。
+**第一步：用 K 建场景心智。** 用户常在留学、务工、发薪、节日红包、父母收款等内容里被触发。KOL / KOC / 官方账号先讲清“为什么汇到微信”，让微信收款进入选择集。
+
+**第二步：用 S 承接比较。** 心智被触发后，用户会搜索“怎么汇回国、多久到账、手续费多少、微信怎么收”。小红书 Search、Google / AI Search、国家 FAQ 和费用 / 到账 / 收款词包，负责接住这批高意图需求。
+
+**第三步：用教程验信任。** 汇款决策依赖真实步骤和到账结果。KOC、达人亲测、截图教程、录屏视频和评论区答疑，负责回答“我照着做会不会成功”。
+
+**第四步：把首汇接成复汇。** 内容触发后继续接试算入口、客服咨询、发薪日提醒、节日权益和亲友推荐，把一次首汇变成周期性使用。
+
+### 5.2 入口建设：K / S 优先 + 主账号
+
+这一部分对应第 4 章的第一个判断：平台决定用户入口。先按市场、人群和使用场景排优先级，再决定平台投入。
 
 | **KFS核心思路** | **KOL (K) - 心智 / 信任建立** | **Feeds (F) - 验证后放量** | **Search (S) - 搜索承接** |
 | - | - | - | - |
@@ -2857,7 +4150,7 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 
 #### 1）K / S 优先投流：先建心智，再做承接
 
-**在线上获客中，微汇款不宜把 KFS 三段平均发力，更合适的顺序是 K 先建立场景心智，S 承接主动搜索，F 只在内容与词包都已验证后选择性放量。** 汇款业务的人群差异很强，同一条内容在不同平台、不同国家和不同用户画像下的效果会完全不同。因此投流需要拆成三层：先按平台判断用户在哪里，再按画像判断用户为什么汇款，最后按内容形式决定用笔记、短视频、长视频还是评论区 FAQ 承接。
+**在线上获客中，KFS 的投入顺序应为：K 先建立场景心智，S 承接主动搜索，F 在内容与词包验证后选择性放量。** 汇款业务的人群差异很强，同一条内容在不同平台、不同国家和不同用户画像下的效果会完全不同。因此投流需要拆成三层：先按平台判断用户在哪里，再按画像判断用户为什么汇款，最后按内容形式决定用笔记、短视频、长视频还是评论区 FAQ 承接。
 
 | **平台** | **优先用户画像 / 市场** | **适合投流形式** | **具体投流方法** | **内容主题** | **承接动作** |
 | - | - | - | - | - | - |
@@ -2867,7 +4160,20 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 | **视频号** | 微信生态用户、社群用户、家庭支持型用户；韩国汇款等低饱和搜索场景 | 短视频、截图教程、社群转发素材、公众号 / 视频号联动 | **K：**测试少量本地达人真实教程；<br/><br/>**F：**用社群、公众号、朋友圈链路放大；<br/><br/>**S：**卡视频号内“韩国汇款”“汇款回国”“微信收款”搜索结果 | 发薪汇款、微信收款、家人确认到账、节日红包、到账后怎么用 | 视频号评论、公众号 FAQ、社群答疑、小程序路径说明 |
 | **YouTube / B站 / 播客** | Efficient Professional、Asset Strategist、财经 / 留学 / 职场用户 | 长视频、播客口播、财经科普、平台测评 | 和财经、留学、海外职场 KOL 做品牌解释和深度测评，讲清“跨境资金如何流转”“费用 / 汇率 / 到账怎么判断” | 金融科普、平台测评、手续费和汇率解释、大额合规、安全性 | 专属链接、优惠码、FAQ 长页、客服咨询 |
 
-按用户画像看，投流内容还要进一步拆分，避免所有达人都讲同一套“方便快捷安全”：
+平台矩阵回答“先打哪里”。落到执行，动作收束成四个内容包：每个内容包同时绑定人群、平台、搜索词和承接动作。
+
+| **内容包** | **适用人群 / 场景** | **主平台** | **核心问题** | **承接动作** |
+| - | - | - | - | - |
+| **发薪寄家包** | 韩国 / 日本务工人群、Family Supporter | 快手、抖音、视频号、本地社群 | 工资怎么安全寄回家？父母怎么收？ | 口播教程、中文步骤图、客服入口、评论区问答 |
+| **费用比较包** | 白领、留学生、搜索型市场用户 | 小红书、Google SEO、YouTube / B站 | 哪个平台更便宜、更快、更透明？ | 平台对比笔记、费用 FAQ、试算入口、私信关键词 |
+| **微信到账包** | 年轻用户、小额高频用户、微信生态用户 | 小红书、抖音、视频号 | 怎么汇到微信？到账后怎么用？ | 截图教程、录屏视频、父母视角说明、公众号 FAQ |
+| **安全合规包** | 大额用户、资产型用户、财经关注用户 | YouTube / B站、财经 KOL、Web SEO | 大额安全吗？限额、异常、风控怎么处理？ | 深度测评、FAQ 长页、客服咨询、专属链接 |
+
+执行顺序也按 K / S / F 展开：先用 KOL / KOC 跑出每个内容包的样本，再把高互动内容拆成搜索词包，最后只放大收藏、评论、私信表现明确的内容。
+
+:::details 补充：用户画像、素材参考与关键词拆分
+
+用户画像拆分保留为执行参考，用于确认达人选择、内容口吻和承接动作。
 
 | **用户画像** | **核心决策问题** | **更适合的平台** | **更适合的内容形式** | **投流表达重点** |
 | - | - | - | - | - |
@@ -2883,7 +4189,7 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 | **品牌解释型：头部 KOL 视频广告植入** | YouTube / B站 / 播客；白领、资产型用户 | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45108898)<br/><br/>主题可围绕“钱是怎么在国家间流通的？”通过财经科普讲清产品定位。 |
 | **地区教程型：当地 KOC 笔记 / 短视频** | 小红书、抖音、快手、视频号；留学生、蓝领、年轻用户 | ![Clipboard_Screenshot_1779363013.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45118343)<br/><br/>![Clipboard_Screenshot_1779363067.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45118375)<br/><br/>按国家复制为“新加坡怎么汇到微信”“韩国发薪后怎么汇回国”“日本打工怎么给父母转钱”等。 |
 
-Search 仍然是投流后的长期承接层。关键词不应只做泛品类词，而要和平台、人群、内容形式一起匹配：
+Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到平台、人群和内容形式的组合匹配：
 
 | **关键词类型** | **用户意图** | **内容形式** | **示例关键词** |
 | - | - | - | - |
@@ -2892,25 +4198,25 @@ Search 仍然是投流后的长期承接层。关键词不应只做泛品类词�
 | 时效词 | 我担心到账 | 教程视频、FAQ、评论区置顶 | 日本汇款回国多久到账、美国汇款到中国多久到账、春节前汇款会不会延迟 |
 | 收款词 | 我不知道家人怎么收 | 截图教程、短视频录屏、父母视角说明 | 美国汇款到微信怎么收、日本汇款给父母怎么收款、新加坡汇款到微信怎么确认到账 |
 
+:::
 
 #### 2）小红书官方账号：建立品牌认知
 
-**小红书不应只作为广告投放渠道，而应成为微汇款的主要内容阵地**。
+**小红书承担微汇款的主要内容阵地和搜索承接阵地**。
 
 **开通微汇款小红书官方账号/地区矩阵账号。由小红书承担微汇款的主要内容获客功能。**选择小红书主要有三点原因：1）**用户匹配度高**，小红书聚集大量海外华人、留学生和海外生活用户，与微汇款目标人群高度重合；**2）搜索心智强**，用户在汇款前会主动搜索手续费、到账时间、材料和收款方式，小红书适合承接这类高意图需求；**3）适合教育转化**，微汇款需要解释清楚自身角色和使用价值，小红书的图文、短视频和评论区问答适合做用户教育，降低首次使用门槛。
 
-**账号定位可以从“跨境汇款工具”升级为 海外华人生活资讯助手**，在生活内容中自然承接汇款需求。官方账号运营逻辑可以参考 Weee!，它的官方账号不只讲“买菜”，而是通过菜谱、食材、节日和家庭场景持续创造价值。微汇款也不应只讲“汇款”，而应围绕海外华人的生活、工作和家庭责任，成为用户长期关注的海外生活助手。重点做三类内容：
+**账号定位可以从“跨境汇款工具”升级为 海外华人生活资讯助手**，在生活内容中自然承接汇款需求。官方账号运营逻辑可以参考 Weee!：用菜谱、食材、节日和家庭场景持续创造价值。微汇款也可以围绕海外华人的生活、工作和家庭责任，沉淀为用户长期关注的海外生活助手。重点做三类内容：
 
 | **内容营销方向** | **账号主站** | **品牌认知图文** |
 | - | - | - |
-| **1）海外生活资讯**  <br/>围绕海外用户真实关心的问题持续输出，例如国外税务管理、工资到账、报税常识、海外工作谈薪、职场避坑、务工机会、机票攻略、工签续签、租房押金、银行卡使用等。内容不应单一停留在汇款，更多帮助用户解决“人在海外怎么生活、赚钱、办事”的具体问题 | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45117389)<br/><br/> | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45118771) |
+| **1）海外生活资讯**  <br/>围绕海外用户真实关心的问题持续输出，例如国外税务管理、工资到账、报税常识、海外工作谈薪、职场避坑、务工机会、机票攻略、工签续签、租房押金、银行卡使用等。内容从汇款延展到“人在海外怎么生活、赚钱、办事”的具体问题 | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45117389)<br/><br/> | ![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45118771) |
 | **2）地区资讯运营**  <br/>按国家和城市拆分内容，例如“美国华人报税季汇款注意事项”“英国留学生生活费怎么安排”“加拿大打工人发薪后如何规划汇款”“澳洲工签用户如何给国内家人转钱”。不同地区可以结合当地的职场信息、报税、签证节点，形成更强的本地化触达。 |   |   |
 | **3）汇款场景承接**  <br/>在生活资讯中自然植入汇款需求，例如发薪后给国内家人转生活费、父母急用钱、春节红包、留学生和家里互相转账、海外务工人员定期寄钱回国等。用户先被实用内容吸引，再通过评论区、私信和落地页进入微汇款服务。 |   |   |
 
+:::details 补充：内容教育如何承接前面的入口建设
 
-### 5.2 内容教育：围绕四类高意图问题组织解释层
-
-这一部分对应第 4 章的第二个判断：内容主题决定比较效率。微汇款的教育内容不应平均铺开，而应优先围绕用户最常比较的四类问题组织。
+这一部分对应第 4 章的第二个判断：内容主题决定比较效率。微汇款的教育内容优先围绕用户最常比较的四类问题组织。
 
 | **高意图主题** | **用户要确认什么** | **微汇款应该讲什么** | **适合承接形式** |
 | - | - | - | - |
@@ -2920,10 +4226,11 @@ Search 仍然是投流后的长期承接层。关键词不应只做泛品类词�
 | 安全风险 | 钱是否安全，出了问题谁负责 | 合作机构关系、监管与风控机制、异常处理、到账失败与客服协助 | 品牌解释页、KOL 深度测评、FAQ 长页 |
 
 四类主题讲清之后，还要把“谁来讲”一起设计清楚。官方账号负责稳定输出规则和标准答案，达人 / KOC 负责演示真实操作过程，搜索页和落地页负责承接高意图问题与转化动作。
+:::
 
 ### 5.3 场景补强：和本地生活平台联合获客
 
-这一部分补的是平台之外的生活场景入口。对部分用户而言，汇款不会先从主动搜索开始，而是先在饭团、Weee! 这类高频生活平台建立熟悉度。
+这一部分补平台之外的生活场景入口。部分用户会先在饭团、Weee! 这类高频生活平台建立熟悉度，再进入搜索、咨询和首汇承接。
 
 **场景补强的重点是借助饭团、熊猫外卖、Weee! 等已经深入海外华人生活场景的平台**，直接接触留学生、海外工作人群和华人家庭。相比单独做广告，这类合作更接近用户日常消费场景，适合把微汇款嵌入“吃饭、买菜”等高频具体需求中。
 
@@ -2931,7 +4238,6 @@ Search 仍然是投流后的长期承接层。关键词不应只做泛品类词�
 | - | - | - | - |
 | 饭团 / 熊猫外卖 /<br/><br/>Weee!<br/><br/> | App banner、订单页权益、优惠券联合、节日活动 | **1）饭团联名活动：**核心是获取饭团的高度重合目标用户<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45108850) | **2）和Weee！**进行投流合作，打入北美华人社区，覆盖更多当地用户<br/><br/>![Clipboard_Screenshot_1779365728.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45120616) |
 | 本地华人生活平台 | 城市频道露出、社群推文、专属优惠码 | “在美国/日本/新加坡生活，给家里汇钱怎么更方便” |  |
-
 
 ### 5.4 运营承接：强调微信亲情属性 + 节点提醒复汇
 
@@ -2942,23 +4248,6 @@ Search 仍然是投流后的长期承接层。关键词不应只做泛品类词�
 | **发薪日** | 固定给国内父母或家人汇钱 | **发薪日前推送提醒**、**复汇入口** |
 | **节日节点** | 春节、中秋等家庭转账需求 | **推出亲情主题活动，强调微信亲人社交 x 汇款的属性，形成汇款业务的“支付红包效应”**<br/><br/>示例：<br/><br/>![image.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45121587) |
 | **亲友推荐** | 海外华人圈层信任强 | **重启裂变推荐奖励，作为长期激励。引导用户推荐同事和亲友使用，做投流增长期配合，加速用户增长冲量。**<br/><br/>![Clipboard_Screenshot_1779366768.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45121542) |
-
-### 5.5 执行优先级：先补“解释清楚”，再放大投流
-
-如果按优先级推进，建议不要一开始就把重点放在大规模投流，而是先补齐用户理解微汇款所需要的基础内容，再用 KFS 和本地生活合作放大。
-
-| **优先级** | **先做什么** | **为什么先做** |
-| - | - | - |
-| P0 | 微汇款角色解释、合作机构关系、微信收款流程、费用/汇率/到账 FAQ | 先解决“微汇款到底是什么、为什么值得用”的认知问题 |
-| P1 | 国家词 + 费用词 + 到账词 + 收款词的搜索内容 | 用户主动搜索时先出现，承接高意图需求 |
-| P2 | 分平台 KOC 内容打样 + Search 内容卡位，验证后再做 Feeds 放大：小红书笔记、抖音 / 快手 / 视频号短视频、长视频测评 | 先把有效表达和高意图词包跑通，再决定是否扩大投放 |
-| P3 | 本地生活平台联合获客、节日复汇、亲友推荐 | 在内容获客之后承接首汇、复汇和裂变 |
-
-
-
-
-
-
 
 </script>
 
@@ -4590,6 +5879,865 @@ function enhanceKfsPyramid() {
       });
     }
 
+    function enhancePlatformMatrixEvidence() {
+      const wraps = [...content.querySelectorAll('.table-wrap')];
+      let targetWrap = null;
+      let targetTable = null;
+
+      for (const wrap of wraps) {
+        const table = wrap.querySelector('table');
+        if (!table) continue;
+        const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim().toLowerCase());
+        const text = table.textContent;
+        if (headers.includes('平台') && headers.includes('维度') && headers.includes('remitly') && headers.includes('hanpass') && text.includes('快手') && text.includes('小红书')) {
+          targetWrap = wrap;
+          targetTable = table;
+          break;
+        }
+      }
+      if (!targetWrap || !targetTable || targetWrap.closest('.matrix-view-wrapper')) return;
+
+      const headers = [...targetTable.querySelectorAll('th')].map(th => th.textContent.trim());
+      const rows = [...targetTable.querySelectorAll('tbody tr')];
+      const brandNames = headers.slice(2);
+      const platforms = [];
+      let currentPlatform = null;
+      let lastDimension = '';
+
+      rows.forEach(row => {
+        const cells = [...row.querySelectorAll('td')];
+        if (cells.length < headers.length) return;
+        const platformName = cells[0].textContent.trim();
+        const dimensionName = cells[1].textContent.trim();
+
+        if (platformName) {
+          currentPlatform = {
+            name: platformName,
+            key: `platform-${platforms.length}`,
+            brands: brandNames.map((name, index) => ({ name, key: `brand-${index}`, fields: {} }))
+          };
+          platforms.push(currentPlatform);
+          lastDimension = '';
+        }
+        if (!currentPlatform) return;
+
+        const fieldName = dimensionName || lastDimension;
+        if (!fieldName) return;
+        if (dimensionName) lastDimension = dimensionName;
+
+        currentPlatform.brands.forEach((brand, index) => {
+          const html = cells[index + 2]?.innerHTML.trim() || '';
+          if (!html) return;
+          if (dimensionName) {
+            brand.fields[fieldName] = html;
+          } else {
+            brand.fields[fieldName] = [brand.fields[fieldName], html].filter(Boolean).join('<br/><br/>');
+          }
+        });
+      });
+
+      if (!platforms.length) return;
+
+      const platformSummary = {
+        '快手': {
+          role: '务工型市场触达',
+          signal: '韩国 / 日本蓝领账号更容易形成有效覆盖',
+          action: '围绕发薪、汇率提醒、口播教程和中文答疑做定点运营'
+        },
+        '抖音': {
+          role: '流程教学与渠道比较',
+          signal: '教程类与真实操作内容更容易沉淀赞藏',
+          action: '用 30 秒流程视频、平台对比和评论区答疑承接高意图用户'
+        },
+        '小红书': {
+          role: '搜索承接与长期沉淀',
+          signal: '政策、汇率、本地生活资讯和收款 FAQ 更适合收藏复查',
+          action: '建立地区矩阵与关键词内容库，持续占位主动搜索结果'
+        }
+      };
+
+      function toText(html) {
+        const box = document.createElement('div');
+        box.innerHTML = html || '';
+        return (box.textContent || '')
+          .replace(/\*+/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      function textWithBreaks(html) {
+        const box = document.createElement('div');
+        box.innerHTML = html || '';
+        box.querySelectorAll('figure').forEach(figure => figure.remove());
+        box.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+        return (box.textContent || '')
+          .replace(/\*+/g, '')
+          .replace(/\|\|/g, ' || ')
+          .replace(/\u00a0/g, ' ')
+          .replace(/[ \t]+/g, ' ')
+          .trim();
+      }
+
+      function getField(brand, names) {
+        for (const name of names) {
+          if (brand.fields[name]) return brand.fields[name];
+        }
+        return '';
+      }
+
+      function splitMediaCell(html) {
+        const box = document.createElement('div');
+        box.innerHTML = html || '';
+        const figures = [...box.querySelectorAll('figure')].map(figure => figure.outerHTML).join('');
+        box.querySelectorAll('figure').forEach(figure => figure.remove());
+        return { text: box.innerHTML.trim(), figures };
+      }
+
+      function splitBlocks(html) {
+        const raw = textWithBreaks(html)
+          .replace(/\n\s*---\s*\n/g, '\n\n')
+          .replace(/---/g, '\n\n');
+        const blocks = raw
+          .split(/\n{1,}/)
+          .flatMap(part => {
+            const plain = part.replace(/\s+/g, ' ').trim();
+            if (!plain || plain === '-') return [];
+            const numbered = plain.split(/(?=\d+[）)]\s*)/).map(item => item.trim()).filter(Boolean);
+            return numbered.length > 1 ? numbered : [plain];
+          });
+        return blocks.filter(Boolean);
+      }
+
+      function renderBlocks(html, emptyText = '-') {
+        const blocks = splitBlocks(html);
+        if (!blocks.length) return escapeHTML(emptyText);
+        return `<div class="matrix-rich-list">${blocks.map(block => `<div class="matrix-rich-item">${escapeHTML(block)}</div>`).join('')}</div>`;
+      }
+
+      function renderTypeText(html) {
+        const plain = toText(html);
+        if (!plain || plain === '-') return '-';
+        return escapeHTML(plain.replace(/[、,+，/]+/g, ' / '));
+      }
+
+      function truncatePlain(text, max = 86) {
+        const clean = (text || '').replace(/\s+/g, ' ').trim();
+        return clean.length > max ? `${clean.slice(0, max)}…` : clean;
+      }
+
+      function renderCompactList(html, maxItems = 3, maxChars = 120) {
+        const blocks = splitBlocks(html);
+        const items = (blocks.length ? blocks : [toText(html || '-')])
+          .map(item => truncatePlain(item, maxChars))
+          .filter(Boolean);
+        const visible = items.slice(0, maxItems);
+        const more = items.length > maxItems ? `<span class="matrix-more-hint">+${items.length - maxItems} 条，切到完整表格查看</span>` : '';
+        return `<div class="matrix-compact-list">${visible.map(item => `<span class="matrix-compact-item">${escapeHTML(item)}</span>`).join('')}${more}</div>`;
+      }
+
+      function splitHotPosts(html) {
+        const lines = splitBlocks(html)
+          .map(line => line.replace(/@image:[^\s]+/gi, '').replace(/image\.png/gi, '').replace(/\s+/g, ' ').trim())
+          .filter(line => line && !/^[@\s]*(?:image|图片)/i.test(line));
+        const posts = [];
+        const metricOnly = /^\d+\s*(?:点赞|赞)(?:(?:[，,、\s]+)\d+\s*(?:收藏|评论))*$/;
+        const metricTail = /(\d+\s*(?:点赞|赞)(?:(?:[，,、\s]+)\d+\s*(?:收藏|评论))*)$/;
+
+        lines.forEach(line => {
+          const normalized = line.replace(/[“”]/g, '').trim();
+          if (!normalized || /^（.*）$/.test(normalized)) return;
+
+          if (metricOnly.test(normalized)) {
+            const last = posts[posts.length - 1];
+            if (last && !metricTail.test(last)) posts[posts.length - 1] = `${last} ${normalized}`;
+            return;
+          }
+
+          const parts = normalized
+            .split(/(?<=\d\s*(?:点赞|赞))\s+(?=\S)/)
+            .map(part => part.trim())
+            .filter(Boolean);
+          parts.forEach(part => posts.push(part));
+        });
+
+        return posts.filter(post => /\S/.test(post) && !/^\d+\s*(?:点赞|赞)/.test(post));
+      }
+
+      function renderFullList(html) {
+        const items = splitHotPosts(html);
+        if (!items.length) return '<div class="matrix-hot-list"><div class="matrix-hot-item"><span class="matrix-hot-title">无</span></div></div>';
+        return `<div class="matrix-hot-list">${items.map((item, index) => {
+          const metricMatch = item.match(/(\d+\s*(?:点赞|赞)(?:(?:[，,、\s]+)\d+\s*(?:收藏|评论))*)$/);
+          const metric = metricMatch ? metricMatch[1].replace(/\s+/g, ' ') : '';
+          const title = (metricMatch ? item.slice(0, metricMatch.index) : item).replace(/[“”]/g, '').trim();
+          return `<div class="matrix-hot-item"><span class="matrix-hot-rank">TOP ${index + 1}</span><span class="matrix-hot-title">${escapeHTML(title || item)}</span>${metric ? `<span class="matrix-hot-metric">${escapeHTML(metric)}</span>` : ''}</div>`;
+        }).join('')}</div>`;
+      }
+
+      function renderThumbs(html) {
+        const media = splitMediaCell(html);
+        if (!media.figures) return '';
+        return `<div class="matrix-card-shots">${media.figures}</div>`;
+      }
+
+      function coverageTone(coverage) {
+        const text = toText(coverage);
+        if (/差|低|少|不明确|不活跃|活跃度低|0-5/.test(text)) {
+          return { className: 'is-weak', label: '覆盖偏弱' };
+        }
+        if (/蓝领|澳洲|全球|官号|粉丝多|覆盖|居多|以色列/.test(text)) {
+          return { className: 'is-strong', label: '覆盖有效' };
+        }
+        return { className: 'is-medium', label: '待验证' };
+      }
+
+      function renderAudienceFlow(target, coverage) {
+        const tone = coverageTone(coverage);
+        return `
+          <div class="matrix-audience-flow">
+            <div class="matrix-audience-box">
+              <span class="matrix-audience-label">账号定位客群</span>
+              <span class="matrix-audience-text">${escapeHTML(truncatePlain(toText(target), 88))}</span>
+            </div>
+            <div class="matrix-audience-arrow">→</div>
+            <div class="matrix-audience-box is-result">
+              <span class="matrix-audience-label">实际覆盖结果</span>
+              <span class="matrix-coverage-tone ${tone.className}">${tone.label}</span>
+              <span class="matrix-audience-text">${escapeHTML(truncatePlain(toText(coverage), 88))}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      function parseFollowers(html) {
+        const plain = toText(html).replace(/,/g, '');
+        const values = [...plain.matchAll(/\d+(?:\.\d+)?/g)].map(match => Number(match[0]));
+        return values.length ? Math.max(...values) : 0;
+      }
+
+      function summarizeTopBrand(platform) {
+        const ranked = platform.brands
+          .map(brand => ({ brand, value: parseFollowers(getField(brand, ['关注'])) }))
+          .sort((a, b) => b.value - a.value);
+        const top = ranked[0];
+        if (!top || !top.value) return '暂无明确规模优势';
+        return `${top.brand.name}：${toText(getField(top.brand, ['关注']))}`;
+      }
+
+      const platformTabsHTML = platforms.map((platform, index) => `
+        <button class="matrix-platform-tab${index === 0 ? ' active' : ''}" data-platform="${platform.key}">${escapeHTML(platform.name)}</button>
+      `).join('');
+
+      const panelsHTML = platforms.map((platform, platformIndex) => {
+        const summary = platformSummary[platform.name] || { role: '平台观察', signal: '账号矩阵与内容主题存在差异', action: '按平台用户结构配置内容与讲述者' };
+        const brandCards = platform.brands.map(brand => {
+          const fans = getField(brand, ['关注']) || '-';
+          const target = getField(brand, ['目标用户']) || '-';
+          const coverage = getField(brand, ['覆盖情况', '覆盖用户']) || '-';
+          const accountContent = getField(brand, ['账号内容']) || '-';
+          const hotContent = getField(brand, ['热帖内容']) || '无';
+          const tags = getField(brand, ['热点标签']) || '-';
+          const page = getField(brand, ['页面']);
+
+          return `
+            <article class="matrix-brand-card ${brand.key}">
+              <div class="matrix-brand-card-header">
+                <div class="matrix-card-topline">
+                  <div class="matrix-brand-name">${escapeHTML(brand.name)}</div>
+                  <div class="matrix-fan-badge">关注：${truncatePlain(toText(fans), 24)}</div>
+                </div>
+                ${renderThumbs(page)}
+              </div>
+              <div class="matrix-brand-card-body">
+                ${renderAudienceFlow(target, coverage)}
+                <div class="matrix-compare-row">
+                  <span class="matrix-compare-label">内容方向</span>
+                  <div class="matrix-compare-value">${renderCompactList(accountContent, 4, 120)}</div>
+                </div>
+                <div class="matrix-compare-row is-hot">
+                  <span class="matrix-compare-label">Top 热帖</span>
+                  <div class="matrix-compare-value">${renderFullList(hotContent)}</div>
+                </div>
+                <div class="matrix-compare-row">
+                  <span class="matrix-compare-label">热帖内容类型</span>
+                  <div class="matrix-compare-value">${renderTypeText(tags)}</div>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        return `
+          <section class="matrix-platform-panel" data-platform="${platform.key}"${platformIndex === 0 ? '' : ' hidden'}>
+            <div class="matrix-platform-summary">
+              <div class="matrix-summary-card">
+                <span class="matrix-summary-label">平台角色</span>
+                <div class="matrix-summary-value">${summary.role}</div>
+              </div>
+              <div class="matrix-summary-card">
+                <span class="matrix-summary-label">最强账号规模</span>
+                <div class="matrix-summary-value">${summarizeTopBrand(platform)}</div>
+              </div>
+              <div class="matrix-summary-card">
+                <span class="matrix-summary-label">运营启示</span>
+                <div class="matrix-summary-value">${summary.action}</div>
+              </div>
+            </div>
+            <div class="matrix-brand-grid">${brandCards}</div>
+          </section>
+        `;
+      }).join('');
+
+      const viewWrapper = document.createElement('div');
+      viewWrapper.className = 'matrix-view-wrapper show-cards';
+      viewWrapper.innerHTML = `
+        <div class="matrix-view-header">
+          <div>
+            <div class="matrix-view-title">平台矩阵账号观察</div>
+          </div>
+          <div class="view-switch-control">
+            <button class="switch-btn active" data-view="cards">交互视图</button>
+            <button class="switch-btn" data-view="table">完整表格视图</button>
+            <span class="switch-slider"></span>
+          </div>
+        </div>
+        <div class="matrix-cards-view">
+          <div class="matrix-platform-tabs">${platformTabsHTML}</div>
+          ${panelsHTML}
+        </div>
+      `;
+
+      const tableView = document.createElement('div');
+      tableView.className = 'matrix-table-view';
+      targetWrap.closest('.collapsible-question')?.classList.add('has-matrix-view');
+      targetWrap.parentNode.insertBefore(viewWrapper, targetWrap);
+      tableView.appendChild(targetWrap);
+      viewWrapper.appendChild(tableView);
+
+      const switchBtns = [...viewWrapper.querySelectorAll('.view-switch-control .switch-btn')];
+      viewWrapper.querySelector('.view-switch-control').addEventListener('click', event => {
+        const btn = event.target.closest('.switch-btn');
+        if (!btn || btn.classList.contains('active')) return;
+        switchBtns.forEach(item => item.classList.remove('active'));
+        btn.classList.add('active');
+        viewWrapper.classList.toggle('show-table', btn.dataset.view === 'table');
+        viewWrapper.classList.toggle('show-cards', btn.dataset.view !== 'table');
+      });
+
+      const tabs = [...viewWrapper.querySelectorAll('.matrix-platform-tab')];
+      const panels = [...viewWrapper.querySelectorAll('.matrix-platform-panel')];
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(item => item.classList.remove('active'));
+          tab.classList.add('active');
+          const platform = tab.dataset.platform;
+          panels.forEach(panel => {
+            panel.hidden = panel.dataset.platform !== platform;
+          });
+        });
+      });
+    }
+
+    function enhanceCreatorSearchEvidence() {
+      const wraps = [...content.querySelectorAll('.table-wrap')];
+      let targetWrap = null;
+      let targetTable = null;
+
+      for (const wrap of wraps) {
+        const table = wrap.querySelector('table');
+        if (!table) continue;
+        const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+        const text = table.textContent;
+        if (headers.includes('搜索词') && headers.includes('快手') && headers.includes('视频号') && text.includes('Top10搜索结构机构')) {
+          targetWrap = wrap;
+          targetTable = table;
+          break;
+        }
+      }
+      if (!targetWrap || !targetTable || targetWrap.closest('.creator-search-view-wrapper')) return;
+
+      const headers = [...targetTable.querySelectorAll('th')].map(th => th.textContent.trim());
+      const rows = [...targetTable.querySelectorAll('tbody tr')];
+      const platforms = headers.slice(1).map((name, index) => ({
+        name,
+        key: `platform-${index}`,
+        fields: {}
+      }));
+
+      rows.forEach(row => {
+        const cells = [...row.querySelectorAll('td')];
+        if (cells.length < headers.length) return;
+        const label = cells[0].textContent.trim();
+        platforms.forEach((platform, index) => {
+          platform.fields[label] = cells[index + 1]?.innerHTML.trim() || '';
+        });
+      });
+
+      function splitMediaCell(html) {
+        const box = document.createElement('div');
+        box.innerHTML = html || '';
+        const figures = [...box.querySelectorAll('figure')].map(figure => figure.outerHTML).join('');
+        box.querySelectorAll('figure').forEach(figure => figure.remove());
+        return { text: box.innerHTML.trim(), figures };
+      }
+
+      function splitBlocks(html) {
+        return (html || '')
+          .split(/(?:<br\s*\/?>(?:\s|&nbsp;)*){2,}/i)
+          .map(part => part.trim())
+          .filter(Boolean);
+      }
+
+      function renderChips(html) {
+        const chips = splitBlocks(html);
+        if (!chips.length) return '-';
+        return `<div class="creator-search-chip-list">${chips.map(chip => `<span class="creator-search-chip">${chip}</span>`).join('')}</div>`;
+      }
+
+      function renderInsightRows(html) {
+        const rows = splitBlocks(html);
+        if (!rows.length) return html || '-';
+        return `<div class="creator-search-insight-list">${rows.map(row => {
+          const text = document.createElement('div');
+          text.innerHTML = row;
+          const plain = text.textContent || '';
+          const index = plain.indexOf('：');
+          if (index < 0) return `<div class="creator-search-insight-row"><span class="creator-search-insight-value">${row}</span></div>`;
+          const key = escapeHTML(plain.slice(0, index + 1));
+          const value = row.replace(/^.*?：/, '');
+          return `<div class="creator-search-insight-row"><span class="creator-search-insight-key">${key}</span><span class="creator-search-insight-value">${value}</span></div>`;
+        }).join('')}</div>`;
+      }
+
+      function compactText(html) {
+        const blocks = splitBlocks(html).map(block => {
+          const box = document.createElement('div');
+          box.innerHTML = block;
+          return (box.textContent || '').replace(/\s+/g, ' ').trim();
+        }).filter(Boolean);
+        if (blocks.length) return escapeHTML(blocks.join(' / '));
+        const box = document.createElement('div');
+        box.innerHTML = html || '';
+        return escapeHTML((box.textContent || '-').replace(/\s+/g, ' ').trim() || '-');
+      }
+
+      function renderFactSection(label, html, variant = '') {
+        const blocks = splitBlocks(html).map(block => block.replace(/<br\s*\/?>(?!\s*$)/gi, '；'));
+        const content = blocks.length
+          ? blocks.map(block => `<div class="creator-search-fact-line">${block}</div>`).join('')
+          : '<div class="creator-search-fact-line">-</div>';
+        return `<section class="creator-search-fact-section ${variant}"><div class="creator-search-fact-label">${label}</div><div class="creator-search-fact-content">${content}</div></section>`;
+      }
+
+      function platformSvg(name) {
+        const clean = name.toLowerCase();
+        const aliases = clean.includes('视频号') ? ['微信'] : [name];
+        const sourceBadge = [...content.querySelectorAll('.media-badge')]
+          .find(badge => aliases.some(alias => badge.textContent.includes(alias)));
+        const sourceSvg = sourceBadge?.querySelector('svg');
+        if (sourceSvg) return sourceSvg.cloneNode(true).outerHTML;
+        if (clean.includes('小红书')) {
+          return '<svg viewBox="0 0 24 24" class="svg-icon svg-red" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#FF2442"></rect><path d="M6.5 7.6h11v2.1h-4.2v1.7h3.7v2h-3.7v3h4.7v2.1H6v-2.1h4.8v-3H7.1v-2h3.7V9.7H6.5V7.6z" fill="#fff"></path></svg>';
+        }
+        if (clean.includes('抖音')) {
+          return '<svg viewBox="0 0 24 24" class="svg-icon svg-douyin" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#111111"></rect><path d="M14.2 5.2c.45 2 1.65 3.2 3.6 3.6v3c-1.25-.02-2.45-.38-3.55-1.08v4.5c0 2.5-1.85 4.25-4.25 4.25-2.25 0-4.05-1.72-4.05-3.9 0-2.42 1.92-4.2 4.55-4.2v3.05c-.92 0-1.5.52-1.5 1.22 0 .62.5 1.12 1.18 1.12.74 0 1.35-.52 1.35-1.5V5.2h2.67z" fill="#fff"></path></svg>';
+        }
+        if (clean.includes('快手')) {
+          return '<svg viewBox="0 0 24 24" class="svg-icon svg-kuaishou" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#FF4A08"></rect><path d="M7.2 7.6a2.3 2.3 0 1 1 4.6 0 2.3 2.3 0 0 1-4.6 0zm5 0a2.3 2.3 0 1 1 4.6 0 2.3 2.3 0 0 1-4.6 0zM5.3 14.2c0-1.7 1.35-3.1 3.02-3.1h7.36c1.67 0 3.02 1.4 3.02 3.1v2.1c0 1.7-1.35 3.1-3.02 3.1H8.32c-1.67 0-3.02-1.4-3.02-3.1v-2.1zm2.4.15v1.8c0 .56.43 1.02.96 1.02h6.68c.53 0 .96-.46.96-1.02v-1.8c0-.56-.43-1.02-.96-1.02H8.66c-.53 0-.96.46-.96 1.02z" fill="#fff"></path></svg>';
+        }
+        if (clean.includes('视频号') || clean.includes('微信')) {
+          return '<svg viewBox="0 0 1024 1024" class="svg-icon svg-wechat" aria-hidden="true"><path d="M683.058 364.695c11 0 22 1.016 32.943 1.976C686.564 230.064 538.896 128 370.681 128c-188.104 0.66-342.237 127.793-342.237 289.226 0 93.068 51.379 169.827 136.725 229.256L130.72 748.43l119.796-59.368c42.918 8.395 77.37 16.79 119.742 16.79 11 0 21.46-0.48 31.914-1.442a259.168 259.168 0 0 1-10.455-71.358c0.485-148.002 128.744-268.297 291.403-268.297l-0.06-0.06z m-184.113-91.992c25.99 0 42.913 16.79 42.913 42.575 0 25.188-16.923 42.579-42.913 42.579-25.45 0-51.38-16.85-51.38-42.58 0-25.784 25.93-42.574 51.38-42.574z m-239.544 85.154c-25.384 0-51.374-16.85-51.374-42.58 0-25.784 25.99-42.574 51.374-42.574 25.45 0 42.918 16.79 42.918 42.575 0 25.188-16.924 42.579-42.918 42.579z m736.155 271.655c0-135.647-136.725-246.527-290.983-246.527-162.655 0-290.918 110.88-290.918 246.527 0 136.128 128.263 246.587 290.918 246.587 33.972 0 68.423-8.395 102.818-16.85l93.809 50.973-25.93-84.677c68.907-51.93 120.286-119.815 120.286-196.033z m-385.275-42.58c-16.923 0-34.452-16.79-34.452-34.179 0-16.79 17.529-34.18 34.452-34.18 25.99 0 42.918 16.85 42.918 34.18 0 17.39-16.928 34.18-42.918 34.18z m188.165 0c-16.984 0-33.972-16.79-33.972-34.179 0-16.79 16.927-34.18 33.972-34.18 25.93 0 42.913 16.85 42.913 34.18 0 17.39-16.983 34.18-42.913 34.18z" fill="#09BB07"></path></svg>';
+        }
+        return '';
+      }
+
+      const cardsHTML = platforms.map(platform => {
+        const page = splitMediaCell(platform.fields['页面']);
+        const hot = splitMediaCell(platform.fields['最火']);
+        const badge = platform.name === '视频号' ? '机会：低饱和' : platform.name === '小红书' ? '图文：可收藏' : '短视频：强教程';
+        return `
+          <article class="creator-search-card creator-search-flat-card" data-platform="${platform.key}">
+            <div class="creator-search-card-header">
+              <div class="creator-platform-title">
+                <span class="creator-platform-icon">${platformSvg(platform.name)}</span>
+                <div class="creator-search-platform-name">${escapeHTML(platform.name)}</div>
+              </div>
+              <span class="creator-search-badge">${badge}</span>
+            </div>
+            <div class="creator-search-flat-body">
+              <div class="creator-search-image-block">
+                <span class="creator-search-shot-label">搜索页</span>
+                ${page.figures || '<div class="creator-search-field-content">暂无截图</div>'}
+              </div>
+              ${renderFactSection('机构占位', platform.fields['Top10搜索结构机构'])}
+              <div class="creator-search-image-block is-hot-sample">
+                <span class="creator-search-shot-label">最火视频 / 笔记</span>
+                <div class="creator-search-hot-text">${compactText(hot.text)}</div>
+                ${hot.figures || '<div class="creator-search-field-content">暂无截图</div>'}
+              </div>
+              <div class="creator-search-facts">
+                ${renderFactSection('最火内容解析', platform.fields['韩国汇款'], 'is-hot-analysis')}
+                ${renderFactSection('达人生态判断', platform.fields['观察结论'])}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      const viewWrapper = document.createElement('div');
+      viewWrapper.className = 'creator-search-view-wrapper show-cards';
+      viewWrapper.innerHTML = `
+        <div class="creator-search-view-header">
+          <div>
+            <div class="creator-search-view-title">“韩国汇款”达人搜索结果观察</div>
+            <div class="creator-search-view-subtitle">四个平台并排对比；点赞 / 收藏只归属各自的最火视频或笔记样本。</div>
+          </div>
+          <div class="view-switch-control">
+            <button class="switch-btn active" data-view="cards">平台解读视图</button>
+            <button class="switch-btn" data-view="table">完整表格视图</button>
+            <span class="switch-slider"></span>
+          </div>
+        </div>
+        <div class="creator-search-cards-view">
+          <div class="creator-search-card-grid">${cardsHTML}</div>
+        </div>
+      `;
+
+      const tableView = document.createElement('div');
+      tableView.className = 'creator-search-table-view';
+      targetWrap.closest('.collapsible-question')?.classList.add('has-creator-search-view');
+      targetWrap.parentNode.insertBefore(viewWrapper, targetWrap);
+      tableView.appendChild(targetWrap);
+      viewWrapper.appendChild(tableView);
+
+      const switchBtns = [...viewWrapper.querySelectorAll('.view-switch-control .switch-btn')];
+      viewWrapper.querySelector('.view-switch-control').addEventListener('click', (event) => {
+        const btn = event.target.closest('.switch-btn');
+        if (!btn || btn.classList.contains('active')) return;
+        switchBtns.forEach(item => item.classList.remove('active'));
+        btn.classList.add('active');
+        viewWrapper.classList.toggle('show-table', btn.dataset.view === 'table');
+        viewWrapper.classList.toggle('show-cards', btn.dataset.view !== 'table');
+      });
+
+    }
+
+    function enhanceSection5Playbook() {
+      const wraps = [...content.querySelectorAll('.table-wrap')];
+
+      function platformSvg(name) {
+        const clean = name.toLowerCase();
+        if (clean.includes('小红书')) {
+          return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#FF2442"></rect><path d="M6.5 7.6h11v2.1h-4.2v1.7h3.7v2h-3.7v3h4.7v2.1H6v-2.1h4.8v-3H7.1v-2h3.7V9.7H6.5V7.6z" fill="#fff"></path></svg>';
+        }
+        if (clean.includes('抖音')) {
+          return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#111827"></rect><path d="M14.2 5.2c.45 2 1.65 3.2 3.6 3.6v3c-1.25-.02-2.45-.38-3.55-1.08v4.5c0 2.5-1.85 4.25-4.25 4.25-2.25 0-4.05-1.72-4.05-3.9 0-2.42 1.92-4.2 4.55-4.2v3.05c-.92 0-1.5.52-1.5 1.22 0 .62.5 1.12 1.18 1.12.74 0 1.35-.52 1.35-1.5V5.2h2.67z" fill="#fff"></path></svg>';
+        }
+        if (clean.includes('快手')) {
+          return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#FF4A08"></rect><path d="M7.2 7.6a2.3 2.3 0 1 1 4.6 0 2.3 2.3 0 0 1-4.6 0zm5 0a2.3 2.3 0 1 1 4.6 0 2.3 2.3 0 0 1-4.6 0zM5.3 14.2c0-1.7 1.35-3.1 3.02-3.1h7.36c1.67 0 3.02 1.4 3.02 3.1v2.1c0 1.7-1.35 3.1-3.02 3.1H8.32c-1.67 0-3.02-1.4-3.02-3.1v-2.1zm2.4.15v1.8c0 .56.43 1.02.96 1.02h6.68c.53 0 .96-.46.96-1.02v-1.8c0-.56-.43-1.02-.96-1.02H8.66c-.53 0-.96.46-.96 1.02z" fill="#fff"></path></svg>';
+        }
+        if (clean.includes('视频号') || clean.includes('微信')) {
+          return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#09BB07"></rect><path d="M7 8.2c1.05-1.55 2.78-2.5 5-2.5 3.62 0 6.25 2.35 6.25 5.3s-2.63 5.3-6.25 5.3c-.63 0-1.24-.07-1.8-.22l-2.5 1.35.6-2.2C6.72 14.27 5.75 12.77 5.75 11c0-.98.32-1.94.9-2.74l.35-.06zm3.5 5.95l4.4-3.14-4.4-3.14v6.28z" fill="#fff"></path></svg>';
+        }
+        if (clean.includes('youtube') || clean.includes('b站') || clean.includes('播客')) {
+          return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#E11D24"></rect><path d="M18.9 8.2c-.18-.68-.72-1.22-1.4-1.4C16.25 6.5 12 6.5 12 6.5s-4.25 0-5.5.3c-.68.18-1.22.72-1.4 1.4-.3 1.25-.3 3.8-.3 3.8s0 2.55.3 3.8c.18.68.72 1.22 1.4 1.4 1.25.3 5.5.3 5.5.3s4.25 0 5.5-.3c.68-.18 1.22-.72 1.4-1.4.3-1.25.3-3.8.3-3.8s0-2.55-.3-3.8zM10.5 14.6V9.4l4.5 2.6-4.5 2.6z" fill="#fff"></path></svg>';
+        }
+        return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5.5" fill="#0052D9"></rect><path d="M6 17.5h12M7 10.5h10M8 6.5l4-2.5 4 2.5M8 10.5v7M12 10.5v7M16 10.5v7" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+      }
+
+      function textFromHTML(html) {
+        const box = document.createElement('div');
+        box.innerHTML = html || '';
+        return (box.textContent || '').replace(/\s+/g, ' ').trim();
+      }
+
+      function splitBlocks(html) {
+        return (html || '')
+          .split(/(?:<br\s*\/?>(?:\s|&nbsp;)*){2,}|；|;/i)
+          .map(part => part.trim())
+          .filter(Boolean);
+      }
+
+      function splitChips(html, max = 6) {
+        const text = textFromHTML(html);
+        return text
+          .split(/[、，,]/)
+          .map(item => item.trim())
+          .filter(Boolean)
+          .slice(0, max);
+      }
+
+      function platformKey(name) {
+        if (name.includes('小红书')) return 'xiaohongshu';
+        if (name.includes('抖音')) return 'douyin';
+        if (name.includes('快手')) return 'kuaishou';
+        if (name.includes('视频号')) return 'wechat';
+        if (name.includes('YouTube') || name.includes('B站') || name.includes('播客')) return 'youtube';
+        return 'default';
+      }
+
+      function platformRole(name, index) {
+        if (name.includes('小红书')) return index === 0 ? '主战场' : '搜索阵地';
+        if (name.includes('快手')) return '蓝领突破';
+        if (name.includes('抖音')) return '教程破冰';
+        if (name.includes('视频号')) return '微信承接';
+        return '专业背书';
+      }
+
+      function enhanceKfsTable() {
+        const targetWrap = wraps.find(wrap => {
+          const table = wrap.querySelector('table');
+          if (!table || wrap.closest('.section5-visual-wrapper')) return false;
+          const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+          return headers.includes('KFS核心思路') && headers.some(h => h.includes('KOL')) && headers.some(h => h.includes('Search'));
+        });
+        if (!targetWrap) return;
+        const table = targetWrap.querySelector('table');
+        const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+        const rows = [...table.querySelectorAll('tbody tr')];
+        const labels = rows.map(row => row.cells[0]?.textContent.trim() || '');
+        const colors = [
+          { letter: 'K', soft: 'rgba(255, 36, 66, .08)', color: '#ff2442', border: 'rgba(255, 36, 66, .16)' },
+          { letter: 'F', soft: 'rgba(255, 74, 8, .08)', color: '#ff4a08', border: 'rgba(255, 74, 8, .16)' },
+          { letter: 'S', soft: 'rgba(0, 82, 217, .08)', color: '#0052d9', border: 'rgba(0, 82, 217, .16)' }
+        ];
+        const cards = headers.slice(1).map((header, index) => {
+          const style = colors[index] || colors[0];
+          const rowsHTML = rows.map((row, rowIndex) => `
+            <div class="section5-kfs-row">
+              <span>${escapeHTML(labels[rowIndex])}</span>
+              <div>${row.cells[index + 1]?.innerHTML || ''}</div>
+            </div>
+          `).join('');
+          return `
+            <article class="section5-kfs-card" style="--card-soft:${style.soft};--card-color:${style.color};--card-border:${style.border}">
+              <div class="section5-kfs-topline">
+                <span class="section5-kfs-letter">${style.letter}</span>
+                <div class="section5-kfs-name">${escapeHTML(header)}</div>
+              </div>
+              ${rowsHTML}
+            </article>
+          `;
+        }).join('');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'section5-visual-wrapper section5-kfs-wrapper';
+        wrapper.innerHTML = `
+          <div class="section5-visual-header">
+            <div>
+              <h4 class="section5-visual-title">KFS 投入顺序：K 建心智、S 接需求、F 后放量</h4>
+              <p class="section5-visual-subtitle">把原表格拆成三张任务卡，先看每段在链路里承担什么角色。</p>
+            </div>
+          </div>
+          <div class="section5-kfs-grid">${cards}</div>
+        `;
+        const details = document.createElement('details');
+        details.className = 'section5-source-details';
+        details.innerHTML = '<summary>查看原始 KFS 表格</summary>';
+        targetWrap.parentNode.insertBefore(wrapper, targetWrap);
+        details.appendChild(targetWrap);
+        wrapper.appendChild(details);
+      }
+
+      function enhanceJourneyMap() {
+        const heading = [...content.querySelectorAll('h3')].find(h => h.textContent.includes('5.1 打法总览'));
+        if (!heading || heading.nextElementSibling?.classList?.contains('section5-journey-wrapper')) return;
+
+        const steps = [
+          {
+            title: '场景触发',
+            text: '用 KOL / KOC / 官方账号讲发薪、留学、节日红包和父母收款，让微信收款进入选择集。',
+            color: '#ff2442',
+            soft: 'rgba(255, 36, 66, .08)'
+          },
+          {
+            title: '搜索比较',
+            text: '用小红书 Search、Google / AI Search 和 FAQ 承接费用、到账、收款方式等高意图问题。',
+            color: '#0052d9',
+            soft: 'rgba(0, 82, 217, .08)'
+          },
+          {
+            title: '教程验证',
+            text: '用达人实操、截图教程、到账结果和评论区答疑，完成首次信任确认。',
+            color: '#ff4a08',
+            soft: 'rgba(255, 74, 8, .08)'
+          },
+          {
+            title: '首汇复汇',
+            text: '把首汇用户接到客服、发薪日提醒、节日权益和亲友推荐链路里。',
+            color: '#09bb07',
+            soft: 'rgba(9, 187, 7, .08)'
+          }
+        ];
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'section5-visual-wrapper section5-journey-wrapper';
+        wrapper.innerHTML = `
+          <div class="section5-visual-header">
+            <div>
+              <h4 class="section5-visual-title">从场景心智到复汇习惯：一条链路推进转化</h4>
+              <p class="section5-visual-subtitle">5.1 先看这条主线，后面的入口建设、场景补强和运营承接都围绕它展开。</p>
+            </div>
+          </div>
+          <div class="section5-journey-grid">
+            ${steps.map((step, index) => `
+              <article class="section5-journey-card" style="--journey-color:${step.color};--journey-soft:${step.soft}">
+                <div class="section5-journey-step">${index + 1}</div>
+                <h4 class="section5-journey-title">${escapeHTML(step.title)}</h4>
+                <p class="section5-journey-text">${escapeHTML(step.text)}</p>
+              </article>
+            `).join('')}
+          </div>
+        `;
+        heading.insertAdjacentElement('afterend', wrapper);
+      }
+
+      function enhancePlatformTable() {
+        const targetWrap = wraps.find(wrap => {
+          const table = wrap.querySelector('table');
+          if (!table || wrap.closest('.section5-visual-wrapper')) return false;
+          const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+          return headers.includes('平台') && headers.includes('优先用户画像 / 市场') && headers.includes('具体投流方法') && headers.includes('承接动作');
+        });
+        if (!targetWrap) return;
+        const table = targetWrap.querySelector('table');
+        const rows = [...table.querySelectorAll('tbody tr')];
+        const cards = rows.map((row, index) => {
+          const cells = [...row.querySelectorAll('td')];
+          const name = cells[0]?.textContent.trim() || '';
+          const key = platformKey(name);
+          const isPrimary = name.includes('小红书');
+          const chips = splitChips(cells[4]?.innerHTML || '', isPrimary ? 8 : 5)
+            .map(chip => `<span class="section5-platform-chip">${escapeHTML(chip)}</span>`)
+            .join('');
+          const kfsRows = splitBlocks(cells[3]?.innerHTML || '').map(block => {
+            const label = textFromHTML(block).slice(0, 1).toUpperCase();
+            const safeLabel = ['K', 'F', 'S'].includes(label) ? label : '•';
+            return `<div class="section5-platform-kfs-row"><b>${safeLabel}</b><span>${block}</span></div>`;
+          }).join('');
+          return `
+            <article class="section5-platform-card${isPrimary ? ' is-primary' : ''}" data-platform="${key}">
+              <div class="section5-platform-head">
+                <div class="section5-platform-icon">${platformSvg(name)}</div>
+                <div>
+                  <div class="section5-platform-title">${escapeHTML(name)}</div>
+                  <div class="section5-visual-subtitle">${escapeHTML(textFromHTML(cells[2]?.innerHTML || ''))}</div>
+                </div>
+                <span class="section5-platform-role">${platformRole(name, index)}</span>
+              </div>
+              <div class="section5-platform-body">
+                <div class="section5-platform-block">
+                  <span class="section5-platform-label">优先人群 / 市场</span>
+                  <div class="section5-platform-text">${cells[1]?.innerHTML || ''}</div>
+                </div>
+                <div class="section5-platform-block">
+                  <span class="section5-platform-label">K / F / S 投流动作</span>
+                  <div class="section5-platform-kfs">${kfsRows || cells[3]?.innerHTML || ''}</div>
+                </div>
+                <div class="section5-platform-block">
+                  <span class="section5-platform-label">内容主题</span>
+                  <div class="section5-platform-chip-list">${chips}</div>
+                </div>
+                <div class="section5-platform-block">
+                  <span class="section5-platform-label">承接动作</span>
+                  <div class="section5-platform-text">${cells[5]?.innerHTML || ''}</div>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'section5-visual-wrapper section5-platform-wrapper';
+        wrapper.innerHTML = `
+          <div class="section5-visual-header">
+            <div>
+              <h4 class="section5-visual-title">平台打法地图：先看角色，再看动作</h4>
+              <p class="section5-visual-subtitle">小红书承担主战场；短视频负责信任破冰；视频号和长视频分别做微信承接与专业背书。</p>
+            </div>
+          </div>
+          <div class="section5-platform-grid">${cards}</div>
+        `;
+        const details = document.createElement('details');
+        details.className = 'section5-source-details';
+        details.innerHTML = '<summary>查看完整平台投流表格</summary>';
+        targetWrap.parentNode.insertBefore(wrapper, targetWrap);
+        details.appendChild(targetWrap);
+        wrapper.appendChild(details);
+      }
+
+      function enhanceContentPackageTable() {
+        const targetWrap = wraps.find(wrap => {
+          const table = wrap.querySelector('table');
+          if (!table || wrap.closest('.section5-visual-wrapper')) return false;
+          const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+          return headers.includes('内容包') && headers.some(h => h.includes('核心问题')) && headers.some(h => h.includes('承接动作'));
+        });
+        if (!targetWrap) return;
+        const rows = [...targetWrap.querySelectorAll('tbody tr')];
+        const accents = [
+          { color: '#ff4a08', soft: 'rgba(255, 74, 8, .08)', border: 'rgba(255, 74, 8, .16)' },
+          { color: '#0052d9', soft: 'rgba(0, 82, 217, .08)', border: 'rgba(0, 82, 217, .16)' },
+          { color: '#09bb07', soft: 'rgba(9, 187, 7, .08)', border: 'rgba(9, 187, 7, .16)' },
+          { color: '#8b5cf6', soft: 'rgba(139, 92, 246, .08)', border: 'rgba(139, 92, 246, .16)' }
+        ];
+        const cards = rows.map((row, index) => {
+          const cells = row.cells;
+          const style = accents[index] || accents[0];
+          const packageName = textFromHTML(cells[0]?.innerHTML || '');
+          const platforms = splitChips(cells[2]?.innerHTML || '', 4)
+            .map(chip => `<span class="section5-package-chip">${escapeHTML(chip)}</span>`)
+            .join('');
+          return `
+            <article class="section5-package-card" style="--package-color:${style.color};--package-soft:${style.soft};--package-border:${style.border}">
+              <div class="section5-package-topline">
+                <span class="section5-package-index">0${index + 1}</span>
+                <h4 class="section5-package-name">${escapeHTML(packageName)}</h4>
+              </div>
+              <div class="section5-package-chips">${platforms}</div>
+              <div class="section5-package-flow">
+                <div class="section5-package-block">
+                  <span class="section5-package-label">人群 / 场景</span>
+                  <div class="section5-package-text">${cells[1]?.innerHTML || ''}</div>
+                </div>
+                <div class="section5-package-block">
+                  <span class="section5-package-label">核心问题</span>
+                  <div class="section5-package-text">${cells[3]?.innerHTML || ''}</div>
+                </div>
+                <div class="section5-package-block">
+                  <span class="section5-package-label">承接动作</span>
+                  <div class="section5-package-text">${cells[4]?.innerHTML || ''}</div>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'section5-visual-wrapper section5-package-wrapper';
+        wrapper.innerHTML = `
+          <div class="section5-visual-header">
+            <div>
+              <h4 class="section5-visual-title">平台之后看内容包：人群、问题、承接合到一张图</h4>
+              <p class="section5-visual-subtitle">先按内容包组织素材，再拆搜索词和投流素材，减少平台表后的画像重复。</p>
+            </div>
+          </div>
+          <div class="section5-package-grid">${cards}</div>
+        `;
+        const details = document.createElement('details');
+        details.className = 'section5-source-details';
+        details.innerHTML = '<summary>查看内容包执行表</summary>';
+        targetWrap.parentNode.insertBefore(wrapper, targetWrap);
+        details.appendChild(targetWrap);
+        wrapper.appendChild(details);
+      }
+
+      enhanceJourneyMap();
+      enhanceKfsTable();
+      enhancePlatformTable();
+      enhanceContentPackageTable();
+    }
+
     function initLightbox() {
       const modal = document.createElement('div');
       modal.className = 'lightbox-modal';
@@ -4655,6 +6803,9 @@ function enhanceKfsPyramid() {
     enhancePersonas();
     enhanceKfsPyramid();
     enhanceCognitiveBlocks();
+    enhancePlatformMatrixEvidence();
+    enhanceCreatorSearchEvidence();
+    enhanceSection5Playbook();
     [...content.querySelectorAll('.chapter-card')].forEach(clusterImages);
     initLightbox();
 
