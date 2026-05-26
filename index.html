@@ -3211,10 +3211,6 @@
       align-items: center;
       gap: 6px;
       min-width: 0;
-      padding: 4px 9px;
-      border: 1px solid #dbe6f3;
-      border-radius: 6px;
-      background: #ffffff;
     }
     .creator-platform-icon {
       display: inline-grid;
@@ -3248,26 +3244,39 @@
       padding: 12px;
     }
     .creator-search-image-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       min-width: 0;
+      height: 180px;
       padding: 9px 10px 10px;
       border: 1px solid #edf3fa;
       border-radius: 8px;
       background: #ffffff;
+      overflow: hidden;
     }
     .creator-search-image-block.is-hot-sample {
       border-color: #dce9f7;
       background: #f9fcff;
+      height: 240px;
     }
     .creator-search-image-block figure {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
+      flex: 1;
+      min-height: 0;
       margin: 0;
       transform: none;
       background: transparent;
+      overflow: hidden;
     }
     .creator-search-image-block img {
       width: 100%;
+      height: 100%;
       max-width: 100%;
-      max-height: 170px;
+      max-height: 100%;
       object-fit: contain;
       border-radius: 6px;
       cursor: zoom-in;
@@ -3612,18 +3621,28 @@
       font-weight: 950;
     }
     .section5-package-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
     .section5-package-card {
       position: relative;
       overflow: hidden;
-      padding: 15px;
+      padding: 20px 24px;
       border: 1px solid var(--package-border);
-      border-radius: 12px;
+      border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 8px 24px rgba(15, 35, 55, .035);
+      box-shadow: 0 10px 30px rgba(15, 35, 55, .03);
+      display: grid;
+      grid-template-columns: minmax(180px, 200px) auto 1fr auto 1.1fr auto 1.1fr;
+      align-items: stretch;
+      gap: 12px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .section5-package-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(15, 35, 55, .08);
+      border-color: var(--package-color);
     }
     .section5-package-card::before {
       content: "";
@@ -3632,11 +3651,30 @@
       width: 5px;
       background: var(--package-color);
     }
+    .section5-package-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 8px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 1px solid #f1f5f9;
+      border-radius: 12px;
+      height: 100%;
+    }
+    .section5-package-col.col-header {
+      padding: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      height: auto;
+      justify-content: center;
+      gap: 10px;
+    }
     .section5-package-topline {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 12px;
     }
     .section5-package-index {
       width: 32px;
@@ -3648,18 +3686,19 @@
       color: var(--package-color);
       font-size: 13px;
       font-weight: 950;
+      flex-shrink: 0;
     }
     .section5-package-name {
       color: #10243c;
       font-size: 15px;
       font-weight: 950;
       line-height: 1.25;
+      margin: 0;
     }
     .section5-package-chips {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 12px;
     }
     .section5-package-chip {
       display: inline-flex;
@@ -3672,27 +3711,54 @@
       font-weight: 820;
       line-height: 1.25;
     }
-    .section5-package-flow {
-      display: grid;
-      gap: 8px;
+    .section5-package-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      opacity: 0.8;
     }
-    .section5-package-block {
-      padding-top: 8px;
-      border-top: 1px solid #edf3f8;
+    .flow-arrow-icon {
+      width: 18px;
+      height: 18px;
+      stroke: #94a3b8;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .section5-package-card:hover .flow-arrow-icon {
+      transform: translateX(3px);
+      color: var(--package-color);
     }
     .section5-package-label {
-      display: block;
-      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       color: #7a8ba0;
       font-size: 11px;
       font-weight: 950;
       letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .label-icon {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+      stroke-width: 2.5;
     }
     .section5-package-text {
       color: #273c54;
       font-size: 12.7px;
       font-weight: 720;
       line-height: 1.52;
+    }
+    .section5-package-col.col-question .section5-package-text {
+      border-left: 2.5px solid var(--package-color);
+      padding-left: 8px;
+      font-style: italic;
+      color: #1e293b;
+    }
+    .section5-package-col.col-action .section5-package-text {
+      color: #0f172a;
+      font-weight: 750;
     }
     .section5-priority-grid {
       display: grid;
@@ -3702,7 +3768,7 @@
       --priority-color: #0052d9;
       --priority-soft: rgba(0, 82, 217, .08);
       display: grid;
-      grid-template-columns: 96px 154px minmax(0, 1.2fr) minmax(0, 1fr);
+      grid-template-columns: 96px 154px minmax(0, 1fr) minmax(0, 1.6fr);
       gap: 14px;
       align-items: stretch;
       padding: 15px;
@@ -3789,6 +3855,26 @@
       .section5-journey-grid,
       .section5-kfs-grid {
         grid-template-columns: 1fr;
+      }
+      .section5-package-card {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px;
+      }
+      .section5-package-col {
+        height: auto;
+        padding: 12px;
+      }
+      .section5-package-connector {
+        transform: rotate(90deg);
+        margin: 4px 0;
+      }
+      .section5-package-card:hover .flow-arrow-icon {
+        transform: translateY(3px);
+      }
+      .section5-package-col.col-question .section5-package-text {
+        border-left-width: 3px;
+        padding-left: 10px;
       }
       .section5-priority-card {
         grid-template-columns: 1fr;
@@ -4251,7 +4337,7 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 
 微信收款链路的内容占位仍然偏弱。现有攻略主要导向机构 App，系统化的小程序教程较少。该空白为微汇款提供了明确的建设方向。
 
-:::details open 完整论据表 B：“韩国汇款”达人搜索结果观察（含视频号）
+:::details open 补充参考 B：“韩国汇款”内容搜索结果对比
 | **搜索词** | **快手** | **抖音** | **小红书** | **视频号** |
 | - | - | - | - | - |
 | 页面 | ![Clipboard_Screenshot_1779808337.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458024) | ![Clipboard_Screenshot_1779808382.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458026) | ![Clipboard_Screenshot_1779808427.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458025) | ![Clipboard_Screenshot_1779812486.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458183) |
@@ -4899,7 +4985,20 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
           investor: { bank: true, online: false, offline: false }
         };
         
+        // Specific platform preferences from the market report normalized to sum to 100%:
+        // - family: Bank 72% (from archetype report), Offline 20%, Online 8%
+        // - professional: Online 59% (from archetype report), Bank 31%, Offline 10%
+        // - young: Bank 45%, Online 45%, Offline 10% (App-centric / Mobile hybrid)
+        // - investor: Bank 66% (from archetype report), Online 24%, Offline 10%
+        const percentages = {
+          family: { bank: '72%', online: '8%', offline: '20%' },
+          professional: { bank: '31%', online: '59%', offline: '10%' },
+          young: { bank: '45%', online: '45%', offline: '10%' },
+          investor: { bank: '66%', online: '24%', offline: '10%' }
+        };
+
         const status = mapping[pId] || { bank: false, online: false, offline: false };
+        const percent = percentages[pId] || { bank: '0%', online: '0%', offline: '0%' };
         
         const bankClass = status.bank ? 'active' : 'inactive';
         const onlineClass = status.online ? 'active' : 'inactive';
@@ -4914,7 +5013,7 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
                 </svg>
               </div>
               <span class="platform-name">银行机构</span>
-              <span class="platform-status-badge">${status.bank ? '常用' : '不常用'}</span>
+              <span class="platform-status-badge">${percent.bank}</span>
             </div>
             <div class="platform-item ${onlineClass}">
               <div class="platform-icon-wrap">
@@ -4926,7 +5025,7 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
                 </svg>
               </div>
               <span class="platform-name">线上平台</span>
-              <span class="platform-status-badge">${status.online ? '常用' : '不常用'}</span>
+              <span class="platform-status-badge">${percent.online}</span>
             </div>
             <div class="platform-item ${offlineClass}">
               <div class="platform-icon-wrap">
@@ -4935,7 +5034,7 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
                 </svg>
               </div>
               <span class="platform-name">线下门店</span>
-              <span class="platform-status-badge">${status.offline ? '常用' : '不常用'}</span>
+              <span class="platform-status-badge">${percent.offline}</span>
             </div>
           </div>
         `;
@@ -6523,7 +6622,6 @@ function enhanceKfsPyramid() {
       const cardsHTML = platforms.map(platform => {
         const page = splitMediaCell(platform.fields['页面']);
         const hot = splitMediaCell(platform.fields['最火']);
-        const badge = platform.name === '视频号' ? '机会：低饱和' : platform.name === '小红书' ? '图文：可收藏' : '短视频：强教程';
         return `
           <article class="creator-search-card creator-search-flat-card" data-platform="${platform.key}">
             <div class="creator-search-card-header">
@@ -6531,14 +6629,13 @@ function enhanceKfsPyramid() {
                 <span class="creator-platform-icon">${platformSvg(platform.name)}</span>
                 <div class="creator-search-platform-name">${escapeHTML(platform.name)}</div>
               </div>
-              <span class="creator-search-badge">${badge}</span>
             </div>
             <div class="creator-search-flat-body">
-              <div class="creator-search-image-block">
+              <div class="creator-search-image-block is-page-shot">
                 <span class="creator-search-shot-label">搜索页</span>
                 ${page.figures || '<div class="creator-search-field-content">暂无截图</div>'}
               </div>
-              ${renderFactSection('机构占位', platform.fields['Top10搜索结构机构'])}
+              ${renderFactSection('机构占位', platform.fields['Top10搜索结构机构'], 'is-org-distribution')}
               <div class="creator-search-image-block is-hot-sample">
                 <span class="creator-search-shot-label">最火视频 / 笔记</span>
                 <div class="creator-search-hot-text">${compactText(hot.text)}</div>
@@ -6546,7 +6643,7 @@ function enhanceKfsPyramid() {
               </div>
               <div class="creator-search-facts">
                 ${renderFactSection('最火内容解析', platform.fields['韩国汇款'], 'is-hot-analysis')}
-                ${renderFactSection('达人生态判断', platform.fields['观察结论'])}
+                ${renderFactSection('达人生态判断', platform.fields['观察结论'], 'is-eco-feature')}
               </div>
             </div>
           </article>
@@ -6558,8 +6655,8 @@ function enhanceKfsPyramid() {
       viewWrapper.innerHTML = `
         <div class="creator-search-view-header">
           <div>
-            <div class="creator-search-view-title">“韩国汇款”达人搜索结果观察</div>
-            <div class="creator-search-view-subtitle">四个平台并排对比；点赞 / 收藏只归属各自的最火视频或笔记样本。</div>
+            <div class="creator-search-view-title">“韩国汇款”内容搜索结果对比</div>
+            <div class="creator-search-view-subtitle">四个平台并排对比；点赞 / 收藏仅对应各平台展示的高互动视频或笔记。</div>
           </div>
           <div class="view-switch-control">
             <button class="switch-btn active" data-view="cards">平台解读视图</button>
@@ -6587,7 +6684,53 @@ function enhanceKfsPyramid() {
         btn.classList.add('active');
         viewWrapper.classList.toggle('show-table', btn.dataset.view === 'table');
         viewWrapper.classList.toggle('show-cards', btn.dataset.view !== 'table');
+        if (btn.dataset.view !== 'table') {
+          setTimeout(alignHeights, 50);
+        }
       });
+
+      function alignHeights() {
+        const selectors = [
+          '.creator-search-card-header',
+          '.is-org-distribution',
+          '.is-hot-analysis',
+          '.is-eco-feature'
+        ];
+        
+        selectors.forEach(sel => {
+          const elements = [...viewWrapper.querySelectorAll(sel)];
+          // Reset heights first to measure natural height
+          elements.forEach(el => { el.style.height = ''; });
+          
+          // Only align if columns are displayed side-by-side (desktop layout: min-width 861px)
+          if (window.innerWidth <= 860) {
+            return;
+          }
+          
+          let maxHeight = 0;
+          elements.forEach(el => {
+            const h = el.getBoundingClientRect().height;
+            if (h > maxHeight) maxHeight = h;
+          });
+          
+          if (maxHeight > 0) {
+            elements.forEach(el => {
+              el.style.height = `${maxHeight}px`;
+            });
+          }
+        });
+      }
+
+      // Use ResizeObserver for robust layout changes (images loading, window resizing, details opening/closing)
+      if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(() => {
+          requestAnimationFrame(alignHeights);
+        });
+        ro.observe(viewWrapper);
+      } else {
+        window.addEventListener('resize', alignHeights);
+        setTimeout(alignHeights, 100);
+      }
 
     }
 
@@ -6847,6 +6990,16 @@ function enhanceKfsPyramid() {
           { color: '#09bb07', soft: 'rgba(9, 187, 7, .08)', border: 'rgba(9, 187, 7, .16)' },
           { color: '#8b5cf6', soft: 'rgba(139, 92, 246, .08)', border: 'rgba(139, 92, 246, .16)' }
         ];
+
+        const arrowSvg = `
+          <div class="section5-package-connector" aria-hidden="true">
+            <svg class="flow-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        `;
+
         const cards = rows.map((row, index) => {
           const cells = row.cells;
           const style = accents[index] || accents[0];
@@ -6856,24 +7009,46 @@ function enhanceKfsPyramid() {
             .join('');
           return `
             <article class="section5-package-card" style="--package-color:${style.color};--package-soft:${style.soft};--package-border:${style.border}">
-              <div class="section5-package-topline">
-                <span class="section5-package-index">0${index + 1}</span>
-                <h4 class="section5-package-name">${escapeHTML(packageName)}</h4>
+              <!-- Step 1: Package & Platforms -->
+              <div class="section5-package-col col-header">
+                <div class="section5-package-topline">
+                  <span class="section5-package-index">0${index + 1}</span>
+                  <h4 class="section5-package-name">${escapeHTML(packageName)}</h4>
+                </div>
+                <div class="section5-package-chips">${platforms}</div>
               </div>
-              <div class="section5-package-chips">${platforms}</div>
-              <div class="section5-package-flow">
-                <div class="section5-package-block">
-                  <span class="section5-package-label">人群 / 场景</span>
-                  <div class="section5-package-text">${cells[1]?.innerHTML || ''}</div>
-                </div>
-                <div class="section5-package-block">
-                  <span class="section5-package-label">核心问题</span>
-                  <div class="section5-package-text">${cells[3]?.innerHTML || ''}</div>
-                </div>
-                <div class="section5-package-block">
-                  <span class="section5-package-label">承接动作</span>
-                  <div class="section5-package-text">${cells[4]?.innerHTML || ''}</div>
-                </div>
+              
+              ${arrowSvg}
+              
+              <!-- Step 2: Audience / Scene -->
+              <div class="section5-package-col col-audience">
+                <span class="section5-package-label">
+                  <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  人群 / 场景
+                </span>
+                <div class="section5-package-text">${cells[1]?.innerHTML || ''}</div>
+              </div>
+              
+              ${arrowSvg}
+              
+              <!-- Step 3: Core Question -->
+              <div class="section5-package-col col-question">
+                <span class="section5-package-label">
+                  <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  核心问题
+                </span>
+                <div class="section5-package-text">${cells[3]?.innerHTML || ''}</div>
+              </div>
+              
+              ${arrowSvg}
+              
+              <!-- Step 4: Landing Action -->
+              <div class="section5-package-col col-action">
+                <span class="section5-package-label">
+                  <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  承接动作
+                </span>
+                <div class="section5-package-text">${cells[4]?.innerHTML || ''}</div>
               </div>
             </article>
           `;
