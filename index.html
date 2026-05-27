@@ -6920,22 +6920,32 @@ function enhanceKfsPyramid() {
 
         const steps = [
           {
-            title: '前端：进入选择集',
-            text: '围绕费用、汇率、到账、收款方式和安全性，完成触达、比较和信任建立。',
+            title: '第一阶段：获客与认知',
+            text: '在用户对比和选择渠道时进行内容触达，树立安全、透明的心智，解决“被看见与被信任”的问题。',
             color: '#0052d9',
-            soft: 'rgba(0, 82, 217, .08)'
+            soft: 'rgba(0, 82, 217, .08)',
+            badge: '核心聚焦',
+            badgeBg: 'rgba(0, 82, 217, 0.12)',
+            badgeColor: '#0052d9'
           },
           {
-            title: '中段：接住首汇',
-            text: '用教程、FAQ、试算和客服承接第一次交易，减少决策犹豫和操作流失。',
-            color: '#ff4a08',
-            soft: 'rgba(255, 74, 8, .08)'
+            title: '第二阶段：引导与转化',
+            text: '通过教程、FAQ和试算工具引导首次汇款，减少流失。（此环节属于机构侧功能承接，不在本报告营销打法探讨范围）',
+            color: '#8c9ba5',
+            soft: 'rgba(140, 155, 165, .08)',
+            badge: '非本报告范围',
+            badgeBg: '#f1f5f9',
+            badgeColor: '#64748b',
+            extraStyle: 'opacity: 0.65; border-style: dashed;'
           },
           {
-            title: '后端：做成复汇',
-            text: '围绕发薪、节日和家庭用钱场景做提醒、权益和推荐，推动再次使用。',
+            title: '第三阶段：留存与裂变',
+            text: '围绕发薪日、节日等场景做定向汇款提醒，并通过激励机制推动二次复汇与推荐分享。',
             color: '#09bb07',
-            soft: 'rgba(9, 187, 7, .08)'
+            soft: 'rgba(9, 187, 7, .08)',
+            badge: '次要涉及',
+            badgeBg: 'rgba(9, 187, 7, 0.12)',
+            badgeColor: '#09bb07'
           }
         ];
 
@@ -6944,16 +6954,18 @@ function enhanceKfsPyramid() {
         wrapper.innerHTML = `
           <div class="section5-visual-header">
             <div>
-              <h4 class="section5-visual-title">营销重心前移：先进入选择集，再把首汇接成复汇</h4>
-              <p class="section5-visual-subtitle">用一张图看清三段任务：前端解决被看见与被理解，中段解决首次成交，后端解决复汇与推荐。</p>
+              <h4 class="section5-visual-title">微汇款内容营销漏斗：从认知到裂变</h4>
             </div>
           </div>
           <div class="section5-journey-grid">
             ${steps.map((step, index) => `
-              <article class="section5-journey-card" style="--journey-color:${step.color};--journey-soft:${step.soft}">
-                <div class="section5-journey-step">${index + 1}</div>
-                <h4 class="section5-journey-title">${escapeHTML(step.title)}</h4>
-                <p class="section5-journey-text">${escapeHTML(step.text)}</p>
+              <article class="section5-journey-card" style="--journey-color:${step.color};--journey-soft:${step.soft};${step.extraStyle || ''}">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <div class="section5-journey-step" style="margin-bottom: 0;">${index + 1}</div>
+                  ${step.badge ? `<span style="font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 6px; background: ${step.badgeBg}; color: ${step.badgeColor};">${step.badge}</span>` : ''}
+                </div>
+                <h4 class="section5-journey-title" style="color: ${step.color === '#8c9ba5' ? '#64748b' : '#10243c'}">${escapeHTML(step.title)}</h4>
+                <p class="section5-journey-text" style="color: ${step.color === '#8c9ba5' ? '#7a8ba0' : '#3d536b'}">${escapeHTML(step.text)}</p>
               </article>
             `).join('')}
           </div>
