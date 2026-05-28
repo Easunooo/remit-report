@@ -772,23 +772,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 90px;
+      height: 50px;
       position: relative;
     }
     .weee-svg-connector {
       width: 100%;
       max-width: 640px;
-      height: 90px;
+      height: 50px;
       display: block;
-    }
-    @keyframes flowDashes {
-      to {
-        stroke-dashoffset: -20;
-      }
-    }
-    .weee-flow-path-animated {
-      stroke-dasharray: 8, 8;
-      animation: flowDashes 1.2s linear infinite;
     }
     
     /* Mobile-only connector */
@@ -7034,11 +7025,8 @@ function enhanceKfsPyramid() {
           
           <!-- Middle SVG Connector for Desktop -->
           <div class="weee-arrow-connector">
-            <svg viewBox="0 0 640 90" class="weee-svg-connector">
+            <svg viewBox="0 0 640 50" class="weee-svg-connector">
               <defs>
-                <filter id="weee-shadow" x="-10%" y="-10%" width="120%" height="120%">
-                  <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#7c3aed" flood-opacity="0.25" />
-                </filter>
                 <linearGradient id="weee-left-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stop-color="#0052d9" />
                   <stop offset="100%" stop-color="#7c3aed" />
@@ -7051,18 +7039,14 @@ function enhanceKfsPyramid() {
                   <path d="M 1 1 L 7 4 L 1 7 Z" fill="#7c3aed" />
                 </marker>
               </defs>
-              <!-- Left flow track -->
-              <path d="M 150,2 C 150,45 320,35 320,74" fill="none" stroke="#0052d9" stroke-width="4" stroke-opacity="0.1" stroke-linecap="round" />
-              <!-- Left flow animated line -->
-              <path d="M 150,2 C 150,45 320,35 320,74" fill="none" stroke="url(#weee-left-grad)" stroke-width="3" stroke-linecap="round" class="weee-flow-path-animated" filter="url(#weee-shadow)" />
+              <!-- Left curve -->
+              <path d="M 150,2 C 150,25 320,20 320,44" fill="none" stroke="url(#weee-left-grad)" stroke-width="2.5" stroke-dasharray="6,4" stroke-linecap="round" />
               
-              <!-- Right flow track -->
-              <path d="M 490,2 C 490,45 320,35 320,74" fill="none" stroke="#0d9488" stroke-width="4" stroke-opacity="0.1" stroke-linecap="round" />
-              <!-- Right flow animated line -->
-              <path d="M 490,2 C 490,45 320,35 320,74" fill="none" stroke="url(#weee-right-grad)" stroke-width="3" stroke-linecap="round" class="weee-flow-path-animated" filter="url(#weee-shadow)" />
+              <!-- Right curve -->
+              <path d="M 490,2 C 490,25 320,20 320,44" fill="none" stroke="url(#weee-right-grad)" stroke-width="2.5" stroke-dasharray="6,4" stroke-linecap="round" />
               
               <!-- Joining Arrowhead -->
-              <path d="M 320,72 L 320,76" fill="none" stroke="#7c3aed" stroke-width="3.5" stroke-linecap="round" marker-end="url(#weee-arrow-marker)" />
+              <path d="M 320,41 L 320,45" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" marker-end="url(#weee-arrow-marker)" />
             </svg>
           </div>
           
