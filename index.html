@@ -7147,13 +7147,18 @@ function enhanceKfsPyramid() {
         };
       });
 
+      // Strip the leading bold label (e.g. "KOC：地方KOC" / "Feeds：地方普通用户") before <br> breaks
+      function stripLeadingLabel(html) {
+        return html.replace(/^[\s\S]*?(?:<br\s*\/?>[\s]*){1,2}/, '');
+      }
+
       const pptHTML = `
         <div class="weee-presentation-container">
           <div class="weee-nodes-grid-3">
             <!-- Left Card: Local KOC -->
             <div class="weee-node-card">
               <div class="weee-node-title color-kol">地方 KOC</div>
-              <div class="weee-node-strategy">${data[0].strategyHTML}</div>
+              <div class="weee-node-strategy">${stripLeadingLabel(data[0].strategyHTML)}</div>
               <div class="weee-node-desc">${data[0].caseHTML}</div>
               <div class="weee-node-images">${data[0].imagesHTML}</div>
             </div>
@@ -7161,7 +7166,7 @@ function enhanceKfsPyramid() {
             <!-- Middle Card: Local Feeds -->
             <div class="weee-node-card">
               <div class="weee-node-title color-matrix">地方 Feeds</div>
-              <div class="weee-node-strategy">${data[1].strategyHTML}</div>
+              <div class="weee-node-strategy">${stripLeadingLabel(data[1].strategyHTML)}</div>
               <div class="weee-node-desc">${data[1].caseHTML}</div>
               <div class="weee-node-images">${data[1].imagesHTML}</div>
             </div>
