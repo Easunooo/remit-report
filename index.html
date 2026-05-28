@@ -829,6 +829,323 @@
         padding: 16px;
       }
     }
+    .futu-strategy-wrapper {
+      margin-bottom: 30px;
+    }
+    .futu-strategy-wrapper.show-table .switch-slider {
+      transform: translateX(100%);
+    }
+    .futu-strategy-wrapper.show-presentation .futu-presentation-view {
+      display: block;
+    }
+    .futu-strategy-wrapper.show-presentation .futu-table-view {
+      display: none;
+    }
+    .futu-strategy-wrapper.show-table .futu-presentation-view {
+      display: none;
+    }
+    .futu-strategy-wrapper.show-table .futu-table-view {
+      display: block;
+    }
+    .futu-presentation-shell {
+      border: 1px solid rgba(226, 232, 240, 0.92);
+      border-radius: 18px;
+      padding: 20px;
+      background: #ffffff;
+      box-shadow: none;
+    }
+    .futu-bridge-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .futu-bridge-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.08);
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .futu-bridge-pill.is-conversion {
+      background: rgba(124, 58, 237, 0.08);
+      color: #7c3aed;
+    }
+    .futu-bridge-line {
+      position: relative;
+      flex: 1;
+      min-width: 72px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.2) 0%, rgba(124, 58, 237, 0.22) 100%);
+    }
+    .futu-bridge-line::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 6px;
+      height: 6px;
+      border-top: 1.5px solid rgba(124, 58, 237, 0.55);
+      border-right: 1.5px solid rgba(124, 58, 237, 0.55);
+      transform: translateY(-50%) rotate(45deg);
+    }
+    .futu-presentation-track {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .futu-panel {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .futu-panel-hero {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0;
+    }
+    .futu-panel-tag {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .futu-panel.is-method .futu-panel-tag {
+      color: #1d4ed8;
+      background: rgba(37, 99, 235, 0.08);
+    }
+    .futu-panel.is-conversion .futu-panel-tag {
+      color: #7c3aed;
+      background: rgba(124, 58, 237, 0.08);
+    }
+    .futu-panel-title {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.18;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+    .futu-panel-copy {
+      font-size: 13.5px;
+      line-height: 1.68;
+      color: #475569;
+      max-width: 56ch;
+    }
+    .futu-panel-copy > :first-child {
+      margin-top: 0;
+    }
+    .futu-panel-copy > :last-child {
+      margin-bottom: 0;
+    }
+    .futu-method-list {
+      display: grid;
+      gap: 10px;
+    }
+    .futu-method-card,
+    .futu-conversion-card {
+      position: relative;
+      overflow: visible;
+      border-radius: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .futu-method-card::before,
+    .futu-conversion-card::before {
+      display: none;
+    }
+    .futu-method-card-head,
+    .futu-conversion-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .futu-method-index,
+    .futu-conversion-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .futu-method-index {
+      background: rgba(37, 99, 235, 0.1);
+      color: #2563eb;
+    }
+    .futu-conversion-icon {
+      background: rgba(124, 58, 237, 0.1);
+      color: #7c3aed;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .futu-card-text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .futu-card-title {
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.4;
+      color: #0f172a;
+    }
+    .futu-card-desc {
+      font-size: 13px;
+      line-height: 1.62;
+      color: #475569;
+    }
+    .futu-card-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 14px;
+    }
+    .futu-card-meta-item {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .futu-card-meta-label {
+      color: #334155;
+      font-weight: 700;
+    }
+    .futu-media-strip {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 0 0 4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(100, 116, 139, 0.2) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .futu-media-strip::-webkit-scrollbar {
+      height: 4px;
+    }
+    .futu-media-strip::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.18);
+      border-radius: 999px;
+    }
+    .futu-media-strip::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .futu-media-strip .table-image-row {
+      display: flex;
+      flex-wrap: nowrap !important;
+      gap: 6px;
+      margin-top: 0;
+      width: max-content;
+      padding-bottom: 0 !important;
+    }
+    .futu-media-strip .table-image-row figure,
+    .futu-media-strip figure {
+      flex: 0 0 auto !important;
+      width: 88px !important;
+      max-width: 88px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    .futu-media-strip .table-image-row img,
+    .futu-media-strip img {
+      display: block !important;
+      width: 88px !important;
+      max-width: 88px !important;
+      height: 116px !important;
+      max-height: 116px !important;
+      object-fit: cover !important;
+      border-radius: 8px !important;
+    }
+    .futu-conversion-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+    }
+    .futu-conversion-summary-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #6d28d9;
+    }
+    .futu-conversion-summary-copy {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #5b21b6;
+    }
+    @media (max-width: 980px) {
+      .futu-presentation-track {
+        grid-template-columns: 1fr;
+      }
+      .futu-bridge-line {
+        display: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .futu-presentation-shell {
+        padding: 16px 14px;
+      }
+      .futu-panel-title {
+        font-size: 19px;
+      }
+      .futu-method-card,
+      .futu-conversion-card {
+        gap: 8px;
+      }
+      .futu-card-meta-row {
+        gap: 4px 10px;
+      }
+      .futu-media-strip .table-image-row figure,
+      .futu-media-strip figure {
+        width: 82px !important;
+        max-width: 82px !important;
+      }
+      .futu-media-strip .table-image-row img,
+      .futu-media-strip img {
+        width: 82px !important;
+        max-width: 82px !important;
+        height: 108px !important;
+        max-height: 108px !important;
+      }
+    }
     td.merged-image-cell {
       vertical-align: middle;
       text-align: center;
@@ -2945,8 +3262,8 @@
       gap: 6px;
       min-width: 0;
       padding: 10px;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
+      border: 0;
+      border-radius: 10px;
       background: #ffffff;
     }
     .matrix-audience-box.is-result {
@@ -2996,6 +3313,7 @@
       transform: none;
       background: transparent;
       box-shadow: none;
+      border-radius: 10px;
     }
     .matrix-card-shots img {
       width: 92px;
@@ -3004,16 +3322,17 @@
       max-height: 122px;
       object-fit: cover;
       object-position: top center;
-      border: 1px solid #dbe6f3;
-      border-radius: 7px;
+      border: 0;
+      border-radius: 10px;
       cursor: zoom-in;
     }
     .matrix-compare-row.is-hot {
       margin: 0 -14px;
       padding: 12px 14px;
-      background: #f8fbff;
-      border-top: 1px solid #e6edf5;
-      border-bottom: 1px solid #e6edf5;
+      background: #fff1f1;
+      border-top: 0;
+      border-bottom: 0;
+      border-radius: 10px;
     }
     .matrix-compare-label {
       color: #64748b;
@@ -3055,9 +3374,9 @@
       display: grid;
       gap: 4px;
       padding: 9px 10px;
-      border: 1px solid #e6edf5;
-      border-radius: 7px;
-      background: #ffffff;
+      border: 0;
+      border-radius: 10px;
+      background: #fff1f1;
     }
     .matrix-hot-rank {
       color: var(--blue-deep);
@@ -3073,8 +3392,8 @@
     .matrix-hot-metric {
       width: fit-content;
       border-radius: 99px;
-      background: rgba(0, 82, 217, .09);
-      color: var(--blue-deep);
+      background: #ffe4e4;
+      color: #8f2d2d;
       padding: 3px 8px;
       font-size: 11px;
       font-weight: 900;
@@ -3090,17 +3409,18 @@
     }
     .matrix-compare-grid {
       display: grid;
-      gap: 0;
+      gap: 8px;
       overflow-x: auto;
-      border: 1px solid #e6edf5;
+      border: 0;
       border-radius: 12px;
-      background: #ffffff;
+      background: transparent;
     }
     .matrix-grid-row {
       display: grid;
       grid-template-columns: 132px repeat(4, minmax(210px, 1fr));
       min-width: 980px;
-      border-bottom: 1px solid #e6edf5;
+      gap: 8px;
+      border-bottom: 0;
     }
     .matrix-grid-row:last-child { border-bottom: 0; }
     .matrix-row-label {
@@ -3112,16 +3432,19 @@
       font-size: 12px;
       font-weight: 950;
       line-height: 1.35;
-      border-right: 1px solid #e6edf5;
+      border-right: 0;
+      border-radius: 10px;
     }
     .matrix-grid-cell {
       min-width: 0;
       padding: 14px 12px;
-      border-right: 1px solid #eef3f9;
+      border-right: 0;
       color: #263c55;
       font-size: 12.5px;
       font-weight: 760;
       line-height: 1.48;
+      border-radius: 10px;
+      background: #ffffff;
     }
     .matrix-grid-cell:last-child { border-right: 0; }
     .matrix-brand-row .matrix-row-label {
@@ -3151,6 +3474,7 @@
       padding: 0;
       flex-basis: 110px;
       width: 110px;
+      border-radius: 10px;
     }
     .matrix-card-shots img {
       width: 110px;
@@ -3158,8 +3482,8 @@
       max-width: 110px;
       max-height: 146px;
       object-fit: cover;
-      border-radius: 6px;
-      border: 1px solid #eef3f9;
+      border-radius: 10px;
+      border: 0;
     }
     .matrix-follower-cell {
       display: grid;
@@ -3186,10 +3510,37 @@
       border-radius: inherit;
       background: var(--blue);
     }
-    .matrix-grid-row.is-hot-row .matrix-grid-cell { background: #f8fbff; }
+    .matrix-grid-row.is-hot-row .matrix-row-label,
+    .matrix-grid-row.is-hot-row .matrix-grid-cell,
+    .matrix-grid-row.is-type-row .matrix-row-label,
+    .matrix-grid-row.is-type-row .matrix-grid-cell { background: #fff1f1; }
     .matrix-grid-row.is-type-row .matrix-grid-cell {
       color: #30465d;
       font-weight: 760;
+    }
+    .table-wrap.matrix-source-table {
+      border-radius: 12px;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .table-wrap.matrix-source-table td,
+    .table-wrap.matrix-source-table th,
+    .table-wrap.matrix-source-table tr th:first-child,
+    .table-wrap.matrix-source-table tr td:first-child,
+    .table-wrap.matrix-source-table tr th:last-child,
+    .table-wrap.matrix-source-table tr td:last-child {
+      border-radius: 10px;
+      border: 0;
+      background-clip: padding-box;
+    }
+    .table-wrap.matrix-source-table img,
+    .table-wrap.matrix-source-table .table-image-row img,
+    .table-wrap.matrix-source-table figure {
+      border-radius: 10px !important;
+    }
+    .table-wrap.matrix-source-table tbody tr.matrix-source-hot-row td {
+      background: #fff1f1;
     }
     @media (max-width: 1180px) {
       .matrix-brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -3692,21 +4043,33 @@
     }
     .creator-search-facts {
       display: grid;
-      gap: 16px;
+      gap: 10px;
       align-content: start;
     }
     .creator-search-fact-section {
-      padding: 12px 14px !important;
+      padding: 10px 12px !important;
       border: none !important;
       border-radius: 8px !important;
-      background: #f8fafc !important; /* Uniform slate/grey background */
+      background: #f8fafc !important;
       box-shadow: none !important;
       box-sizing: border-box !important;
+    }
+    .creator-search-fact-section.is-hot-analysis {
+      background: #fff1f2 !important;
+    }
+    .creator-search-fact-section.is-hot-analysis .creator-search-fact-label::before {
+      background-color: #fda4af;
+    }
+    .creator-search-fact-section.is-eco-feature {
+      background: #eff6ff !important;
+    }
+    .creator-search-fact-section.is-eco-feature .creator-search-fact-label::before {
+      background-color: #93c5fd;
     }
     .creator-search-fact-label {
       display: flex;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: #1e293b;
       font-size: 13.5px;
       font-weight: 800;
@@ -3719,7 +4082,7 @@
       height: 12px;
       border-radius: 2px;
       margin-right: 8px;
-      background-color: #64748b; /* Single unified slate vertical line */
+      background-color: #64748b;
     }
 
     .creator-search-fact-content {
@@ -3732,7 +4095,7 @@
       font-weight: 600;
       line-height: 1.5;
       word-break: break-word;
-      padding: 6px 0;
+      padding: 5px 0;
     }
     .creator-search-fact-line + .creator-search-fact-line {
       border-top: 1px solid #f1f5f9;
@@ -4218,57 +4581,44 @@
       font-weight: 950;
     }
     .section5-package-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: stretch;
     }
     .section5-package-card {
       position: relative;
       overflow: hidden;
-      padding: 20px 24px;
-      border: 1px solid var(--package-border);
+      padding: 18px;
+      border: none;
       border-radius: 16px;
       background: #ffffff;
-      display: grid;
-      grid-template-columns: minmax(180px, 200px) auto 1fr auto 1.1fr auto 1.1fr;
-      align-items: stretch;
-      gap: 12px;
-      transition: border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+      box-shadow: 0 10px 24px rgba(15, 35, 55, .06);
+      transition: box-shadow 0.2s ease;
     }
     .section5-package-card:hover {
-      border-color: var(--package-color);
-    }
-    .section5-package-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 5px;
-      background: var(--package-color);
+      box-shadow: 0 14px 30px rgba(15, 35, 55, .09);
     }
     .section5-package-col {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      gap: 8px;
-      padding: 12px 14px;
-      background: #f8fafc;
-      border: 1px solid #f1f5f9;
-      border-radius: 12px;
-      height: 100%;
+      gap: 6px;
+      min-width: 0;
     }
     .section5-package-col.col-header {
-      padding: 0;
-      background: none;
-      border: none;
-      border-radius: 0;
-      height: auto;
-      justify-content: center;
-      gap: 10px;
+      justify-content: flex-start;
+      gap: 8px;
+      padding-bottom: 2px;
     }
     .section5-package-topline {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .section5-package-index {
       width: 32px;
@@ -4293,6 +4643,8 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
+      margin-left: auto;
+      justify-content: flex-end;
     }
     .section5-package-chip {
       display: inline-flex;
@@ -4305,22 +4657,45 @@
       font-weight: 820;
       line-height: 1.25;
     }
+    .section5-package-flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
+      gap: 8px;
+      min-width: 0;
+    }
+    .section5-package-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: none;
+      min-width: 0;
+    }
+    .section5-package-stage.stage-question {
+      background: #fbfdff;
+    }
+    .section5-package-stage.stage-action {
+      background: #f7f9fc;
+    }
     .section5-package-connector {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #cbd5e1;
-      opacity: 0.8;
+      color: #a8b6c7;
+      opacity: 1;
+      min-width: 18px;
     }
     .flow-arrow-icon {
       width: 18px;
       height: 18px;
       stroke: #94a3b8;
-      transition: transform 0.3s ease, color 0.3s ease;
+      transition: stroke 0.2s ease;
     }
     .section5-package-card:hover .flow-arrow-icon {
-      transform: translateX(3px);
-      color: var(--package-color);
+      stroke: var(--package-color);
     }
     .section5-package-label {
       display: flex;
@@ -4332,40 +4707,58 @@
       letter-spacing: .04em;
       text-transform: uppercase;
     }
+    .section5-package-stepdot {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--package-soft);
+      color: var(--package-color);
+      font-size: 10px;
+      font-weight: 950;
+      flex-shrink: 0;
+    }
     .label-icon {
       width: 13px;
       height: 13px;
       stroke: currentColor;
       stroke-width: 2.5;
+      flex-shrink: 0;
     }
     .section5-package-text {
       color: #273c54;
       font-size: 12.7px;
       font-weight: 720;
-      line-height: 1.52;
+      line-height: 1.56;
+      min-width: 0;
     }
-    .section5-package-col.col-question .section5-package-text {
-      border-left: 2.5px solid var(--package-color);
-      padding-left: 8px;
-      font-style: italic;
+    .section5-package-stage.stage-question .section5-package-text {
       color: #1e293b;
+      font-style: normal;
     }
-    .section5-package-col.col-action .section5-package-text {
+    .section5-package-stage.stage-action .section5-package-text {
       color: #0f172a;
-      font-weight: 750;
+      font-weight: 760;
     }
     .section5-priority-board {
       display: grid;
       gap: 16px;
     }
+    .section5-priority-wrapper {
+      border-color: #dfe7f1;
+      background:
+        radial-gradient(circle at top left, rgba(76, 113, 163, .08), transparent 34%),
+        linear-gradient(180deg, #ffffff, #f8fbff);
+    }
     .section5-priority-bar {
       display: flex;
       height: 38px;
       overflow: hidden;
-      border: 1px solid #dfe8f3;
+      border: 1px solid #dbe5f0;
       border-radius: 999px;
-      background: #ffffff;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .85);
+      background: #fafcff;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .94);
     }
     .section5-priority-segment {
       width: var(--priority-width);
@@ -4375,7 +4768,7 @@
       gap: 6px;
       min-width: 72px;
       color: #ffffff;
-      background: var(--priority-color);
+      background: color-mix(in srgb, var(--priority-color) 92%, #243b53 8%);
       font-size: 12px;
       font-weight: 950;
       line-height: 1;
@@ -4383,15 +4776,16 @@
     }
     .section5-priority-list {
       overflow: hidden;
-      border: 1px solid #dfe8f3;
+      border: 1px solid #dbe5f0;
       border-radius: 14px;
-      background: #ffffff;
-      box-shadow: 0 10px 26px rgba(15, 35, 55, .035);
+      background: rgba(255, 255, 255, .98);
+      box-shadow: 0 9px 24px rgba(15, 23, 42, .045);
     }
     .section5-priority-row {
-      --priority-color: #1f3a5f;
+      --priority-color: #d65b74;
+      --priority-soft: rgba(214, 91, 116, .11);
       display: grid;
-      grid-template-columns: 108px 104px minmax(112px, 144px) minmax(0, 1fr);
+      grid-template-columns: 108px 104px minmax(136px, 168px) minmax(0, 1fr);
       gap: 16px;
       align-items: start;
       padding: 16px 18px;
@@ -4439,7 +4833,7 @@
       height: 4px;
       overflow: hidden;
       border-radius: 99px;
-      background: #e8eef6;
+      background: color-mix(in srgb, var(--priority-color) 12%, #edf3f8);
     }
     .section5-priority-meter span {
       display: block;
@@ -4466,11 +4860,12 @@
       font-weight: 730;
       line-height: 1.52;
     }
+    .section5-priority-action-list,
     .section5-priority-points {
       display: grid;
       gap: 5px;
     }
-    .section5-priority-point {
+    .section5-priority-action {
       position: relative;
       padding-left: 12px;
       color: #273c54;
@@ -4478,6 +4873,7 @@
       font-weight: 730;
       line-height: 1.45;
     }
+    .section5-priority-action::before,
     .section5-priority-point::before {
       content: "";
       position: absolute;
@@ -4487,6 +4883,14 @@
       height: 4px;
       border-radius: 999px;
       background: var(--priority-color);
+    }
+    .section5-priority-point {
+      position: relative;
+      padding-left: 12px;
+      color: #273c54;
+      font-size: 12.5px;
+      font-weight: 730;
+      line-height: 1.45;
     }
     .section5-priority-point strong {
       color: var(--priority-color);
@@ -4504,24 +4908,24 @@
         grid-template-columns: 1fr;
       }
       .section5-package-card {
-        grid-template-columns: 1fr;
         gap: 16px;
         padding: 20px;
       }
-      .section5-package-col {
-        height: auto;
-        padding: 12px;
+      .section5-package-flow {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .section5-package-stage {
+        padding: 12px 14px;
       }
       .section5-package-connector {
+        margin: -2px 0;
+      }
+      .flow-arrow-icon {
         transform: rotate(90deg);
-        margin: 4px 0;
       }
       .section5-package-card:hover .flow-arrow-icon {
-        transform: translateY(3px);
-      }
-      .section5-package-col.col-question .section5-package-text {
-        border-left-width: 3px;
-        padding-left: 10px;
+        stroke: var(--package-color);
       }
       .section5-priority-row {
         grid-template-columns: 1fr;
@@ -4751,16 +5155,136 @@
       --theme-tag-bg: hsla(355, 65%, 48%, 0.03);
     }
     
+    .bridge-demo-heading {
+      margin: 18px 0 12px;
+    }
+    .journey-bridge-demo {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 44px minmax(260px, 0.9fr) 44px minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+      margin: 0 0 20px;
+    }
+    .bridge-demo-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+      height: 100%;
+    }
+    .bridge-demo-card,
+    .bridge-demo-core {
+      position: relative;
+      padding: 14px 14px 13px;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid #dbe5f0;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, .04);
+    }
+    .bridge-demo-card {
+      min-height: 100px;
+    }
+    .bridge-demo-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+      color: #2563eb;
+      font-size: 26px;
+      font-weight: 700;
+    }
+    .bridge-demo-badge,
+    .bridge-demo-step,
+    .bridge-demo-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 820;
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+    .bridge-demo-badge,
+    .bridge-demo-step,
+    .bridge-demo-eyebrow {
+      color: var(--blue-deep);
+      background: #eef4ff;
+    }
+    .bridge-demo-card-title {
+      font-size: 14px;
+      line-height: 1.4;
+      color: #0f172a;
+      font-weight: 820;
+      margin-bottom: 4px;
+    }
+    .bridge-demo-card-desc {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #526274;
+    }
+    .bridge-demo-core {
+      min-width: 260px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      text-align: left;
+    }
+    .bridge-demo-core-title {
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 880;
+      color: #10243c;
+    }
+    .bridge-demo-core-copy {
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #45607a;
+    }
+    .bridge-demo-core-highlight {
+      padding-top: 8px;
+      margin-top: 2px;
+      border-top: 1px dashed #d7e1ec;
+      font-size: 12.5px;
+      line-height: 1.7;
+      color: #1f3650;
+    }
+    .bridge-demo-core-highlight strong {
+      color: var(--blue-deep);
+    }
+    
     @media (max-width: 1200px) {
       .content-themes-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
+      }
+      .journey-bridge-demo {
+        grid-template-columns: 1fr;
+      }
+      .bridge-demo-core {
+        min-width: 0;
+      }
+      .bridge-demo-arrow {
+        min-height: auto;
+        font-size: 24px;
+        transform: rotate(90deg);
       }
     }
     @media (max-width: 640px) {
       .content-themes-grid {
         grid-template-columns: 1fr;
         gap: 16px;
+      }
+      .bridge-demo-card,
+      .bridge-demo-core {
+        padding: 13px;
+      }
+      .bridge-demo-core-title {
+        font-size: 16px;
       }
     }
   </style>
@@ -4904,7 +5428,6 @@
 | 教育信任 | 如何降低高决策成本，并讲清平台角色？ | 看复杂服务如何先解释，再承接转化 | Futu |
 | 行业验证 | 汇款行业里哪些表达已经被证明有效？ | 回到真实平台生态验证这些方法是否成立 | Remitly、考拉、熊猫、Hanpass、韩国汇款达人内容 |
 
-下面进入案例部分，分别对应这三类任务。
 
 ## 3. 方法借鉴：三个案例分别解决什么问题？
 
@@ -5082,9 +5605,55 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 1. 上面的材料里，最关键的是 Learn 教程、教学视频、模拟体验、KOL 测评和福利页这条链路：先让用户学会，再让用户敢用，最后把人导向开户/交易。
 2. 对微汇款也是一样，先把费用、汇率、到账、收款流程、合作机构关系讲清，再接试算、首汇优惠、客服或落地页；头部财经 KOL 和重品牌投放不宜直接照搬。
 
-三个案例放在一起看，逻辑会更清楚：**饭团解决“怎么进入生活场景和搜索入口”，Weee! 解决“不同国家和人群怎么分层运营”，Futu 解决“高决策门槛服务怎么先教育、再转化”。**
+<div class="bridge-demo-heading">
+  <div class="bridge-demo-eyebrow">从案例，走到行业验证</div>
+</div>
+<div class="journey-bridge-demo">
+  <div class="bridge-demo-column">
+    <div class="bridge-demo-card">
+      <div class="bridge-demo-badge">案例 01</div>
+      <div class="bridge-demo-card-title">饭团：看入口</div>
+      <div class="bridge-demo-card-desc">先进入场景和搜索入口。</div>
+    </div>
+    <div class="bridge-demo-card">
+      <div class="bridge-demo-badge">案例 02</div>
+      <div class="bridge-demo-card-title">Weee!：看分层</div>
+      <div class="bridge-demo-card-desc">先分国家和人群再运营。</div>
+    </div>
+    <div class="bridge-demo-card">
+      <div class="bridge-demo-badge">案例 03</div>
+      <div class="bridge-demo-card-title">Futu：看教育</div>
+      <div class="bridge-demo-card-desc">先讲清楚，再接转化。</div>
+    </div>
+  </div>
+  <div class="bridge-demo-arrow" aria-hidden="true">→</div>
+  <div class="bridge-demo-core">
+    <div class="bridge-demo-step">迁移</div>
+    <div class="bridge-demo-core-title">拿回汇款行业验证</div>
+    <div class="bridge-demo-core-copy">案例给方法，下一章看这些方法在真实平台生态里是否成立。</div>
+    <div class="bridge-demo-core-highlight"><strong>验证顺序：</strong>平台 → 内容 → 达人</div>
+  </div>
+  <div class="bridge-demo-arrow" aria-hidden="true">→</div>
+  <div class="bridge-demo-column">
+    <div class="bridge-demo-card">
+      <div class="bridge-demo-step">01</div>
+      <div class="bridge-demo-card-title">看平台</div>
+      <div class="bridge-demo-card-desc">先看触达和搜索入口。</div>
+    </div>
+    <div class="bridge-demo-card">
+      <div class="bridge-demo-step">02</div>
+      <div class="bridge-demo-card-title">看内容</div>
+      <div class="bridge-demo-card-desc">再看费用、汇率、流程。</div>
+    </div>
+    <div class="bridge-demo-card">
+      <div class="bridge-demo-step">03</div>
+      <div class="bridge-demo-card-title">看达人</div>
+      <div class="bridge-demo-card-desc">最后看谁来补信任。</div>
+    </div>
+  </div>
+</div>
 
-案例部分给出的是方法论。下一章回到汇款行业本身，验证这些方法在真实平台生态中是否成立。
+接下来回到汇款行业，按**平台 → 内容 → 达人**验证这套方法。
 
 ---
 
@@ -5103,6 +5672,10 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 | 快手 | 韩国、日本等蓝领 / 务工型市场 | 口播教程、汇率提醒、发薪后汇款、接地气的美女 / 小哥讲解 | 对务工型市场覆盖更强，适合发薪时点和流程解释 |
 | 抖音 | 泛海外华人、视频教程用户、汇款方案比较人群 | 30 秒流程教学、平台对比、达人亲测、汇率 / 政策短解读 | 适合流程视频化与渠道比较内容 |
 | 小红书 | 留学生、白领、年轻用户、主动搜索用户 | 攻略教程、本地新闻、政策 / 汇率 / 资产解读、收款 FAQ | 适合搜索承接与长期内容沉淀 |
+
+**从账号矩阵可先得出两点判断：**
+- **平台选择本质上是客群选择**：账号定位必须与平台用户画像一致。Remitly 和考拉在快手上的目标客群与平台主流人群并不匹配，因此长期难以经营；熊猫和 Hanpass 切入韩国 / 日本蓝领市场后，与快手用户结构更贴合，反而更容易跑出效果。相应地，在大众用户更集中的抖音上，Remitly 更容易精准覆盖以色列本地用户。
+- **内容风格必须匹配平台偏好**：快手最有效的是单人口播、接地气、人物感强的内容，美女或小哥出镜、美颜都不是问题，关键是不能“悬浮”；同类风格放到抖音通常效果一般，抖音更偏好多样化、真实感更强的视频表达，单纯“活动宣传页 + 文字”并不适合；小红书则更适合图文 + 视频并行，其中政策解读、攻略教程类内容最容易起量。
 
 :::details open 完整论据表 A：平台矩阵账号观察 (Remitly、考拉、熊猫、Hanpass)
 | **平台** | **维度** | **remitly** | **考拉** | **熊猫** | **hanpass** |
@@ -5124,8 +5697,8 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 |  | 热点标签 | 攻略教程 | 攻略教程 | 攻略教程 | - |
 | 小红书 | 关注 | 648 | 643 | 16,000 | 4,278 |
 |  | 页面 | ![Clipboard_Screenshot_1779791381.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458018) | ![Clipboard_Screenshot_1779791638.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458019) | ![Clipboard_Screenshot_1779791463.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458022) | ![Clipboard_Screenshot_1779791521.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458028) |
-|  | 目标用户 | 全球汇款需求用户 | 澳洲 | 全球汇款需求用户 | 全球汇款需求用户 |
-|  | 覆盖用户 | 不明确，活跃度低 | 澳洲 | 不明确，粉丝多，但日常更新活跃度低 | 差 |
+|  | 目标用户 | 全球汇款需求用户 | 澳洲 | 全球汇款需求用户 | 韩国汇款用户 |
+|  | 覆盖用户 | 不明确，活跃度低 | 开号新、部分内容质量AI味重 | 粉丝多，更新多，但是互动率低，用户主要是订阅提醒汇率功能 | 韩国汇款用户 |
 |  | 账号内容 | 1）**收款教程类**：支付宝、微信、银行卡怎么收款。  <br/>2）**材料准备类**：地址证明、身份验证、上传证件。  <br/>3）**操作FAQ类**：转账取消、审核、安全汇款等问题。 | 1）**澳洲本地资讯**：澳洲政策、移民、税务、社会热点。  <br/>2）**汇率资产类**：澳元、日元、欧元、黄金等行情变化。  <br/>3）**回国/换汇攻略类**：银行卡、PayID、退税、回国准备、换汇教程。 | **1）政策变化类**：比如退税、签证、入境、汇款税。  <br/>**2）汇率波动类**：尤其是澳元、日元、英镑、加元这种用户高频关注币种。  <br/>**3）强风险提醒类**：比如到账慢、冻卡、诈骗、转账失败。 | 1）**在韩工具类**：Hanpass卡、注册、绑卡、银联二维码。<br/><br/>2）**汇款收款类**：韩国汇中国、支付宝收款、韩币换人民币。<br/><br/>3）**福利活动类**：返现、薅羊毛、邀请好友、线下地推。 |
 |  | 热帖内容 | **如何使用支付宝接收来自Remitly的汇款？ 86赞**  <br/>**Remitly手把手教你如何填写支票**  **61赞**  <br/>**Remitly*微信转账 &#124;&#124; 如何授权我的银行卡？** **53赞**<br/><br/> | **澳洲Teenager终于要有人治了？870赞**  <br/>**澳元将大涨40%？2026澳元好年要来了  511赞**  <br/>**格陵兰岛争端推高金价！现货黄金突破4800！ 222赞** | **日本退税新制度！取消即买即退！245点赞**<br/><br/>**澳元为什么会突然开始暴涨？ 167点赞**<br/><br/>**致熊猫速汇小红书用户的一封信！ 134点赞** | **在韩华人必备卡，你拥有了吗？** **202赞**<br/><br/>**🇰🇷最牛卡！！ㅋㅋㅋㅋ** **175赞**<br/><br/>**Hanpass会员注册教程💕**  **153赞** |
 |  | 热点标签 | 攻略教程 | 新闻热点、汇率 | 政策、汇率 | 攻略教程 |
@@ -5152,7 +5725,7 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 
 微信收款链路的内容占位仍然偏弱。现有攻略主要导向机构 App，系统化的小程序教程较少。该空白为微汇款提供了明确的建设方向。
 
-:::details open 补充参考 B：韩国汇款内容搜索对比
+:::details open 搜索词为“韩国汇款”各平台搜索结果对比
 | **搜索词** | **快手** | **抖音** | **小红书** | **视频号** |
 | - | - | - | - | - |
 | 页面 | ![Clipboard_Screenshot_1779808337.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458024) | ![Clipboard_Screenshot_1779808382.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458026) | ![Clipboard_Screenshot_1779808427.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458025) | ![Clipboard_Screenshot_1779812486.png](https://iwiki.woa.com/tencent/api/attachments/s3/url?attachmentid=45458183) |
@@ -5173,8 +5746,6 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 3. 信任靠达人实操、到账结果和官方答疑配合完成。
 
 在实际执行层面，这一逻辑可转化为标准的传导路径：**平台入口 → 问题内容 → 信任确认 → 搜索 / 首汇转化**。
-
-第 5 章就沿着这条链路展开。
 
 ---
 
@@ -5213,14 +5784,17 @@ Futu 对应的是“教育与信任”问题，重点观察高决策成本服务
 | **视频号** | 微信生态用户、社群用户、家庭支持型用户；韩国汇款等低饱和场景 | 短视频、截图教程、社群转发素材、公众号 / 视频号联动 | **K：**测试少量本地达人真实教程；<br/><br/>**F：**用社群、公众号、朋友圈链路放大；<br/><br/>**S：**卡视频号内“韩国汇款”“汇款回国”“微信收款”搜索结果 | 发薪汇款、微信收款、家人确认到账、节日红包、到账后怎么用 | 视频号评论、公众号 FAQ、社群答疑、小程序路径说明 |
 | **YouTube / B站 / 播客** | Efficient Professional、Asset Strategist、财经 / 留学 / 职场用户 | 长视频、播客口播、财经科普、平台测评 | 和财经、留学、海外职场 KOL 做品牌解释和深度测评，讲清“跨境资金如何流转”“费用 / 汇率 / 到账怎么判断” | 金融科普、平台测评、手续费和汇率解释、大额合规、安全性 | 专属链接、优惠码、FAQ 长页、客服咨询 |
 
-平台矩阵回答“先打哪里”。落到执行，动作收束成四个内容包：每个内容包同时绑定人群、平台、搜索词和承接动作。
+平台矩阵回答“先打哪里”。落到执行，动作收束成五个内容包：每个内容包同时绑定人群、平台、搜索词和承接动作。
 
 | **内容包** | **适用人群 / 场景** | **主平台** | **核心问题** | **承接动作** |
 | - | - | - | - | - |
 | **发薪寄家包** | 韩国 / 日本务工人群、Family Supporter | 快手、抖音、视频号、本地社群 | 工资怎么安全寄回家？父母怎么收？ | 口播教程、中文步骤图、客服入口、评论区问答 |
 | **费用比较包** | 白领、留学生、搜索型市场用户 | 小红书、Google SEO、YouTube / B站 | 哪个平台更便宜、更快、更透明？ | 平台对比笔记、费用 FAQ、试算入口、私信关键词 |
 | **微信到账包** | 年轻用户、小额高频用户、微信生态用户 | 小红书、抖音、视频号 | 怎么汇到微信？到账后怎么用？ | 截图教程、录屏视频、父母视角说明、公众号 FAQ |
+| **高频带低频包** | 微信重度用户、年轻白领、留学生、家庭小额汇款人群；适合“红包 / 转账 / 扫码消费 / 朋友代付 / 给父母零花钱”等钱一到账就要立刻用的场景 | 小红书、抖音、视频号、微信生态 | 为什么要把钱汇到微信，而不是先落银行卡？汇到微信后立刻能做什么？ | “到账后 5 分钟能做什么”场景短视频 / 图文、红包 / 转账 / 扫码消费演示、节日模板、父母 / 熟人视角说明、评论区关键词 + 小程序路径 |
 | **安全合规包** | 大额用户、资产型用户、财经关注用户 | YouTube / B站、财经 KOL、Web SEO | 大额安全吗？限额、异常、风控怎么处理？ | 深度测评、FAQ 长页、客服咨询、专属链接 |
+
+其中，“高频带低频包”借鉴的就是 Weee! 那种高频内容带低频决策的思路：先用“钱到了微信之后怎么立刻花 / 转 / 发”的日常内容建立想象，再把这层即时使用心智接到真实汇款决策。
 
 执行顺序也按 K / S / F 展开：先用 KOL / KOC 跑出每个内容包的样本，再把高互动内容拆成搜索词包，最后只放大收藏、评论、私信表现明确的内容。
 
@@ -5290,10 +5864,10 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
 
 | **优先级** | **内容资源占比** | **主动作** | **排序依据** | **对应模块** |
 | - | - | - | - | - |
-| **P0 核心主战场** | **40%** | 小红书 Search 词包 + KOC 打样 + 费用 / 到账内容 | **高意图：**用户主动搜费用、到账、微信收款<br/>**近转化：**收藏、评论、私信可直接接试算和客服<br/>**先验证：**KOC 内容跑通后再放量 | 5.1 K / S 优先投流；费用比较包 / 微信到账包 |
-| **P1 场景突破** | **30%** | 小红书官方号 / 地区矩阵 + 韩国 / 日本务工场景的快手、抖音、视频号达人教程 | **沉标准：**官方号负责稳定答案<br/>**强场景：**发薪后就有寄家需求<br/>**强教程：**短视频能讲清步骤和到账结果<br/>**强首汇：**适合从具体国家切入第一笔 | 5.1 小红书主账号；5.1 平台打法；发薪寄家包 |
-| **P2 信任背书** | **20%** | YouTube / B站 / 财经 KOL 长内容 + 安全合规 FAQ | **补信任：**回答安全、合规、大额疑虑<br/>**后置做：**不抢 P0 获客预算，但必须承接比较末端 | 安全合规包 |
-| **P3 外围补强** | **10%** | 饭团 / Weee! / 本地生活平台联合权益 + 老客复汇提醒 | **做放大：**生活平台扩大场景曝光<br/>**做复汇：**发薪日、节日、亲友推荐持续提醒<br/>**后接入：**主入口和教程跑顺后再加码 | 5.2 场景补强；5.3 运营承接 |
+| **P0 核心主战场** | **40%** | 小红书 Search 词包<br/>KOC 打样<br/>费用 / 到账内容<br/>韩国 / 日本投流 | **高意图：**用户主动搜费用、到账、微信收款<br/>**近转化：**收藏、评论、私信可直接接试算和客服<br/>**先验证：**KOC 内容跑通后再放量 | 5.1 K / S 优先投流；5.1 平台打法；费用比较包 / 微信到账包 |
+| **P1 场景突破** | **30%** | 小红书官方号 / 地区矩阵<br/>发薪寄家场景的快手、抖音、视频号达人教程 | **沉标准：**官方号负责稳定答案<br/>**强场景：**发薪后就有寄家需求<br/>**强教程：**短视频能讲清步骤和到账结果<br/>**强首汇：**适合从具体国家切入第一笔 | 5.1 小红书主账号；发薪寄家包 |
+| **P2 信任背书** | **20%** | YouTube / B站 / 财经 KOL 长内容<br/>安全合规 FAQ | **补信任：**回答安全、合规、大额疑虑<br/>**后置做：**不抢 P0 获客预算，但必须承接比较末端 | 安全合规包 |
+| **P3 外围补强** | **10%** | 饭团 / Weee! / 本地生活平台联合权益<br/>老客复汇提醒 | **做放大：**生活平台扩大场景曝光<br/>**做复汇：**发薪日、节日、亲友推荐持续提醒<br/>**后接入：**主入口和教程跑顺后再加码 | 5.2 场景补强；5.3 运营承接 |
 
 </script>
 
@@ -5465,6 +6039,20 @@ Search 仍然是投流后的长期承接层。关键词从泛品类词扩展到�
           }
           i -= 1;
           html.push(renderTable(tableLines));
+          continue;
+        }
+
+        if (/^<div\b/i.test(trimmed)) {
+          flushAll();
+          const blockLines = [line];
+          let depth = (line.match(/<div\b/gi) || []).length - (line.match(/<\/div>/gi) || []).length;
+          while (depth > 0 && i + 1 < lines.length) {
+            i += 1;
+            const nextLine = lines[i];
+            blockLines.push(nextLine);
+            depth += (nextLine.match(/<div\b/gi) || []).length - (nextLine.match(/<\/div>/gi) || []).length;
+          }
+          html.push(blockLines.join('\n'));
           continue;
         }
 
@@ -7273,6 +7861,239 @@ function enhanceKfsPyramid() {
       });
     }
 
+    function enhanceFutuEducationStrategy() {
+      const wraps = [...content.querySelectorAll('.table-wrap')];
+      let targetWrap = null;
+      let targetTable = null;
+
+      for (const wrap of wraps) {
+        const table = wrap.querySelector('table');
+        if (!table) continue;
+        const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+        const text = table.textContent;
+        if (headers.includes('模块') && headers.includes('目的') && headers.includes('策略/案例') && text.includes('模拟交易') && text.includes('KOL')) {
+          targetWrap = wrap;
+          targetTable = table;
+          break;
+        }
+      }
+      if (!targetWrap || !targetTable || targetWrap.closest('.futu-strategy-wrapper')) return;
+
+      const rows = [...targetTable.querySelectorAll('tbody tr')];
+      if (rows.length < 4) return;
+
+      const methodItems = [];
+      let conversionCard = null;
+      let currentModule = '';
+      let currentPurpose = '';
+
+      rows.forEach((row, index) => {
+        const cells = [...row.querySelectorAll('td')];
+        if (cells.length < 4) return;
+
+        const moduleText = cells[0].textContent.trim();
+        const purposeText = cells[1].textContent.trim();
+        const strategyHTML = cells[2].innerHTML.trim();
+        const imagesHTML = cells[3].innerHTML.trim();
+
+        if (moduleText) currentModule = moduleText;
+        if (purposeText) currentPurpose = purposeText;
+
+        const item = {
+          index: methodItems.length + 1,
+          moduleText: currentModule,
+          purposeText: currentPurpose,
+          strategyHTML,
+          imagesHTML
+        };
+
+        if (currentModule.includes('品牌投流+转化')) {
+          conversionCard = item;
+        } else {
+          methodItems.push(item);
+        }
+      });
+
+      if (!methodItems.length || !conversionCard) return;
+
+      function stripLeadingLabel(html) {
+        return html.replace(/^[\s\S]*?(?:<br\s*\/?>[\s]*){1,2}/, '').trim();
+      }
+
+      function htmlToText(html) {
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        return temp.textContent.replace(/\s+/g, ' ').trim();
+      }
+
+      function escapeHTML(text) {
+        return text
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function normalizeText(text) {
+        return text
+          .replace(/\s+/g, ' ')
+          .replace(/：/g, '： ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      function getStrategyParts(html) {
+        const cleanText = htmlToText(stripLeadingLabel(html))
+          .replace(/^策略\/案例[:：]?\s*/, '')
+          .replace(/^案例[:：]?\s*/, '')
+          .replace(/^策略[:：]?\s*/, '')
+          .trim();
+
+        const colonIndex = cleanText.search(/[:：]/);
+        let title = cleanText;
+        let desc = '';
+
+        if (colonIndex > -1 && colonIndex < 24) {
+          title = cleanText.slice(0, colonIndex).trim();
+          desc = cleanText.slice(colonIndex + 1).trim();
+        } else {
+          const sentences = cleanText.split(/[。；]/).map(item => item.trim()).filter(Boolean);
+          title = sentences[0] || cleanText;
+          desc = sentences.slice(1).join('；');
+        }
+
+        title = title.replace(/^["“”']+|["“”']+$/g, '').trim();
+        if (title.length > 30) {
+          title = `${title.slice(0, 30).trim()}…`;
+        }
+        if (!desc && cleanText !== title) {
+          desc = cleanText.slice(title.length).replace(/^[:：\s]+/, '').trim();
+        }
+        if (desc.length > 82) {
+          desc = `${desc.slice(0, 82).trim()}…`;
+        }
+
+        return { title, desc };
+      }
+
+      function buildMetaHTML(purposeText, moduleText) {
+        const items = [];
+
+        if (purposeText) {
+          items.push(`<span class="futu-card-meta-item"><span class="futu-card-meta-label">目的</span><span>${escapeHTML(purposeText)}</span></span>`);
+        }
+        if (moduleText) {
+          items.push(`<span class="futu-card-meta-item"><span class="futu-card-meta-label">位置</span><span>${escapeHTML(normalizeText(moduleText))}</span></span>`);
+        }
+
+        return items.length ? `<div class="futu-card-meta-row">${items.join('')}</div>` : '';
+      }
+
+      const methodCardsHTML = methodItems.map(item => {
+        const parts = getStrategyParts(item.strategyHTML);
+        const methodIndex = String(item.index).padStart(2, '0');
+
+        return `
+          <article class="futu-method-card">
+            <div class="futu-method-card-head">
+              <div class="futu-method-index">${methodIndex}</div>
+              <div class="futu-card-text">
+                <div class="futu-card-title">${escapeHTML(parts.title)}</div>
+                ${parts.desc ? `<div class="futu-card-desc">${escapeHTML(parts.desc)}</div>` : ''}
+              </div>
+            </div>
+            ${buildMetaHTML(item.purposeText, item.moduleText)}
+            <div class="futu-media-strip">${item.imagesHTML}</div>
+          </article>
+        `;
+      }).join('');
+
+      const conversionParts = getStrategyParts(conversionCard.strategyHTML);
+
+      const pptHTML = `
+        <div class="futu-presentation-shell">
+          <div class="futu-bridge-bar">
+            <div class="futu-bridge-pill">左侧：教育方法</div>
+            <div class="futu-bridge-line" aria-hidden="true"></div>
+            <div class="futu-bridge-pill is-conversion">右侧：转化承接</div>
+          </div>
+          <div class="futu-presentation-track">
+            <section class="futu-panel is-method">
+              <div class="futu-panel-hero">
+                <div class="futu-panel-tag">左侧 · 方法</div>
+                <div class="futu-panel-title">先教育，再建立参与</div>
+                <div class="futu-panel-copy">把复杂金融产品拆成更容易进入的内容路径：先学基础，再做模拟，再用投放把有效内容放大，让用户一步步从“看不懂”走到“愿意试”。</div>
+              </div>
+              <div class="futu-method-list">${methodCardsHTML}</div>
+            </section>
+            <section class="futu-panel is-conversion">
+              <div class="futu-panel-hero">
+                <div class="futu-panel-tag">右侧 · 转化</div>
+                <div class="futu-panel-title">把理解承接到开户动作</div>
+                <div class="futu-panel-copy">当用户已经完成基础认知后，再把 KOL 背书、专属权益和承接页面组合起来，把已有兴趣转成明确行动。</div>
+              </div>
+              <div class="futu-conversion-summary">
+                <div class="futu-conversion-summary-title">承接逻辑</div>
+                <div class="futu-conversion-summary-copy">左侧负责降低门槛、建立理解和参与感；右侧集中放大信任感与利益点，完成从教育到转化的收口。</div>
+              </div>
+              <article class="futu-conversion-card">
+                <div class="futu-conversion-card-head">
+                  <div class="futu-conversion-icon">→</div>
+                  <div class="futu-card-text">
+                    <div class="futu-card-title">${escapeHTML(conversionParts.title)}</div>
+                    ${conversionParts.desc ? `<div class="futu-card-desc">${escapeHTML(conversionParts.desc)}</div>` : ''}
+                  </div>
+                </div>
+                ${buildMetaHTML(conversionCard.purposeText, conversionCard.moduleText)}
+                <div class="futu-media-strip">${conversionCard.imagesHTML}</div>
+              </article>
+            </section>
+          </div>
+        </div>
+      `;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'futu-strategy-wrapper show-presentation';
+      wrapper.innerHTML = `
+        <div class="weee-strategy-header">
+          <div class="weee-strategy-header-title">教育打法</div>
+          <div class="view-switch-control">
+            <button class="switch-btn active" data-view="presentation">图示视图</button>
+            <button class="switch-btn" data-view="table">原始表格</button>
+            <span class="switch-slider"></span>
+          </div>
+        </div>
+        <div class="futu-presentation-view">${pptHTML}</div>
+        <div class="futu-table-view"></div>
+      `;
+
+      targetWrap.parentNode.insertBefore(wrapper, targetWrap);
+
+      const tableViewContainer = wrapper.querySelector('.futu-table-view');
+      tableViewContainer.appendChild(targetWrap);
+
+      const switchControl = wrapper.querySelector('.view-switch-control');
+      const switchBtns = wrapper.querySelectorAll('.switch-btn');
+
+      switchControl.addEventListener('click', (e) => {
+        const btn = e.target.closest('.switch-btn');
+        if (!btn || btn.classList.contains('active')) return;
+
+        switchBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const view = btn.dataset.view;
+        if (view === 'table') {
+          wrapper.classList.remove('show-presentation');
+          wrapper.classList.add('show-table');
+        } else {
+          wrapper.classList.remove('show-table');
+          wrapper.classList.add('show-presentation');
+        }
+      });
+    }
+
     function enhancePlatformMatrixEvidence() {
       const wraps = [...content.querySelectorAll('.table-wrap')];
       let targetWrap = null;
@@ -7291,6 +8112,8 @@ function enhanceKfsPyramid() {
       }
       if (!targetWrap || !targetTable || targetWrap.closest('.matrix-view-wrapper')) return;
 
+      targetWrap.classList.add('matrix-source-table');
+
       const headers = [...targetTable.querySelectorAll('th')].map(th => th.textContent.trim());
       const rows = [...targetTable.querySelectorAll('tbody tr')];
       const brandNames = headers.slice(2);
@@ -7303,6 +8126,10 @@ function enhanceKfsPyramid() {
         if (cells.length < headers.length) return;
         const platformName = cells[0].textContent.trim();
         const dimensionName = cells[1].textContent.trim();
+
+        if (dimensionName === '热帖内容' || dimensionName === '热点标签') {
+          row.classList.add('matrix-source-hot-row');
+        }
 
         if (platformName) {
           currentPlatform = {
@@ -7474,8 +8301,15 @@ function enhanceKfsPyramid() {
         return `<div class="matrix-card-shots">${media.figures}</div>`;
       }
 
-      function coverageTone(coverage) {
-        const text = toText(coverage);
+      function coverageTone(target, coverage) {
+        const targetText = toText(target).trim();
+        const text = toText(coverage).trim();
+        if (/开号新|AI\s*味重/.test(text)) {
+          return { className: 'is-medium', label: '覆盖一般' };
+        }
+        if ((/粉丝多/.test(text) && /更新多/.test(text) && /互动率低/.test(text)) || (targetText === '韩国汇款用户' && text === '韩国汇款用户')) {
+          return { className: 'is-strong', label: '覆盖较好' };
+        }
         if (/差|低|少|不明确|不活跃|活跃度低|0-5/.test(text)) {
           return { className: 'is-weak', label: '覆盖偏弱' };
         }
@@ -7486,7 +8320,7 @@ function enhanceKfsPyramid() {
       }
 
       function renderAudienceFlow(target, coverage) {
-        const tone = coverageTone(coverage);
+        const tone = coverageTone(target, coverage);
         return `
           <div class="matrix-audience-flow">
             <div class="matrix-audience-box">
@@ -8404,7 +9238,8 @@ function enhanceKfsPyramid() {
           { color: '#ff4a08', soft: 'rgba(255, 74, 8, .08)', border: 'rgba(255, 74, 8, .16)' },
           { color: '#0052d9', soft: 'rgba(0, 82, 217, .08)', border: 'rgba(0, 82, 217, .16)' },
           { color: '#09bb07', soft: 'rgba(9, 187, 7, .08)', border: 'rgba(9, 187, 7, .16)' },
-          { color: '#8b5cf6', soft: 'rgba(139, 92, 246, .08)', border: 'rgba(139, 92, 246, .16)' }
+          { color: '#8b5cf6', soft: 'rgba(139, 92, 246, .08)', border: 'rgba(139, 92, 246, .16)' },
+          { color: '#f59e0b', soft: 'rgba(245, 158, 11, .10)', border: 'rgba(245, 158, 11, .18)' }
         ];
 
         const arrowSvg = `
@@ -8425,46 +9260,45 @@ function enhanceKfsPyramid() {
             .join('');
           return `
             <article class="section5-package-card" style="--package-color:${style.color};--package-soft:${style.soft};--package-border:${style.border}">
-              <!-- Step 1: Package & Platforms -->
               <div class="section5-package-col col-header">
                 <div class="section5-package-topline">
                   <span class="section5-package-index">0${index + 1}</span>
                   <h4 class="section5-package-name">${escapeHTML(packageName)}</h4>
+                  <div class="section5-package-chips">${platforms}</div>
                 </div>
-                <div class="section5-package-chips">${platforms}</div>
               </div>
-              
-              ${arrowSvg}
-              
-              <!-- Step 2: Audience / Scene -->
-              <div class="section5-package-col col-audience">
-                <span class="section5-package-label">
-                  <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                  人群 / 场景
-                </span>
-                <div class="section5-package-text">${cells[1]?.innerHTML || ''}</div>
-              </div>
-              
-              ${arrowSvg}
-              
-              <!-- Step 3: Core Question -->
-              <div class="section5-package-col col-question">
-                <span class="section5-package-label">
-                  <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                  核心问题
-                </span>
-                <div class="section5-package-text">${cells[3]?.innerHTML || ''}</div>
-              </div>
-              
-              ${arrowSvg}
-              
-              <!-- Step 4: Landing Action -->
-              <div class="section5-package-col col-action">
-                <span class="section5-package-label">
-                  <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                  承接动作
-                </span>
-                <div class="section5-package-text">${cells[4]?.innerHTML || ''}</div>
+
+              <div class="section5-package-flow">
+                <div class="section5-package-stage stage-audience">
+                  <span class="section5-package-label">
+                    <span class="section5-package-stepdot">1</span>
+                    <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    人群 / 场景
+                  </span>
+                  <div class="section5-package-text">${cells[1]?.innerHTML || ''}</div>
+                </div>
+
+                ${arrowSvg}
+
+                <div class="section5-package-stage stage-question">
+                  <span class="section5-package-label">
+                    <span class="section5-package-stepdot">2</span>
+                    <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    核心问题
+                  </span>
+                  <div class="section5-package-text">${cells[3]?.innerHTML || ''}</div>
+                </div>
+
+                ${arrowSvg}
+
+                <div class="section5-package-stage stage-action">
+                  <span class="section5-package-label">
+                    <span class="section5-package-stepdot">3</span>
+                    <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    承接动作
+                  </span>
+                  <div class="section5-package-text">${cells[4]?.innerHTML || ''}</div>
+                </div>
               </div>
             </article>
           `;
@@ -8476,7 +9310,7 @@ function enhanceKfsPyramid() {
           <div class="section5-visual-header">
             <div>
               <h4 class="section5-visual-title">平台之后看内容包：人群、问题、承接合到一张图</h4>
-              <p class="section5-visual-subtitle">先按内容包组织素材，再拆搜索词和投流素材，减少平台表后的画像重复。</p>
+              <p class="section5-visual-subtitle">每个包都用一条内容流把“谁会被打动、为什么会搜、最后怎么接住”串起来；新增的高频带低频包则专门把“汇到微信后立刻能做什么”讲成场景入口。</p>
             </div>
           </div>
           <div class="section5-package-grid">${cards}</div>
@@ -8495,18 +9329,25 @@ function enhanceKfsPyramid() {
         if (!targetWrap) return;
         const rows = [...targetWrap.querySelectorAll('tbody tr')];
         const accents = [
-          { color: '#1f3a5f' },
-          { color: '#3f7f8f' },
-          { color: '#b8873b' },
-          { color: '#6f8d6a' }
+          { color: '#d65b74', soft: 'rgba(214, 91, 116, .11)' },
+          { color: '#4f83c2', soft: 'rgba(79, 131, 194, .11)' },
+          { color: '#d78652', soft: 'rgba(215, 134, 82, .12)' },
+          { color: '#5fa06f', soft: 'rgba(95, 160, 111, .12)' }
         ];
+        const splitHtmlLines = (html) => (html || '')
+          .split(/<br\s*\/?>/i)
+          .map(item => item.trim())
+          .filter(Boolean);
         const renderReasonPoints = (html) => {
-          const points = (html || '')
-            .split(/<br\s*\/?>/i)
-            .map(item => item.trim())
-            .filter(Boolean);
+          const points = splitHtmlLines(html);
           return `<div class="section5-priority-points">${
             points.map(point => `<div class="section5-priority-point">${point}</div>`).join('')
+          }</div>`;
+        };
+        const renderActionPoints = (html) => {
+          const points = splitHtmlLines(html);
+          return `<div class="section5-priority-action-list">${
+            points.map(point => `<div class="section5-priority-action">${point}</div>`).join('')
           }</div>`;
         };
         const items = rows.map((row, index) => {
@@ -8528,7 +9369,7 @@ function enhanceKfsPyramid() {
         const rowsHTML = items.map(item => {
           const { cells, style, rank, name, share, pct } = item;
           return `
-            <article class="section5-priority-row" style="--priority-color:${style.color};--priority-width:${pct}%">
+            <article class="section5-priority-row" style="--priority-color:${style.color};--priority-soft:${style.soft};--priority-width:${pct}%">
               <div class="section5-priority-rank">
                 <span class="section5-priority-dot"></span>
                 <span class="section5-priority-pill">${escapeHTML(rank)}</span>
@@ -8540,7 +9381,7 @@ function enhanceKfsPyramid() {
               </div>
               <div class="section5-priority-block">
                 <span class="section5-priority-label">主动作</span>
-                <div class="section5-priority-text">${cells[2]?.innerHTML || ''}</div>
+                ${renderActionPoints(cells[2]?.innerHTML || '')}
               </div>
               <div class="section5-priority-block">
                 <span class="section5-priority-label">排序依据</span>
@@ -8647,6 +9488,7 @@ function enhanceKfsPyramid() {
     enhanceCognitiveBlocks();
     enhanceWeeeStrategy();
     enhanceWeeeCityStrategy();
+    enhanceFutuEducationStrategy();
     enhancePlatformMatrixEvidence();
     enhanceCreatorSearchEvidence();
     enhanceSection5Playbook();
